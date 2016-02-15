@@ -49,13 +49,13 @@
 	    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
 	      <div class="container">
 	      	
-	        <div class="navbar-header">
+	        <div class="navbar-header top">
         		<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
 			        <span class="icon-bar"></span>
 			        <span class="icon-bar"></span>
 			        <span class="icon-bar"></span>                        
 		      	</button>
-	          	<img src="img/LogoSmall.png" class="logo"/>
+	          	<a href="#"><img src="img/LogoSmall.png" class="logo"/></a>
 	        </div>
 	        
 	        <div class="collapse navbar-collapse" id="myNavbar">
@@ -71,7 +71,8 @@
 
 		<!-- HomePage CoverImage-->
 	    <div class="coverimage">
-	    
+	    	
+	    	<!-- menu -->
 		    <nav class="navbar navbar-inverse" role="navigation">
 		      	
 			        <div class="navbar-header">
@@ -92,75 +93,136 @@
 		        
 		    </nav>
 	    	
-		  <div class="inner">
-			<div class="content">
-				<img src="./img/Logo.png" class="img-responsive" />
-				<h1 class="white">Website Under Construction</h1>
+	    	<!-- content -->
+		    <div class="inner">
+				<div class="content">
+					<img src="./img/Logo.png" class="img-responsive" />
+					<h1 class="white">Website Under Construction</h1>
+					<iframe class="deezer" width="375" height="100" src="https://www.mixcloud.com/widget/iframe/?embed_type=widget_standard&amp;embed_uuid=e4ddf103-1c24-4903-9fae-0c642c6b3465&amp;feed=https%3A%2F%2Fwww.mixcloud.com%2Fmnsr_z%25C3%25A9r0%2F&amp;hide_cover=1&amp;hide_tracklist=1&amp;replace=0&color=ffffff" frameborder="0"></iframe>
+				</div>
 			</div>
-		  </div>
 		  
 	    </div>
 	    
-	    <!-- About Short -->
-
-		
 	    <div class="container">
+	    	
+	    	<!-- About Short -->
+	    	<div class="content-segment">
+	    		<div class="row about">
+		        	<div class="col-md-3 title">
+		        		<h1>BINAIR 01</h1>
+					</div>
+					<div class="col-md-9 body-content">
+						<h4>
+							Donec id elit non mi porta gravida at <b>eget metus</b>. Fusce dapibus, tellus ac cursus commodo, <b>tortor</b> mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. <b>Donec sed odio dui.</b> </p>
+		         		<h4>
+					</div>
+				</div>
+				<a class="btn btn-default link-more" href="#" role="button">learn more &raquo;</a>
+			</div>
+			
+			<!-- Latest News -->
+			<div class="content-segment">
+	    		<div class="row news">
+		        	<div class="col-md-3 title">
+		        		<h1>NEWS</h1>
+					</div>
+					<div class="body-content">
+				        <div class="col-md-3">
+				        	<a href="#">
+					        	<img src="img/temp/coverimage.jpg" class="img-responsive" />
+					          	<h4><b>Lorem ipsum dolor sit amet, consectetur adipiscing elit</b></h4>
+					          	<div class="subtitle">posted 15/02/2016</div>
+				          	</a>
+				        </div>
+				        <div class="col-md-3">
+				        	<a href="#">
+					        	<img src="img/temp/coverimage.jpg" class="img-responsive" />
+					          	<h4><b>Lorem ipsum dolor sit amet, consectetur adipiscing elit</b></h4>
+					          	<div class="subtitle">posted 15/02/2016</div>
+				          	</a>
+				       </div>
+				        <div class="col-md-3">
+				        	<a href="#">
+					        	<img src="img/temp/coverimage.jpg" class="img-responsive" />
+					          	<h4><b>Lorem ipsum dolor sit amet, consectetur adipiscing elit</b></h4>
+					          	<div class="subtitle">posted 15/02/2016</div>
+				          	</a>
+				        </div>
+			        </div>
+				</div>
+				
+				<div class="row news">
+		        	<div class="col-md-3 title">
+		        		<h1>&nbsp;</h1>
+					</div>
+					<div class="body-content">
+				        <div class="col-md-3">
+				        	<a href="#">
+					        	<img src="img/temp/coverimage.jpg" class="img-responsive" />
+					          	<h4><b>Lorem ipsum dolor sit amet, consectetur adipiscing elit</b></h4>
+					          	<div class="subtitle">posted 15/02/2016</div>
+				          	</a>
+				        </div>
+				        <div class="col-md-3">
+				        	<a href="#">
+					        	<img src="img/temp/coverimage.jpg" class="img-responsive" />
+					          	<h4><b>Lorem ipsum dolor sit amet, consectetur adipiscing elit</b></h4>
+					          	<div class="subtitle">posted 15/02/2016</div>
+				          	</a>
+				       </div>
+				        <div class="col-md-3">
+				        	<a href="#">
+					        	<img src="img/temp/coverimage.jpg" class="img-responsive" />
+					          	<h4><b>Lorem ipsum dolor sit amet, consectetur adipiscing elit</b></h4>
+					          	<div class="subtitle">posted 15/02/2016</div>
+				          	</a>
+				        </div>
+			        </div>
+				</div>
+				<a class="btn btn-default link-more" href="#" role="button">more news &raquo;</a>
+			</div>
 	
-	      <div class="row">
-	        <div class="col-md-4">
-	          <h2>Heading</h2>
-	          <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-	          <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
-	        </div>
-	        <div class="col-md-4">
-	          <h2>Heading</h2>
-	          <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-	          <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
-	       </div>
-	        <div class="col-md-4">
-	          <h2>Heading</h2>
-	          <p>Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
-	          <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
-	        </div>
-	      </div>
-	      
-	      <div>
-	      	<p>
-	      		Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque at elit quis nisi lacinia imperdiet sit amet at enim. Integer auctor quis nulla et lacinia. Proin et sem luctus, consequat diam at, sollicitudin magna. Aliquam aliquam tincidunt mauris. Praesent tincidunt vel dui at consequat. Integer pharetra purus arcu, sit amet mollis leo dictum et. Proin viverra tellus urna, nec porta massa maximus vitae. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.
-Fusce quis turpis vel velit dignissim luctus. Phasellus lobortis ipsum vitae dolor gravida, faucibus egestas sem mollis. Quisque in erat eget metus malesuada condimentum. Sed eu tortor sed justo aliquam efficitur nec vitae ex. Sed et orci nibh. Proin vestibulum libero ac dui tempor, eget lobortis ligula tempus. Donec ut elit et urna pellentesque consequat vel eget felis. Morbi efficitur euismod lorem, eu mollis tellus scelerisque blandit. Nulla faucibus risus a ultricies dictum. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Fusce lobortis, est at dapibus gravida, urna metus malesuada neque, ut ultrices ex mauris non mi. Ut imperdiet a urna vitae ornare.
-Cras ornare lorem a leo pretium finibus.
-			</p>
-			<p>
-	      		Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque at elit quis nisi lacinia imperdiet sit amet at enim. Integer auctor quis nulla et lacinia. Proin et sem luctus, consequat diam at, sollicitudin magna. Aliquam aliquam tincidunt mauris. Praesent tincidunt vel dui at consequat. Integer pharetra purus arcu, sit amet mollis leo dictum et. Proin viverra tellus urna, nec porta massa maximus vitae. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.
-Fusce quis turpis vel velit dignissim luctus. Phasellus lobortis ipsum vitae dolor gravida, faucibus egestas sem mollis. Quisque in erat eget metus malesuada condimentum. Sed eu tortor sed justo aliquam efficitur nec vitae ex. Sed et orci nibh. Proin vestibulum libero ac dui tempor, eget lobortis ligula tempus. Donec ut elit et urna pellentesque consequat vel eget felis. Morbi efficitur euismod lorem, eu mollis tellus scelerisque blandit. Nulla faucibus risus a ultricies dictum. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Fusce lobortis, est at dapibus gravida, urna metus malesuada neque, ut ultrices ex mauris non mi. Ut imperdiet a urna vitae ornare.
-Cras ornare lorem a leo pretium finibus.
-			</p>
-			<p>
-	      		Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque at elit quis nisi lacinia imperdiet sit amet at enim. Integer auctor quis nulla et lacinia. Proin et sem luctus, consequat diam at, sollicitudin magna. Aliquam aliquam tincidunt mauris. Praesent tincidunt vel dui at consequat. Integer pharetra purus arcu, sit amet mollis leo dictum et. Proin viverra tellus urna, nec porta massa maximus vitae. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.
-Fusce quis turpis vel velit dignissim luctus. Phasellus lobortis ipsum vitae dolor gravida, faucibus egestas sem mollis. Quisque in erat eget metus malesuada condimentum. Sed eu tortor sed justo aliquam efficitur nec vitae ex. Sed et orci nibh. Proin vestibulum libero ac dui tempor, eget lobortis ligula tempus. Donec ut elit et urna pellentesque consequat vel eget felis. Morbi efficitur euismod lorem, eu mollis tellus scelerisque blandit. Nulla faucibus risus a ultricies dictum. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Fusce lobortis, est at dapibus gravida, urna metus malesuada neque, ut ultrices ex mauris non mi. Ut imperdiet a urna vitae ornare.
-Cras ornare lorem a leo pretium finibus.
-			</p>
-			<p>
-	      		Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque at elit quis nisi lacinia imperdiet sit amet at enim. Integer auctor quis nulla et lacinia. Proin et sem luctus, consequat diam at, sollicitudin magna. Aliquam aliquam tincidunt mauris. Praesent tincidunt vel dui at consequat. Integer pharetra purus arcu, sit amet mollis leo dictum et. Proin viverra tellus urna, nec porta massa maximus vitae. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.
-Fusce quis turpis vel velit dignissim luctus. Phasellus lobortis ipsum vitae dolor gravida, faucibus egestas sem mollis. Quisque in erat eget metus malesuada condimentum. Sed eu tortor sed justo aliquam efficitur nec vitae ex. Sed et orci nibh. Proin vestibulum libero ac dui tempor, eget lobortis ligula tempus. Donec ut elit et urna pellentesque consequat vel eget felis. Morbi efficitur euismod lorem, eu mollis tellus scelerisque blandit. Nulla faucibus risus a ultricies dictum. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Fusce lobortis, est at dapibus gravida, urna metus malesuada neque, ut ultrices ex mauris non mi. Ut imperdiet a urna vitae ornare.
-Cras ornare lorem a leo pretium finibus.
-			</p>
-			<p>
-	      		Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque at elit quis nisi lacinia imperdiet sit amet at enim. Integer auctor quis nulla et lacinia. Proin et sem luctus, consequat diam at, sollicitudin magna. Aliquam aliquam tincidunt mauris. Praesent tincidunt vel dui at consequat. Integer pharetra purus arcu, sit amet mollis leo dictum et. Proin viverra tellus urna, nec porta massa maximus vitae. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.
-Fusce quis turpis vel velit dignissim luctus. Phasellus lobortis ipsum vitae dolor gravida, faucibus egestas sem mollis. Quisque in erat eget metus malesuada condimentum. Sed eu tortor sed justo aliquam efficitur nec vitae ex. Sed et orci nibh. Proin vestibulum libero ac dui tempor, eget lobortis ligula tempus. Donec ut elit et urna pellentesque consequat vel eget felis. Morbi efficitur euismod lorem, eu mollis tellus scelerisque blandit. Nulla faucibus risus a ultricies dictum. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Fusce lobortis, est at dapibus gravida, urna metus malesuada neque, ut ultrices ex mauris non mi. Ut imperdiet a urna vitae ornare.
-Cras ornare lorem a leo pretium finibus.
-			</p>
-			<p>
-	      		Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque at elit quis nisi lacinia imperdiet sit amet at enim. Integer auctor quis nulla et lacinia. Proin et sem luctus, consequat diam at, sollicitudin magna. Aliquam aliquam tincidunt mauris. Praesent tincidunt vel dui at consequat. Integer pharetra purus arcu, sit amet mollis leo dictum et. Proin viverra tellus urna, nec porta massa maximus vitae. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.
-Fusce quis turpis vel velit dignissim luctus. Phasellus lobortis ipsum vitae dolor gravida, faucibus egestas sem mollis. Quisque in erat eget metus malesuada condimentum. Sed eu tortor sed justo aliquam efficitur nec vitae ex. Sed et orci nibh. Proin vestibulum libero ac dui tempor, eget lobortis ligula tempus. Donec ut elit et urna pellentesque consequat vel eget felis. Morbi efficitur euismod lorem, eu mollis tellus scelerisque blandit. Nulla faucibus risus a ultricies dictum. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Fusce lobortis, est at dapibus gravida, urna metus malesuada neque, ut ultrices ex mauris non mi. Ut imperdiet a urna vitae ornare.
-Cras ornare lorem a leo pretium finibus.
-			</p>
-	      </div>
+	
+			<!-- Events -->
+			<div class="content-segment">
+	    		<div class="row news">
+		        	<div class="col-md-3 title">
+		        		<h1>EVENTS</h1>
+					</div>
+					<div class="body-content">
+				        <div class="col-md-3">
+				        	<a href="#">
+					        	<img src="img/temp/coverimage.jpg" class="img-responsive" />
+					          	<h4><b>Lorem ipsum dolor sit amet, consectetur adipiscing elit</b></h4>
+					          	<div class="subtitle">posted 15/02/2016</div>
+				          	</a>
+				        </div>
+				        <div class="col-md-3">
+				        	<a href="#">
+					        	<img src="img/temp/coverimage.jpg" class="img-responsive" />
+					          	<h4><b>Lorem ipsum dolor sit amet, consectetur adipiscing elit</b></h4>
+					          	<div class="subtitle">posted 15/02/2016</div>
+				          	</a>
+				       </div>
+				        <div class="col-md-3">
+				        	<a href="#">
+					        	<img src="img/temp/coverimage.jpg" class="img-responsive" />
+					          	<h4><b>Lorem ipsum dolor sit amet, consectetur adipiscing elit</b></h4>
+					          	<div class="subtitle">posted 15/02/2016</div>
+				          	</a>
+				        </div>
+			        </div>
+				</div>
+				<a class="btn btn-default link-more" href="#" role="button">more events &raquo;</a>
+			</div>
+	     
+	    
 	
 	      <hr>
 	
 	      <footer>
-	        <p>&copy; Binair01 2015</p>
+	        <p class="footer">&copy; Binair01 - <?php echo date("Y"); ?></p>
 	      </footer>
 	    </div> 
 	    
