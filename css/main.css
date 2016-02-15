@@ -1,22 +1,114 @@
+/*general*/
+html, body {
+	margin:0;
+	padding:0;
+	height:100%
+}
+
+.white{
+	color:white;
+}
+
+.navbar-fixed-top, .navbar-header, .navbar-inverse{
+	z-index:10;
+	height:80px;
+	background:url(http://localhost/binair01/img/temp/main.jpg) no-repeat 50% 50%;
+	background-size:cover;
+    background-attachment: fixed;
+    border:0;
+    border-color:none;
+}
+
+.navbar{
+	z-index:10;
+}
+
+.navbar-header .logo{
+	margin-top:9px;
+	margin-left:9px;
+}
+
+.navbar .collapse.in{
+	background:url(http://localhost/binair01/img/temp/main.jpg) no-repeat 50% 50%;
+	background-size:cover;
+    background-attachment: fixed;
+    border-color:white;
+}
+
+.navbar .collapsing, .navbar-inverse .navbar-collapse{
+	background:url(http://localhost/binair01/img/temp/main.jpg) no-repeat 50% 50%;
+	background-size:cover;
+    background-attachment: fixed;
+    border-color:white;
+}
+
+.navbar-inverse .navbar-nav>li>a{
+	color:white;
+}
+
+.navbar-inverse .navbar-nav>li>a:hover{
+	text-decoration:underline;
+	text-shadow:none;
+}
+
+.navbar-inverse .navbar-toggle {
+    border-color: white;
+    margin-top: 23px;
+}
+
+.coverimage .navbar{
+	position:absolute;
+	right:0;
+}
+
+@media screen and (max-width: 767px){
+	.navbar .menuoption{
+		width:100%;
+		text-align:center;
+	}
+	
+	/*.navbar li{
+		border-bottom:solid 1px white;
+		margin:0;
+		padding:0;
+	}*/
+}
 
 
-/* ==========================================================================
-   Author's custom styles
-   ========================================================================== */
+/*home*/
+.coverimage{
+	position: relative;
+	z-index:20;
+	display:table;
+	height:100%;
+	width:100%;
+	margin:auto;
+	background:url(http://localhost/binair01/img/temp/main.jpg) no-repeat 50% 50%;
+	background-size:cover;
+    background-attachment: fixed;
+}
 
+.coverimage .inner {
+	display:table-cell;
+	vertical-align:middle;
+	width:100%;
+	max-width:none;
+	margin:auto;
+}
 
+.coverimage .inner .content{
+	padding:20px;
+	max-width:600px;
+	margin:auto;
+	text-align:center;
+}
 
+.img-responsive {
+    margin: 0 auto;
+}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+nav ul li {
+  list-style:none;
+  float:left;
+  margin-right:50px;
+}
