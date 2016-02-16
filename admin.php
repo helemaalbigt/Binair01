@@ -26,6 +26,7 @@ include_once './inc/db.inc.php';
 		
         <script src="js/vendor/modernizr-2.8.3-respond-1.4.2.min.js"></script>
     </head>
+    
     <body>
         <!--[if lt IE 8]>
             <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
@@ -55,41 +56,13 @@ include_once './inc/db.inc.php';
 	      </div>
 	    </nav>
 	    
+	    <!-- container -->   
 	    <div class="container">
 	    	
-	    	<!-- NEWS ITEMS -->
-			<div class="content-segment">
-				
-				<!--preview-->
-				<div class="news-preview">
-		    		<div class="row">
-						<div class="body-content">
-					        <div class="col-md-9">
-					        	<a href="#">
-						        	<img src="img/temp/coverimage.jpg" class="img-responsive" />
-					          	</a>
-					        </div>
-				        </div>
-				        <div class="col-md-3 title">
-			        		<h1>THIS IS A TITLE</h1>
-			        		<h4><b>Lorem ipsum dolor sit amet, consectetur adipiscing elit</b></h4>
-				          	<div class="subtitle">posted 15/02/2016</div>
-						</div>
-					</div>
-					<a class="btn btn-default link-more" href="#" role="button">read on&raquo;</a>
-				</div>
-				
-			</div>
-
-	
-	      <hr>
-	
-	      <footer>
-	        <p class="footer">&copy; Binair01 - <?php echo date("Y"); ?></p>
-	      </footer>
+	    	
 	    </div> 
-	    
-    	<!-- /container -->        
+    	<!-- /container -->      
+    	  
     	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
         <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.11.2.min.js"><\/script>')</script>
 
