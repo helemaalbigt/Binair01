@@ -14,10 +14,13 @@ h4{
 	padding:0;
 }
 
+.navbar-fixed-top, .navbar-header, .navbar-inverse, .navbar .collapse.in, .navbar .collapsing, .navbar-inverse .navbar-collapse{
+	background:url("../img/temp/main.jpg") no-repeat 50% 50%;
+}
+
 .navbar-fixed-top, .navbar-header, .navbar-inverse{
 	z-index:10;
-	height:80px;
-	background:url("../img/temp/main.jpg") no-repeat 50% 50%;
+	height:60px;
 	-webkit-background-size: cover;
 	-moz-background-size: cover;
 	-o-background-size: cover;
@@ -29,7 +32,7 @@ h4{
 
  .navbar-header, .navbar-inverse{
  	border:0;
- 	height:80px;
+ 	height:60px;
     border-color:none;
  }
 
@@ -43,7 +46,6 @@ h4{
 }
 
 .navbar .collapse.in{
-	background:url("../img/temp/main.jpg") no-repeat 50% 50%;
 		-webkit-background-size: cover;
 	-moz-background-size: cover;
 	-o-background-size: cover;
@@ -53,7 +55,6 @@ h4{
 }
 
 .navbar .collapsing, .navbar-inverse .navbar-collapse{
-	background:url("../img/temp/main.jpg") no-repeat 50% 50%;
 		-webkit-background-size: cover;
 	-moz-background-size: cover;
 	-o-background-size: cover;
@@ -84,9 +85,21 @@ h4{
 
 .navbar-fixed-top .navbar-right{
 	position:relative;
-	top:15px;
+	top:7px;
 }
 
+.navbar-header img.logo{
+	height: 43px;
+}
+
+.navbar-inverse .navbar-toggle {
+	margin-top:13px;	
+}
+
+nav ul li {
+  list-style:none;
+  margin-left: 0 0 0 50px;
+}
 
 @media screen and (max-width: 767px){
 	.navbar .menuoption{
@@ -108,17 +121,6 @@ h4{
 		background-color:rgb(200,70,80);
 	}
 	
-	.navbar-fixed-top, .navbar-header, .navbar-inverse{
-		height:60px;
-	}
-	
-	.navbar-header img.logo{
-		height: 43px;
-	}
-	
-	.navbar-inverse .navbar-toggle {
-		margin-top:13px;	
-	}
 	/*.navbar li{
 		border-bottom:solid 1px white;
 		margin:0;
@@ -212,5 +214,29 @@ footer p{
 	margin:auto;
 	width:100%;
 	text-align:center;
+}
+
+/*news*/
+.navbar-fixed-top.news, .news .navbar-header, .news .navbar-inverse, .navbar.news .collapse.in, .navbar.news .collapsing, .navbar-inverse.news .navbar-collapse{
+	background:url("../img/temp/news.jpg") no-repeat 50% 50%;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover !important;
+    background-attachment: fixed;
+}
+
+.navbar.news .top a{
+	color:white;
+}
+
+.navbar.news .top a h4{
+	display:inline;
+	position:relative;
+	top:7px;
+}
+
+.news-preview{
+	margin-top:60px;
 }
 
