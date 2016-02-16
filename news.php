@@ -59,56 +59,18 @@
 				<!--preview-->
 				<div class="news-preview">
 		    		<div class="row">
-			        	<div class="col-md-3 title">
+						<div class="body-content">
+					        <div class="col-md-9">
+					        	<a href="#">
+						        	<img src="img/temp/coverimage.jpg" class="img-responsive" />
+					          	</a>
+					        </div>
+				        </div>
+				        <div class="col-md-3 title">
 			        		<h1>THIS IS A TITLE</h1>
+			        		<h4><b>Lorem ipsum dolor sit amet, consectetur adipiscing elit</b></h4>
+				          	<div class="subtitle">posted 15/02/2016</div>
 						</div>
-						<div class="body-content">
-					        <div class="col-md-9">
-					        	<a href="#">
-						        	<img src="img/temp/coverimage.jpg" class="img-responsive" />
-						          	<h4><b>Lorem ipsum dolor sit amet, consectetur adipiscing elit</b></h4>
-						          	<div class="subtitle">posted 15/02/2016</div>
-					          	</a>
-					        </div>
-				        </div>
-					</div>
-					<a class="btn btn-default link-more" href="#" role="button">read on&raquo;</a>
-				</div>
-				
-				<!--preview-->
-				<div class="news-preview">
-		    		<div class="row">
-			        	<div class="col-md-3 title">
-			        		<h1>LOREM IPSUM NOW IS DOLER SID AMED</h1>
-						</div>
-						<div class="body-content">
-					        <div class="col-md-9">
-					        	<a href="#">
-						        	<img src="img/temp/coverimage.jpg" class="img-responsive" />
-						          	<h4><b>Lorem ipsum dolor sit amet, consectetur adipiscing elit</b></h4>
-						          	<div class="subtitle">posted 15/02/2016</div>
-					          	</a>
-					        </div>
-				        </div>
-					</div>
-					<a class="btn btn-default link-more" href="#" role="button">read on&raquo;</a>
-				</div>
-				
-				<!--preview-->
-				<div class="news-preview">
-		    		<div class="row">
-			        	<div class="col-md-3 title">
-			        		<h1>THIS IS A TITLE</h1>
-						</div>
-						<div class="body-content">
-					        <div class="col-md-9">
-					        	<a href="#">
-						        	<img src="img/temp/coverimage.jpg" class="img-responsive" />
-						          	<h4><b>Lorem ipsum dolor sit amet, consectetur adipiscing elit</b></h4>
-						          	<div class="subtitle">posted 15/02/2016</div>
-					          	</a>
-					        </div>
-				        </div>
 					</div>
 					<a class="btn btn-default link-more" href="#" role="button">read on&raquo;</a>
 				</div>
