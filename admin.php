@@ -26,7 +26,6 @@ include_once './inc/db.inc.php';
 		
         <script src="js/vendor/modernizr-2.8.3-respond-1.4.2.min.js"></script>
     </head>
-    
     <body>
         <!--[if lt IE 8]>
             <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
@@ -42,7 +41,7 @@ include_once './inc/db.inc.php';
 			        <span class="icon-bar"></span>
 			        <span class="icon-bar"></span>                        
 		      	</button>
-	          	<a href="#"><img src="img/LogoSmall.png" class="logo"/></a><a href="#"><span><h4> / NEWS</h4></span></a>
+	          	<a href="#"><img src="img/LogoSmall.png" class="logo"/></a><a href="#"><span><h4> / ADMIN</h4></span></a>
 	        </div>
 	        
 	        <div class="collapse navbar-collapse" id="myNavbar">
@@ -56,13 +55,51 @@ include_once './inc/db.inc.php';
 	      </div>
 	    </nav>
 	    
-	    <!-- container -->   
-	    <div class="container">
+	    <div class="container page-content admin">
 	    	
-	    	
+            
+            <!-- Form -->
+            <div class="row">
+                <div class="col-sm-2">&nbsp;</div>
+                <h2 class="col-sm-10">New Newsitem</h2>
+            </div>
+
+            <form class="form-horizontal" role="form">
+                <div class="form-group">
+                    <label class="control-label col-sm-2" for="title">Title:</label>
+                    <div class="col-sm-10">
+                    <input type="text" class="form-control" id="title" placeholder="Enter title">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-2" for="pwd">Password:</label>
+                    <div class="col-sm-10"> 
+                    <input type="password" class="form-control" id="pwd" placeholder="Enter password">
+                    </div>
+                </div>
+                <div class="form-group"> 
+                    <div class="col-sm-offset-2 col-sm-10">
+                    <div class="checkbox">
+                        <label><input type="checkbox"> Remember me</label>
+                    </div>
+                    </div>
+                </div>
+                <div class="form-group"> 
+                    <div class="col-sm-offset-2 col-sm-10">
+                    <button type="submit" class="btn btn-default">Submit</button>
+                    </div>
+                </div>
+             </form>
+
+	
+	      <hr>
+	
+	      <footer>
+	        <p class="footer">&copy; Binair01 - <?php echo date("Y"); ?></p>
+	      </footer>
 	    </div> 
-    	<!-- /container -->      
-    	  
+	    
+    	<!-- /container -->        
     	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
         <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.11.2.min.js"><\/script>')</script>
 
