@@ -23,9 +23,19 @@ include_once './inc/db.inc.php';
         <link rel="stylesheet" href="css/bootstrap-theme.min.css">
         <link rel="stylesheet" href="css/main.css">
 		<link rel="stylesheet" href="css/style.css">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+		<link href="css/editor.css" type="text/css" rel="stylesheet"/>
 		
+        <script src="js/vendor/bootstrap.min.js"></script>
         <script src="js/vendor/modernizr-2.8.3-respond-1.4.2.min.js"></script>
-    </head>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+        <script src="js/editor.js"></script><!-- WYSIWYG for textarea-->
+        <script>
+			$(document).ready(function() {
+				$("#txtEditor").Editor();
+			});
+		</script>
+  </head>
     <body>
         <!--[if lt IE 8]>
             <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
@@ -61,16 +71,25 @@ include_once './inc/db.inc.php';
             <!-- Form -->
             <div class="row">
                 <div class="col-sm-2">&nbsp;</div>
-                <h2 class="col-sm-10">New Newsitem</h2>
+                <h2 class="col-sm-10">New blogpost</h2>
             </div>
 
             <form class="form-horizontal" role="form">
+                <!--title-->
                 <div class="form-group">
                     <label class="control-label col-sm-2" for="title">Title:</label>
                     <div class="col-sm-10">
-                    <input type="text" class="form-control" id="title" placeholder="Enter title">
+                        <input type="text" class="form-control" id="title" placeholder="Enter title">
                     </div>
                 </div>
+                <!--body-->
+                <div class="row">
+                    <label class="control-label col-sm-2" for="textbody">Body:</label>
+                    <div class="col-sm-10 nopadding">
+							<textarea id="txtEditor"></textarea> 
+					</div>
+                </div>
+
                 <div class="form-group">
                     <label class="control-label col-sm-2" for="pwd">Password:</label>
                     <div class="col-sm-10"> 
@@ -90,8 +109,7 @@ include_once './inc/db.inc.php';
                     </div>
                 </div>
              </form>
-
-	
+             	
 	      <hr>
 	
 	      <footer>
@@ -102,8 +120,6 @@ include_once './inc/db.inc.php';
     	<!-- /container -->        
     	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
         <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.11.2.min.js"><\/script>')</script>
-
-        <script src="js/vendor/bootstrap.min.js"></script>
 
         <script src="js/main.js"></script>
 
