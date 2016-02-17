@@ -51,7 +51,7 @@
 	      </div>
 	    </nav>
 	    
-	    <div class="container">
+	    <div class="container pagecontent news">
 	    	
 	    	<!-- NEWS ITEMS -->
 			<div class="content-segment">
@@ -59,20 +59,42 @@
 				<!--preview-->
 				<div class="news-preview">
 		    		<div class="row">
+		    			<!--date-->
+		    			<div class="col-md-3 title">
+			        		<h1>Lorem ipsum dolor sit amet</h1>
+						</div>
+						<!--post-->
 						<div class="body-content">
-					        <div class="col-md-9">
+					        <div class="col-md-8">
 					        	<a href="#">
 						        	<img src="img/temp/coverimage.jpg" class="img-responsive" />
 					          	</a>
+				          		<div class="subtitle">tags: bla, bloe, blie</div>
+				          		<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ornare commodo egestas. Aliquam erat volutpat. Fusce et vehicula turpis. Aliquam pretium sed ex id ultrices. Aliquam rutrum a nulla at congue. Praesent id eros mauris. Quisque nec massa ut diam dictum scelerisque. Mauris a nunc nec purus varius suscipit nec quis urna. Vivamus tristique libero erat, molestie scelerisque dolor bibendum et. Aenean condimentum, ligula ac bibendum hendrerit, nisi nulla laoreet nibh, faucibus finibus dui dui id turpis. Donec tincidunt urna eu rhoncus lobortis. Interdum et malesuada fames ac ante ipsum primis in faucibus. Ut vel augue libero.</p>
 					        </div>
 				        </div>
-				        <div class="col-md-3 title">
-			        		<h1>THIS IS A TITLE</h1>
-			        		<h4><b>Lorem ipsum dolor sit amet, consectetur adipiscing elit</b></h4>
-				          	<div class="subtitle">posted 15/02/2016</div>
-						</div>
 					</div>
-					<a class="btn btn-default link-more" href="#" role="button">read on&raquo;</a>
+				</div>
+				
+				
+				<!--preview-->
+				<div class="news-preview">
+		    		<div class="row">
+		    			<!--date-->
+		    			<div class="col-md-3 title">
+			        		<h1>Sit amet, lorem ipsum dolor. Ipsum!</h1>
+						</div>
+						<!--post-->
+						<div class="body-content">
+					        <div class="col-md-8">
+					        	<a href="#">
+						        	<img src="img/temp/coverimage.jpg" class="img-responsive" />
+					          	</a>
+				          		<div class="subtitle">tags: bla, bloe, blie</div>
+				          		<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ornare commodo egestas. Aliquam erat volutpat. Fusce et vehicula turpis. Aliquam pretium sed ex id ultrices. Aliquam rutrum a nulla at congue. Praesent id eros mauris. Quisque nec massa ut diam dictum scelerisque. Mauris a nunc nec purus varius suscipit nec quis urna. Vivamus tristique libero erat, molestie scelerisque dolor bibendum et. Aenean condimentum, ligula ac bibendum hendrerit, nisi nulla laoreet nibh, faucibus finibus dui dui id turpis. Donec tincidunt urna eu rhoncus lobortis. Interdum et malesuada fames ac ante ipsum primis in faucibus. Ut vel augue libero.</p>
+					        </div>
+				        </div>
+					</div>
 				</div>
 				
 			</div>

@@ -241,7 +241,7 @@ footer p{
 	top:7px;
 }
 
-.page-content.admin{
+.page-content.admin, .pagecontent.news{
 	margin-top:60px;
 }
 
