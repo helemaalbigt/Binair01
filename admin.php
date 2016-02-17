@@ -23,18 +23,74 @@ include_once './inc/db.inc.php';
         <link rel="stylesheet" href="css/bootstrap-theme.min.css">
         <link rel="stylesheet" href="css/main.css">
 		<link rel="stylesheet" href="css/style.css">
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-		<link href="css/editor.css" type="text/css" rel="stylesheet"/>
 		
-        <script src="js/vendor/bootstrap.min.js"></script>
         <script src="js/vendor/modernizr-2.8.3-respond-1.4.2.min.js"></script>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
-        <script src="js/editor.js"></script><!-- WYSIWYG for textarea-->
-        <script>
-			$(document).ready(function() {
-				$("#txtEditor").Editor();
-			});
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+        <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.11.2.min.js"><\/script>')</script>
+        <script type="text/javascript" src="js/moment.js"></script>
+        <script src="js/main.js"></script>
+        
+        <!-- include summernote css/js-->
+		<script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script> 
+		<link href="dist/summernote.css" rel="stylesheet">
+		<script src="dist/summernote.min.js"></script>
+		
+		<!-- Include Date Range Picker -->
+		<script type="text/javascript" src="js/daterangepicker.js"></script>
+		<link rel="stylesheet" type="text/css" href="css/daterangepicker.css" />
+		
+		<script>
+		$(document).ready(function() {
+		//WYSIWYG editor
+		  $('#summernote').summernote({
+		  	height:200,
+		  	toolbar: [
+			    // [groupName, [list of button]]
+			    ['style', ['bold', 'italic', 'underline', 'clear']],
+			    ['font', ['strikethrough', 'superscript', 'subscript']],
+			    ['para', ['ul', 'ol', 'paragraph']],
+			    ['insert', ['link', 'video']]
+			  ]
+		  });
+		  
+		  $('#summernote').summernote('lineHeight', 0.7);
+		});
+		
+		//date picker
+		$(function() {
+		    $('input[name="sortdate"]').daterangepicker({
+		        singleDatePicker: true,
+		        showDropdowns: true,
+		        locale: {
+			      format: 'DD/MM/YYYY'
+			    }
+		    });
+		});
+		
+		//file select
+		$(document).on('change', '.btn-file :file', function() {
+		  var input = $(this),
+		      numFiles = input.get(0).files ? input.get(0).files.length : 1,
+		      label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
+		  input.trigger('fileselect', [numFiles, label]);
+		});
+		
+		$(document).ready( function() {
+		    $('.btn-file :file').on('fileselect', function(event, numFiles, label) {
+		        
+		        var input = $(this).parents('.input-group').find(':text'),
+		            log = numFiles > 1 ? numFiles + ' files selected' : label;
+		        
+		        if( input.length ) {
+		            input.val(log);
+		        } else {
+		            if( log ) alert(log);
+		        }
+		        
+		    });
+		});
 		</script>
+        
   </head>
     <body>
         <!--[if lt IE 8]>
@@ -51,7 +107,7 @@ include_once './inc/db.inc.php';
 			        <span class="icon-bar"></span>
 			        <span class="icon-bar"></span>                        
 		      	</button>
-	          	<a href="#"><img src="img/LogoSmall.png" class="logo"/></a><a href="#"><span><h4> / ADMIN</h4></span></a>
+	          	<a href="index.php"><img src="img/LogoSmall.png" class="logo"/></a><a href="#"><span><h4> / ADMIN</h4></span></a>
 	        </div>
 	        
 	        <div class="collapse navbar-collapse" id="myNavbar">
@@ -75,6 +131,7 @@ include_once './inc/db.inc.php';
             </div>
 
             <form class="form-horizontal" role="form">
+            	
                 <!--title-->
                 <div class="form-group">
                     <label class="control-label col-sm-2" for="title">Title:</label>
@@ -82,30 +139,70 @@ include_once './inc/db.inc.php';
                         <input type="text" class="form-control" id="title" placeholder="Enter title">
                     </div>
                 </div>
+                
+                <!--tags-->
+                <div class="form-group">
+                    <label class="control-label col-sm-2" for="title">Tags:</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="tags" placeholder="separate multiple tags by comma eg: party, folk, music">
+                    </div>
+                </div>
+                
+                <!--sortdate-->
+                <div class="form-group">
+                    <label class="control-label col-sm-2" for="sortdate">Sort Date:</label>
+                    <div class="col-sm-10">
+                    	<input type="text" id="sortdate" name="sortdate" value="" />
+                    	<div class="infotext">Posts will be ordered chronologically by this date</div>
+                    </div>
+                </div>
+                
+                <!--coverimage-->
+                <div class="form-group">
+                    <label class="control-label col-sm-2" for="coverimage">Cover Image:</label>
+                    <div class="col-sm-10">
+                    	<div class="input-group">
+			                <span class="input-group-btn">
+			                    <span class="btn btn-default btn-file">
+			                        Browse&hellip; <input name="coverimage" id="coverimage" type="file" >
+			                    </span>
+			                </span>
+			                <input type="text" class="form-control" readonly>
+			            </div>
+                    </div>
+                </div>
+                
                 <!--body-->
                 <div class="row">
                     <label class="control-label col-sm-2" for="textbody">Body:</label>
                     <div class="col-sm-10 nopadding">
-							<textarea id="txtEditor"></textarea> 
+						<div id="summernote"></div>
 					</div>
                 </div>
-
+                
+                <br>
+                
+                <!--gallery-->
                 <div class="form-group">
-                    <label class="control-label col-sm-2" for="pwd">Password:</label>
-                    <div class="col-sm-10"> 
-                    <input type="password" class="form-control" id="pwd" placeholder="Enter password">
+                    <label class="control-label col-sm-2" for="imagegallery">Image Gallery:</label>
+                    <div class="col-sm-10">
+                    	<div class="input-group">
+			                <span class="input-group-btn">
+			                    <span class="btn btn-default btn-file">
+			                        Browse&hellip; <input name="imagegallery" id="imagegallery" type="file" multiple>
+			                    </span>
+			                </span>
+			                <input type="text" class="form-control" readonly>
+			            </div>
                     </div>
                 </div>
+
+                <br><br>
+                
+				<!--submot-->
                 <div class="form-group"> 
                     <div class="col-sm-offset-2 col-sm-10">
-                    <div class="checkbox">
-                        <label><input type="checkbox"> Remember me</label>
-                    </div>
-                    </div>
-                </div>
-                <div class="form-group"> 
-                    <div class="col-sm-offset-2 col-sm-10">
-                    <button type="submit" class="btn btn-default">Submit</button>
+                    <button type="submit" class="btn btn-primary">Submit</button>
                     </div>
                 </div>
              </form>
@@ -118,10 +215,7 @@ include_once './inc/db.inc.php';
 	    </div> 
 	    
     	<!-- /container -->        
-    	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-        <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.11.2.min.js"><\/script>')</script>
 
-        <script src="js/main.js"></script>
 
         <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
         <script>
