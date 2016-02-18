@@ -1,3 +1,35 @@
+<?php 
+    include_once './inc/db.inc.php';
+	include_once './inc/functions.inc.php';
+	include_once './inc/blogpost.inc.php';
+	
+	//initialize session if none exists
+	if (session_id() == '' || !isset($_SESSION)) {
+		// session isn't started
+		session_start();
+	}
+	
+	//how to render page?
+	$showAll = true;	//show all blogposts or just one
+	$blogpost = null;	//if we're showing only one blogpost, save it's instance in this variable
+	$postsPerPage = 5;	//posts to load per page - ajax will load this n° of posts eachtime you reach the bottom of the page
+	
+	if (isset($_GET['id'])) 
+	{
+		$showAll = false;
+		
+		//formatSinglePost();
+		$blogpost = new Blogpost(FALSE);
+		$blogpost -> updateParameters($_GET['id']);
+	} 
+	
+	//check logged in
+	$loggedin = (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == 1) ? TRUE : FALSE;
+	$isAdmin = (isset($_SESSION['usertype']) && $_SESSION['usertype'] == "admin") ? TRUE : FALSE;
+	$errorVisibility="none";
+?>
+
+
 <!doctype html>
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang=""> <![endif]-->
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8" lang=""> <![endif]-->
@@ -21,8 +53,45 @@
 		<link rel="stylesheet" href="css/style.css">
 		
         <script src="js/vendor/modernizr-2.8.3-respond-1.4.2.min.js"></script>
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+        <script>
+        
+	        var isLoading = false;
+	        var isActive = <?php echo $showAll  ?>;
+			var postsPP = "<?php echo $postsPerPage ?>"; //posts per page
+			var projectsOffset = 0;
+	        
+	        //AJAX function for loading more projects when reaching the bottom of the page	
+	    	$(window).scroll(function() {
+			   if($(window).scrollTop() + $(window).height() == $(document).height() && isActive) {
+				 if(!isLoading){
+				 	
+					isLoading = true;
+					//update variables
+					projectsOffset = projectsOffset+parseInt(postsPP);
+					//get data
+					$.get("inc/functions.inc.php?load="+postsPP+"&offset="+projectsOffset, function(data) {
+						$(data).appendTo("#content");
+						isLoading = false;
+					});
+				 }
+			   }
+			});
+		
+        </script>
     </head>
     <body>
+    	
+    	<!--facebook widget-->
+    	<div id="fb-root"></div>
+		<script>(function(d, s, id) {
+		  var js, fjs = d.getElementsByTagName(s)[0];
+		  if (d.getElementById(id)) return;
+		  js = d.createElement(s); js.id = id;
+		  js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.5";
+		  fjs.parentNode.insertBefore(js, fjs);
+		}(document, 'script', 'facebook-jssdk'));</script>
+		
         <!--[if lt IE 8]>
             <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
@@ -37,7 +106,7 @@
 			        <span class="icon-bar"></span>
 			        <span class="icon-bar"></span>                        
 		      	</button>
-	          	<a href="#"><img src="img/LogoSmall.png" class="logo"/></a><a href="#"><span><h4> / NEWS</h4></span></a>
+	          	<a href="index.php"><img src="img/LogoSmall.png" class="logo"/></a> <a href="news.php"><span><h4> / NEWS</h4></span></a> 
 	        </div>
 	        
 	        <div class="collapse navbar-collapse" id="myNavbar">
@@ -54,51 +123,23 @@
 	    <div class="container pagecontent news">
 	    	
 	    	<!-- NEWS ITEMS -->
-			<div class="content-segment">
+			<div class="content-segment" id="content">
 				
-				<!--preview-->
-				<div class="news-preview">
-		    		<div class="row">
-		    			<!--date-->
-		    			<div class="col-md-3 title">
-			        		<h1>Lorem ipsum dolor sit amet</h1>
-						</div>
-						<!--post-->
-						<div class="body-content">
-					        <div class="col-md-8">
-					        	<a href="#">
-						        	<img src="img/temp/coverimage.jpg" class="img-responsive" />
-					          	</a>
-				          		<div class="subtitle">tags: bla, bloe, blie</div>
-				          		<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ornare commodo egestas. Aliquam erat volutpat. Fusce et vehicula turpis. Aliquam pretium sed ex id ultrices. Aliquam rutrum a nulla at congue. Praesent id eros mauris. Quisque nec massa ut diam dictum scelerisque. Mauris a nunc nec purus varius suscipit nec quis urna. Vivamus tristique libero erat, molestie scelerisque dolor bibendum et. Aenean condimentum, ligula ac bibendum hendrerit, nisi nulla laoreet nibh, faucibus finibus dui dui id turpis. Donec tincidunt urna eu rhoncus lobortis. Interdum et malesuada fames ac ante ipsum primis in faucibus. Ut vel augue libero.</p>
-					        </div>
-				        </div>
-					</div>
-				</div>
-				
-				
-				<!--preview-->
-				<div class="news-preview">
-		    		<div class="row">
-		    			<!--date-->
-		    			<div class="col-md-3 title">
-			        		<h1>Sit amet, lorem ipsum dolor. Ipsum!</h1>
-						</div>
-						<!--post-->
-						<div class="body-content">
-					        <div class="col-md-8">
-					        	<a href="#">
-						        	<img src="img/temp/coverimage.jpg" class="img-responsive" />
-					          	</a>
-				          		<div class="subtitle">tags: bla, bloe, blie</div>
-				          		<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ornare commodo egestas. Aliquam erat volutpat. Fusce et vehicula turpis. Aliquam pretium sed ex id ultrices. Aliquam rutrum a nulla at congue. Praesent id eros mauris. Quisque nec massa ut diam dictum scelerisque. Mauris a nunc nec purus varius suscipit nec quis urna. Vivamus tristique libero erat, molestie scelerisque dolor bibendum et. Aenean condimentum, ligula ac bibendum hendrerit, nisi nulla laoreet nibh, faucibus finibus dui dui id turpis. Donec tincidunt urna eu rhoncus lobortis. Interdum et malesuada fames ac ante ipsum primis in faucibus. Ut vel augue libero.</p>
-					        </div>
-				        </div>
-					</div>
-				</div>
-				
+				<?php 
+				//Load the newsitems
+				//if we're looking at one post
+				if (!$showAll) 
+				{
+					echo $blogpost -> formatSinglePost();
+				} 
+				//give overview
+				else
+				{
+					retrieveBlogposts(0,$postsPerPage) ;
+				}
+				?>
+								
 			</div>
-
 	
 	      <hr>
 	
@@ -108,7 +149,6 @@
 	    </div> 
 	    
     	<!-- /container -->        
-    	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
         <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.11.2.min.js"><\/script>')</script>
 
         <script src="js/vendor/bootstrap.min.js"></script>

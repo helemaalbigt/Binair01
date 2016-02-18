@@ -3,10 +3,19 @@ include_once 'db.inc.php';
 include_once 'functions.inc.php';
 include_once 'blogpost.inc.php';
 
+//initialize session if none exists
+if (session_id() == '' || !isset($_SESSION)) {
+	// session isn't started
+	session_set_cookie_params(0);
+	session_start();
+}
+
+
 
 //perform verification of input and required values
+/*Post a blogpost*/
 if($_SERVER['REQUEST_METHOD'] == 'POST' 
-&& $_POST['posttype'] == "save blogpost"
+//&& $_POST['posttype'] == "save blogpost"
 && !empty($_POST['title']) 
 && !empty($_POST['tags']) 
 && !empty($_POST['sortdate']) 
@@ -31,5 +40,86 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'
 		exit('ERROR: problem updating project');	 
 	}
 }
+
+/*Login*/
+else if($_SERVER['REQUEST_METHOD'] == 'POST' 
+//&& $_POST['posttype'] == "login"
+&& !empty($_POST['login_name']) 
+&& !empty($_POST['login_password'])) 
+{
+	//clean post data
+	$cleanedPost = cleanData($_POST);
+		
+	include_once 'db.inc.php';
+	//Open a database connection and store it
+	$db = new PDO(DB_INFO, DB_USER, DB_PASS);
+	$sql = "SELECT COUNT(*) AS num_users, username, password, usertype FROM admin WHERE username=?";
+	$stmt = $db->prepare($sql);
+	$stmt->execute(array($cleanedPost['login_name']));
+	$response = $stmt->fetch();
+	
+	//debug
+	//echo md5($_POST['login_password'].$response['salt'])."  -  ".$response['password'];exit;
+	
+	if($response['num_users'] > 0 && crypt($cleanedPost['login_password'], $response['password']) == $response['password']){
+		$_SESSION['loggedin'] = 1;
+		$_SESSION['username'] = $response['username'];
+		$_SESSION['usertype'] = $response['usertype'];
+		header('Location:../admin.php');
+		exit;
+	} else{
+		$_SESSION['loggedin'] = NULL;
+		header('Location:../admin.php?loginError=1&usernameAttempt='.$cleanedPost['login_name']);
+		exit;
+	}
+}
+
+/*Create user*/
+else if($_SERVER['REQUEST_METHOD'] == 'POST' 
+&& $_POST['action'] == 'create_user' 
+&& !empty($_POST['create_user_name']) 
+&& !empty($_POST['create_user_password']) 
+&& !empty($_POST['create_user_usertype'])){
+		
+	//clean post data
+	$cleanedPost = cleanData($_POST);	
+
+	include_once 'db.inc.php';
+	//Open a database connection and store it
+	$db = new PDO(DB_INFO, DB_USER, DB_PASS);
+	
+	//PROCESS PASSWORD source:http://alias.io/2010/01/store-passwords-safely-with-php-and-mysql/
+	// A higher "cost" is more secure but consumes more processing power
+	$cost = 10;
+
+	// Create a random salt
+	$salt = strtr(base64_encode(mcrypt_create_iv(16, MCRYPT_DEV_URANDOM)), '+', '.');
+
+	// Prefix information about the hash so PHP knows how to verify it later.
+	// "$2a$" Means we're using the Blowfish algorithm. The following two digits are the cost parameter.
+	$salt = sprintf("$2a$%02d$", $cost) . $salt;
+
+	// Hash the password with the salt
+	$hash = crypt($cleanedPost['create_user_password'], $salt);
+	
+	$sql= "INSERT INTO admin (username, password, usertype) VALUES(?, ?, ?)";
+	$stmt = $db->prepare($sql);
+	$stmt->execute(array($cleanedPost['create_user_name'], $hash, $cleanedPost['create_user_usertype']));
+	$stmt -> closeCursor();
+	
+	header('Location:../admin.php');
+	exit;
+}
+
+//if logout is pressed, log out
+else if($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['logout_submit'])){
+	//unset all login session variables
+	if(isset($_SESSION['loggedin'])) unset($_SESSION['loggedin']);
+	if(isset($_SESSION['username'])) unset($_SESSION['username']);
+	if(isset($_SESSION['usertype'])) unset($_SESSION['usertype']);
+	
+	header('Location:../admin.php');
+	exit;
+} 
 
 ?>

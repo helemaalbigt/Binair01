@@ -1,3 +1,14 @@
+<?php 
+    include_once './inc/db.inc.php';
+	include_once './inc/functions.inc.php';
+	
+	//initialize session if none exists
+	if (session_id() == '' || !isset($_SESSION)) {
+		// session isn't started
+		session_start();
+	}
+?>
+
 <!doctype html>
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang=""> <![endif]-->
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8" lang=""> <![endif]-->
@@ -62,7 +73,7 @@
 			      <ul class="nav navbar-nav navbar-right">
 			        <li class="menuoption"><a href="#" class="white"><h4>ABOUT</h4></a></li>
 			        <li class="menuoption"><a href="#" class="white"><h4>EVENTS</h4></a></li>
-			        <li class="menuoption"><a href="#" class="white"><h4>NEWS</h4></a></li>
+			        <li class="menuoption"><a href="news.php" class="white"><h4>NEWS</h4></a></li>
 			      </ul>
 			</div>
 	        
@@ -87,7 +98,7 @@
 					      <ul class="nav navbar-nav navbar-right">
 					        <li class="menuoption"><a href="#" class="white"><h4>ABOUT</h4></a></li>
 					        <li class="menuoption"><a href="#" class="white"><h4>EVENTS</h4></a></li>
-					        <li class="menuoption"><a href="#" class="white"><h4>NEWS</h4></a></li>
+					        <li class="menuoption"><a href="news.php" class="white"><h4>NEWS</h4></a></li>
 					      </ul>
 					</div>
 		        
@@ -104,13 +115,14 @@
 		  
 	    </div>
 	    
+	    <!-- Homepage Content-->
 	    <div class="container">
 	    	
 	    	<!-- About Short -->
 	    	<div class="content-segment">
 	    		<div class="row about">
 		        	<div class="col-md-3 title">
-		        		<h1>BINAIR 01</h1>
+		        		<h1 class="gray">BINAIR 01</h1>
 					</div>
 					<div class="col-md-9 body-content">
 						<h4>
@@ -124,62 +136,14 @@
 			<!-- Latest News -->
 			<div class="content-segment">
 	    		<div class="row news">
-		        	<div class="col-md-3 title">
-		        		<h1>NEWS</h1>
+		        	<div class="col-md-3 col-sm-12 title">
+		        		<h1 class="gray">NEWS</h1>
 					</div>
 					<div class="body-content">
-				        <div class="col-md-3">
-				        	<a href="#">
-					        	<img src="img/temp/coverimage.jpg" class="img-responsive" />
-					          	<h4><b>Lorem ipsum dolor sit amet, consectetur adipiscing elit</b></h4>
-					          	<div class="subtitle">posted 15/02/2016</div>
-				          	</a>
-				        </div>
-				        <div class="col-md-3">
-				        	<a href="#">
-					        	<img src="img/temp/coverimage.jpg" class="img-responsive" />
-					          	<h4><b>Lorem ipsum dolor sit amet, consectetur adipiscing elit</b></h4>
-					          	<div class="subtitle">posted 15/02/2016</div>
-				          	</a>
-				       </div>
-				        <div class="col-md-3">
-				        	<a href="#">
-					        	<img src="img/temp/coverimage.jpg" class="img-responsive" />
-					          	<h4><b>Lorem ipsum dolor sit amet, consectetur adipiscing elit</b></h4>
-					          	<div class="subtitle">posted 15/02/2016</div>
-				          	</a>
-				        </div>
+						<?php retrieveBlogpostsPreview(6) ?>
 			        </div>
 				</div>
-				
-				<div class="row news">
-		        	<div class="col-md-3 title">
-		        		<h1>&nbsp;</h1>
-					</div>
-					<div class="body-content">
-				        <div class="col-md-3">
-				        	<a href="#">
-					        	<img src="img/temp/coverimage.jpg" class="img-responsive" />
-					          	<h4><b>Lorem ipsum dolor sit amet, consectetur adipiscing elit</b></h4>
-					          	<div class="subtitle">posted 15/02/2016</div>
-				          	</a>
-				        </div>
-				        <div class="col-md-3">
-				        	<a href="#">
-					        	<img src="img/temp/coverimage.jpg" class="img-responsive" />
-					          	<h4><b>Lorem ipsum dolor sit amet, consectetur adipiscing elit</b></h4>
-					          	<div class="subtitle">posted 15/02/2016</div>
-				          	</a>
-				       </div>
-				        <div class="col-md-3">
-				        	<a href="#">
-					        	<img src="img/temp/coverimage.jpg" class="img-responsive" />
-					          	<h4><b>Lorem ipsum dolor sit amet, consectetur adipiscing elit</b></h4>
-					          	<div class="subtitle">posted 15/02/2016</div>
-				          	</a>
-				        </div>
-			        </div>
-				</div>
+
 				<a class="btn btn-default link-more" href="#" role="button">more news &raquo;</a>
 			</div>
 	
@@ -188,7 +152,7 @@
 			<div class="content-segment">
 	    		<div class="row news">
 		        	<div class="col-md-3 title">
-		        		<h1>EVENTS</h1>
+		        		<h1 class="gray">EVENTS</h1>
 					</div>
 					<div class="body-content">
 				        <div class="col-md-3">

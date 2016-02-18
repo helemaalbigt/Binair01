@@ -1,5 +1,34 @@
 <?php
 include_once './inc/db.inc.php';
+include_once './inc/blogpost.inc.php';
+
+//initialize session if none exists
+if (session_id() == '' || !isset($_SESSION)) {
+	// session isn't started
+	session_start();
+}
+
+//check logged in
+$loggedin = (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == 1) ? TRUE : FALSE;
+$isAdmin = (isset($_SESSION['usertype']) && $_SESSION['usertype'] == "admin") ? TRUE : FALSE;
+$errorVisibility="none";
+
+
+//blogpost values
+$postTitle ="";
+$postTags ="";
+$postSortdate ="";
+$postBody="";
+//check whether editing blogpost
+if(isset($_GET['editingPost']) && isset($_GET['id'])){
+	$blogpost = new Blogpost(FALSE);
+	$blogpost -> updateParameters($_GET['id']);
+	
+	$postTitle = $blogpost->title;
+	$postTags = $blogpost->tagsOriginal;
+	$postSortdate = $blogpost->sortdateArray["day"]."/".$blogpost->sortdateArray["month"]."/".$blogpost->sortdateArray["year"];
+	$postBody = $blogpost->body;
+}
 ?>
 
 <!doctype html>
@@ -53,7 +82,7 @@ include_once './inc/db.inc.php';
 			  ]
 		  });
 		  
-		  $('#summernote').summernote('lineHeight', 0.7);
+		  $('#summernote').summernote('lineHeight', 1.4);
 		});
 		
 		//date picker
@@ -101,7 +130,7 @@ include_once './inc/db.inc.php';
 			if (edit) {
 				checkEmpty = [["title","title"], ["tags","tags"], ["sortdate","sort date"], ["body","body"]];
 			} else{
-				checkEmpty = [["title","title"], ["tags","tags"], ["sortdate","sort date"], ["coverimage","cover image"], ["body","body"]];
+				checkEmpty = [["title","title"], ["tags","tags"], ["sortdate","sort date"], ["body","body"]];
 			}
 
 			// array of all inputs to check filesize [id, name]
@@ -231,7 +260,7 @@ include_once './inc/db.inc.php';
 			      <ul class="nav navbar-nav navbar-right">
 			        <li class="menuoption"><a href="#" class="white"><h4>ABOUT</h4></a></li>
 			        <li class="menuoption"><a href="#" class="white"><h4>EVENTS</h4></a></li>
-			        <li class="menuoption"><a href="#" class="white"><h4>NEWS</h4></a></li>
+			        <li class="menuoption"><a href="news.php" class="white"><h4>NEWS</h4></a></li>
 			      </ul>
 			</div>
 	        
@@ -239,14 +268,37 @@ include_once './inc/db.inc.php';
 	    </nav>
 	    
 	    <div class="container page-content admin">
+	    	<?php 
+	    		//if logged in show controls
+	    		if($loggedin){
+	    	?>
 	    	
-            
-            <!-- Form -->
+	    	
+	    	<!-- LOGOUT START -->
+	    	<div class="row">
+                <div class="col-sm-2">&nbsp;</div>
+                <div class="col-sm-4">
+                	<h2>Logged in as <?php echo $_SESSION['username'] ?></h2>
+                
+	                <form id="logout_inputform" action="./inc/update.inc.php" method="post">
+					<fieldset>
+		                	<input type="hidden" name="logout_submit" value="logout"/>
+		                    <button type="submit" class="btn btn-primary">LOG OUT</button>
+		            </fieldset>
+					</form>
+					<br><br><br>
+				</div>
+				
+            </div>
+	    	<!-- LOGOUT END -->
+	    	
+	    	
+            <!-- ADD BLOGPOST START -->
             <div class="row">
                 <div class="col-sm-2">&nbsp;</div>
                 <div class="col-sm-10">
-                	<h2>New blogpost</h2>
-               		<div class="infotext">*required fields</div><br><br>
+                	<h2>Add new blogpost</h2>
+               		<div class="infotext">*required fields</div><br>
                 </div>
             </div>
 
@@ -256,7 +308,7 @@ include_once './inc/db.inc.php';
                 <div class="form-group">
                     <label class="control-label col-sm-2" for="title">*Title:</label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control" id="title" name="title" placeholder="Enter title">
+                        <input type="text" class="form-control" id="title" name="title" placeholder="Enter title" value="<?php echo $postTitle ?>">
                     </div>
                 </div>
                 
@@ -264,7 +316,7 @@ include_once './inc/db.inc.php';
                 <div class="form-group">
                     <label class="control-label col-sm-2" for="title">*Tags:</label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control" id="tags" name="tags" placeholder="separate multiple tags by comma eg: party, folk, music">
+                        <input type="text" class="form-control" id="tags" name="tags" placeholder="separate multiple tags by comma eg: party, folk, music" value="<?php echo $postTags ?>">
                     </div>
                 </div>
                 
@@ -272,7 +324,7 @@ include_once './inc/db.inc.php';
                 <div class="form-group">
                     <label class="control-label col-sm-2" for="sortdate">*Sort Date:</label>
                     <div class="col-sm-10">
-                    	<input type="text" id="sortdate" name="sortdate" value="" />
+                    	<input type="text" id="sortdate" name="sortdate" value="<?php echo $postSortdate ?>" />
                     	<div class="infotext">Posts will be ordered chronologically by this date</div>
                     </div>
                 </div>
@@ -296,7 +348,7 @@ include_once './inc/db.inc.php';
                 <div class="row">
                     <label class="control-label col-sm-2" for="textbody">*Body:</label>
                     <div class="col-sm-10 nopadding">
-						<textarea id="summernote" name="body"></textarea>
+						<textarea id="summernote" name="body"><?php echo $postBody ?></textarea>
 					</div>
                 </div>
                 
@@ -322,17 +374,110 @@ include_once './inc/db.inc.php';
 				<!--submit-->
                 <div class="form-group"> 
                     <div class="col-sm-offset-2 col-sm-10">
-                    	<button type="submit" class="btn btn-primary">Submit</button>
                     	<input type="hidden" name="posttype" value="save blogpost" >
+                    	<button type="submit" class="btn btn-primary">Submit</button>
                     </div>
                 </div>
              </form>
+             <!-- ADD BLOGPOST END -->
+             
+             <?php if($isAdmin){ ?>
+		             <!--create users (admin only)-->
+			    	<div class="red">CREATE NEW USER</div>
+					<form id="createuser_inputform" action="./inc/update.inc.php" method="post">
+						<fieldset>
+							<div></br>
+								<div class="login_input">
+									<span>NAME</span><input class="large" name="create_user_name" type="text"/>
+								</div>
+								<div class="login_input">
+									<span>PASSWORD</span><input class="large" name="create_user_password" type="password"/>
+								</div>
+								<div class="login_input">
+									<span>TYPE</span>
+									<select name="create_user_usertype">
+										<option value="editor">Editor</option>
+										<option value="admin">Admin</option>
+									</select>
+								</div>
+								<input type="hidden" name="action" value="create_user"/>
+								<input id="login_submit" type="submit" name="login" value="CREATE"/>
+							</div>
+						</fieldset>
+					</form>
+			<?php } ?>
+             	
+             	
+            <!-- LOGIN FORM START --> 	
+            <?php 
+	    		//if not logged in show login
+	    		} else{
+	    	?>
+	    	
+	    	
+	    	<div class="row">
+                <div class="col-sm-2">&nbsp;</div>
+                <div class="col-sm-10">
+                	<h2>LOGIN</h2>
+                	<div class="infotext">*required fields</div><br><br>
+                </div>
+            </div>
+	    	
+	    	<div class="none" id="login">
+				<div id="login_form_wrapper" style="display: <?php echo ($sitewide && !(isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == 1)) ? "block": "none"?>">
+					<form id="login_inputform"  action="./inc/update.inc.php" method="post">
+						<fieldset>
+
+							<!--user-->
+			                <div class="form-group">
+			                    <label class="control-label col-sm-2" for="title">*User:</label>
+			                    <div class="col-sm-10">
+			                        <input type="text" class="form-control" id="login_name" name="login_name" placeholder="Enter username" value="<?php echo (isset($_GET['usernameAttempt']))? $_GET['usernameAttempt'] : "" ;  ?>">
+			                    </div>
+			                </div><br><br>
+			                
+			                <!--password-->
+			                <div class="form-group">
+			                    <label class="control-label col-sm-2" for="title">*Password:</label>
+			                    <div class="col-sm-10">
+			                        <input type="password" class="form-control" id="login_password" name="login_password" >
+			                    </div>
+			                </div><br><br>
+			                
+			                <!-- error-->
+							<div class="form-group" style="display:<?php echo (isset($_GET['loginError']))? "block": "none"; ?>">
+			                    <span class="control-label col-sm-2" for="title">&nbsp;</span>
+			                    <div class="col-sm-10">
+			                      <b>ERROR: Wrong Username or Password</b> 
+			                    </div>
+			                    <br>
+			                </div>
+			                
+							<!--submit-->
+			                <div class="form-group"> 
+			                    <div class="col-sm-offset-2 col-sm-10">
+			                    	<input type="hidden" name="posttype" value="login" >
+			                    	<button type="submit" class="btn btn-primary">LOG IN</button>
+			                    </div>
+			                </div>
+							
+						</fieldset>
+					</form>
+				</div>
+			</div>
+	    	<!-- LOGIN FORM END -->
+	    	
+	    	<?php 
+	    		} 
+	    	?>
              	
 	      <hr>
 	
 	      <footer>
 	        <p class="footer">&copy; Binair01 - <?php echo date("Y"); ?></p>
 	      </footer>
+	      
+	      
 	    </div> 
 	    
     	<!-- /container -->        

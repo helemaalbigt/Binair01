@@ -9,6 +9,10 @@ html, body {
 	color:white;
 }
 
+.gray, a.gray, .gray a, a.gray:hover{
+	color:rgb(190,190,190);
+}
+
 .infotext{
 	color:gray;
 	font-style:italic;
@@ -170,6 +174,10 @@ nav ul li {
     margin: 0 auto;
 }
 
+.coverimage .navbar {
+  width:100%;
+}
+
 nav ul li {
   list-style:none;
   float:left;
@@ -269,4 +277,8 @@ footer p{
 input[readonly] {
   background-color: white !important;
   cursor: text !important;
+}
+
+.news-preview {
+	margin-bottom:50px;
 }

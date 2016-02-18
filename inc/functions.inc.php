@@ -1,4 +1,16 @@
 <?php
+//initialize session if none exists
+if (session_id() == '' || !isset($_SESSION)) {
+	// session isn't started
+	session_start();
+}
+
+/*
+ * AJAX functions
+ */
+ if(isset($_GET['load']) && isset($_GET['offset'])){
+ 	retrieveBlogposts($_GET['offset'], $_GET['load']);
+ }
 
 /**
  * Clean form data data
@@ -74,7 +86,10 @@ function getImageExtensions($type) {
 }
 
 /**
+ * Save image in various formats
  * 
+ * @param
+ * @return
  */
  function saveImage($image){
  	//1.Original Image
@@ -90,19 +105,116 @@ function getImageExtensions($type) {
 	 	throw new Exception("Couldn't save the uploaded image!");
     }
 	
-	//2.small image
-    $imgSmall = new abeautifulsite\SimpleImage($coverimagePath);
-   	$destination = '../img/small/'.$filename;
-    $imgSmall->fit_to_height(155)->crop(0, 0, 265, 155)->save($destination);
+	//2.save small and medium image
 	
-	//3.small image
-    $imgMed = new abeautifulsite\SimpleImage($coverimagePath);
-   	$destination = '../img/medium/'.$filename;
-    $imgSmall->fit_to_width(700)->save($destination);
+	$destination = '../img/small/'.$filename;
+	resizeAndSaveImage($coverimagePath, $destination, 265, 155);
 	
-	//4.return filename
+	$destination = '../img/medium/'.$filename;
+	resizeAndSaveImage($coverimagePath, $destination, 750, 450);
+		
+	//3.return filename
 	return $filename;
  }
+
+/**
+ * Resize and save an image
+ * 
+ * @param
+ * @return
+ */
+ function resizeAndSaveImage($originalPath, $destination, $W, $H){
+ 	
+ 	list($width, $height, $type, $attr) = getimagesize($originalPath);
+ 	$img = new abeautifulsite\SimpleImage($originalPath);
+	
+	if($width/$height < $W/$H){
+		$img->fit_to_width($W)->crop(0, 0, $W, $H)->save($destination);
+	} else{
+		$img->fit_to_height($H)->crop(0, 0, $W, $H)->save($destination);
+	}
+	
+ }
  
+ 
+ /**
+  * Print Latest newsItems preview format
+  *	
+  * @param int $numberOfPosts
+  * @return
+  */
+function retrieveBlogpostsPreview($numberOfPosts) {
+
+	include_once 'blogpost.inc.php';
+	include_once 'db.inc.php';
+
+	//Open a database connection and store it
+	$db = new PDO(DB_INFO, DB_USER, DB_PASS);
+
+	//compose sql query
+	$sql = "SELECT id
+			FROM blogposts ORDER BY sortdate DESC, created DESC 
+			LIMIT ".$numberOfPosts;
+	$stmt = $db -> prepare($sql);
+	$stmt -> execute();
+	
+	$counter = 0;
+	
+	while ($row = $stmt -> fetch()) {
+		
+		//echo in case of a new row of previews (3 per row)
+		if($counter%3 == 0 && $counter > 0){
+			echo <<<ROW
+			<div class="col-md-3 col-sm-0">
+				&nbsp;
+			</div>
+ROW;
+		}
+		
+		//echo blogpost
+		$blogpost = new Blogpost(FALSE);
+		$blogpost -> updateParameters($row['id']);
+		echo $blogpost -> formatPreview();
+		flush();
+		
+		$counter++;
+	}
+
+	$stmt -> closeCursor();
+}
+
+
+/**
+  * Print Latest newsItems 
+  *	
+  * @param int $offset 
+  * @param int $numberOfPosts
+  * @return
+  */
+function retrieveBlogposts($offset, $numberOfPosts) {
+
+	include_once 'blogpost.inc.php';
+	include_once 'db.inc.php';
+
+	//Open a database connection and store it
+	$db = new PDO(DB_INFO, DB_USER, DB_PASS);
+
+	//compose sql query
+	$sql = "SELECT id
+			FROM blogposts ORDER BY sortdate DESC, created DESC 
+			LIMIT ".$numberOfPosts . " OFFSET " . $offset;
+	$stmt = $db -> prepare($sql);
+	$stmt -> execute();
+	
+	while ($row = $stmt -> fetch()) {
+		//echo blogpost
+		$blogpost = new Blogpost(FALSE);
+		$blogpost -> updateParameters($row['id']);
+		echo $blogpost -> formatNewspage();
+		flush();
+	}
+
+	$stmt -> closeCursor();
+}
 
 ?>
