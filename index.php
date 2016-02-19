@@ -144,7 +144,7 @@
 			        </div>
 				</div>
 
-				<a class="btn btn-default link-more" href="#" role="button">more news &raquo;</a>
+				<a class="btn btn-default link-more" href="news.php" role="button">more news &raquo;</a>
 			</div>
 	
 	

@@ -19,8 +19,14 @@ $postTitle ="";
 $postTags ="";
 $postSortdate ="";
 $postBody="";
+$editedID="";
+$editingPost = false;
 //check whether editing blogpost
 if(isset($_GET['editingPost']) && isset($_GET['id'])){
+	$editingPost = true;
+	
+	$editedID = $_GET['id'];
+	
 	$blogpost = new Blogpost(FALSE);
 	$blogpost -> updateParameters($_GET['id']);
 	
@@ -374,6 +380,7 @@ if(isset($_GET['editingPost']) && isset($_GET['id'])){
 				<!--submit-->
                 <div class="form-group"> 
                     <div class="col-sm-offset-2 col-sm-10">
+                    	<input type="hidden" name="id" id="id" value="<?php echo $editedID ?>" >
                     	<input type="hidden" name="posttype" value="save blogpost" >
                     	<button type="submit" class="btn btn-primary">Submit</button>
                     </div>

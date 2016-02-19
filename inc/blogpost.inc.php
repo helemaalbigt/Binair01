@@ -126,7 +126,25 @@
 		 	//if an id was passed, edit the existing entry
 			if (!empty($p['id'])) 
 			{
-				
+				$appendSQL ="";
+				$appendSTMT = array();
+				//check if new image was added, add some stuff to the query if it is
+				if ($_FILES['coverimage']['name'] != ''){
+					$appendSQL .= ", coverimage=?";
+					$appendSTMT = array($filename);
+				}
+	
+				//prepare the sql query and append a part if we're adding images
+				$sql = "UPDATE blogposts SET title=?, tags=?, sortdate=?, body=?".$appendSQL." WHERE id=? LIMIT 1";
+	
+				if ($stmt = $this -> db -> prepare($sql)) {
+					$A = array_merge(array_merge(array($p['title'], $p['tags'], $date, $p['body']), $appendSTMT),array($p['id']));
+					$stmt -> execute($A);
+					$stmt -> closeCursor();
+					
+					//get the ID of the entry that was just edited
+					$this -> id = $p['id'];
+				}
 			} 
 			//save the entry into the database
 			else
@@ -234,7 +252,7 @@ PREVIEW;
 		 * @param array $p The $_POST superglobal
 		 * @return
 		 */
-		 public function formatSinglePost(){
+		 public function formatSinglePost($loggedIn = false){
 		 	$formattedProject = "";
 			
 			$imgPath = "img/medium/".$this->coverimage;
@@ -242,6 +260,8 @@ PREVIEW;
 			$date = $this->sortdate;
 			$id = $this->id;
 			$body = $this->body;
+			
+			$adminVisibility = ($loggedIn) ? "block" : "none";
 			
 			$fblink = $_SERVER['DOCUMENT_ROOT'].APP_FOLDER."/news.php?id=".$id;
 			
@@ -272,12 +292,41 @@ PREVIEW;
 				        </div>
 			        </div>
 				</div>
+				<div class="row" style="display:$adminVisibility">
+					<div class="col-md-3 title">
+						&nbsp;
+					</div>
+					<div class="col-md-8">	
+						<a class="btn btn-danger delete"  href="./inc/update.inc.php?action=project_delete&id=$id" >delete</a> 
+						<a class="btn btn-primary" href="admin.php?editingPost=1&id=$id">edit</a>
+					</div>
+				</div>
 			</div>
+			
 POST;
 
 			return $formattedProject;
 		 }
 		 
-		
+		 
+		 
+		/**
+		 * Method for deleting a post
+		 *
+		 * @param string $id The id of the priject to delete
+		 */
+		public function deleteBlogpost($id) {
+			$sql = "DELETE FROM blogposts WHERE id=? LIMIT 1";
+			if ($stmt = $this -> db -> prepare($sql)) {
+				//Execute the command, free used memory, and return true
+				$stmt -> execute(array($id));
+				$stmt -> closeCursor();
+				return TRUE;
+			} else {
+				//if something went wrong return false
+				return FALSE;
+			}
+		}
+			
 	}
 ?>

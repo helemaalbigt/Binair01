@@ -34,7 +34,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'
 	if (!empty($id)) {
 		//go to
 		echo "succesfully posted blogpost with id: ".$id;
-		//header('Location:../admin.php?id=' . $id . $query);
+		header('Location:../news.php?id=' . $id );
 		exit;
 	} else {
 		exit('ERROR: problem updating project');	 
@@ -110,6 +110,29 @@ else if($_SERVER['REQUEST_METHOD'] == 'POST'
 	header('Location:../admin.php');
 	exit;
 }
+
+//delete project
+else if ($_GET['action'] == 'project_delete') {
+	//check if logged in and logged in as admin or editor before deleting
+	if(isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == 1){	
+		//instantiate the Project class
+		$blogpost = new Blogpost();
+	
+		//Delete the post and return to the entry
+		if ($blogpost -> deleteBlogpost($_GET['id'])) {
+			header('Location:../news.php');
+			exit ;
+		}
+		//if deletion fails, output an error message
+		else {
+			exit('ERROR: Could not delete the project.');
+		}
+	
+		exit ;
+	} else{
+		exit('ERROR: You are not authorized to delete projects.');
+	};
+} 
 
 //if logout is pressed, log out
 else if($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['logout_submit'])){

@@ -50,14 +50,13 @@
         </style>
         <link rel="stylesheet" href="css/bootstrap-theme.min.css">
         <link rel="stylesheet" href="css/main.css">
-		<link rel="stylesheet" href="css/style.css">
 		
         <script src="js/vendor/modernizr-2.8.3-respond-1.4.2.min.js"></script>
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-        <script>
+        <script type="text/javascript" >
         
 	        var isLoading = false;
-	        var isActive = <?php echo $showAll  ?>;
+	        var isActive = <?php echo ($showAll) ? "true" : "false";  ?>;
 			var postsPP = "<?php echo $postsPerPage ?>"; //posts per page
 			var projectsOffset = 0;
 	        
@@ -77,7 +76,30 @@
 				 }
 			   }
 			});
-		
+			
+			
+			/**
+			 * Adds an event listener to all delete buttons to prompt the user to confirm deletion
+			 * Hides visibility fields depending on display mode
+			 *
+			 * @param
+			 * @return
+			 */
+			$(document).ready(function() {
+				var buttons = document.getElementsByClassName("delete");
+				
+				for (var i = 0; i < buttons.length; i++) {
+					buttons[i].addEventListener('click', function() {
+
+						if (confirm('You are about to DELETE a post. \n This CANNOT BE UNDONE! \n \n  Do you want to continue?')) {
+							return true;
+						} else {
+							event.preventDefault();
+						};
+					}, false);
+				}
+			});
+			
         </script>
     </head>
     <body>
@@ -130,7 +152,7 @@
 				//if we're looking at one post
 				if (!$showAll) 
 				{
-					echo $blogpost -> formatSinglePost();
+					echo $blogpost -> formatSinglePost($loggedin);
 				} 
 				//give overview
 				else
