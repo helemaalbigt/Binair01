@@ -431,7 +431,7 @@ if(isset($_GET['editingPost']) && isset($_GET['id'])){
             </div>
 	    	
 	    	<div class="none" id="login">
-				<div id="login_form_wrapper" style="display: <?php echo ($sitewide && !(isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == 1)) ? "block": "none"?>">
+				<div id="login_form_wrapper" style="display: <?php echo (!(isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == 1)) ? "block": "none"?>">
 					<form id="login_inputform"  action="./inc/update.inc.php" method="post">
 						<fieldset>
 

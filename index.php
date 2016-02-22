@@ -158,7 +158,7 @@
 				        <div class="col-md-3">
 				        	<a href="#">
 					        	<img src="img/temp/coverimage.jpg" class="img-responsive" />
-					          	<h4><b>Lorem ipsum dolor sit amet, consectetur adipiscing elit</b></h4>
+					          	<h4><b>Lorem ipsum doloramet, consectetur adipiscing elit</b></h4>
 					          	<div class="subtitle">posted 15/02/2016</div>
 				          	</a>
 				        </div>

@@ -210,7 +210,7 @@ PREVIEW;
 			$id = $this->id;
 			$body = $this->body;
 			
-			$fblink = $_SERVER['DOCUMENT_ROOT'].APP_FOLDER."/news.php?id=".$id;
+			$fblink = "http://binair01.be/dev/news.php?id=".$id;
 			
 			$taglinks ="";
 			foreach($this->tags as $tag){
@@ -234,8 +234,7 @@ PREVIEW;
 				          		<h1>$title</h1>
 			          		<div class="subtitle gray">tags: $taglinks</div>
 			          		<p class="body">$body</p>
-			          		
-			          		<div class="fb-share-button" data-href="$fblink" data-layout="button_count"></div>
+			          	
 				        </div>
 			        </div>
 				</div>
@@ -263,7 +262,7 @@ PREVIEW;
 			
 			$adminVisibility = ($loggedIn) ? "block" : "none";
 			
-			$fblink = $_SERVER['DOCUMENT_ROOT'].APP_FOLDER."/news.php?id=".$id;
+			$fblink = "http://binair01.be/dev/news.php?id=".$id;
 			
 			$taglinks ="";
 			foreach($this->tags as $tag){
