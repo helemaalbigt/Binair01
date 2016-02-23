@@ -2,7 +2,7 @@
 html, body {
 	margin:0;
 	padding:0;
-	height:100%
+	height:100%;
 }
 
 .white{
@@ -13,8 +13,16 @@ html, body {
 	color:rgb(190,190,190);
 }
 
+.darkgray, a.darkgray, .darkgray a, a.darkgray:hover{
+	color:rgb(150,150,150);
+}
+
 .infotext{
 	color:gray;
+	font-style:italic;
+}
+
+.italic{
 	font-style:italic;
 }
 
@@ -22,6 +30,7 @@ h4{
 	margin:0;
 	padding:0;
 }
+
 
 .navbar-fixed-top, .navbar-header, .navbar-inverse, .navbar .collapse.in, .navbar .collapsing, .navbar-inverse .navbar-collapse{
 	background:url("../img/temp/main.jpg") no-repeat 50% 50%;
@@ -137,6 +146,9 @@ nav ul li {
 	}*/
 }
 
+.container.footer{
+
+}
 
 /*home*/
 .coverimage{
@@ -181,7 +193,7 @@ nav ul li {
 nav ul li {
   list-style:none;
   float:left;
-  margin-right:50px;
+  margin-left:40px;
 }
 
 .body-content{
@@ -209,25 +221,69 @@ nav ul li {
 	margin-bottom:5px;	
 }
 
-.content-segment a{
-	color:black;
-}
-
 .content-segment .subtitle{
 	color:gray;
 	font-style:italic;
 	margin-bottom:15px;
 }
 
+.content-segment a h4{
+	color:black;
+}
+.content-segment a:hover h4{
+	text-decoration:none;
+}
+
 .about{
 	margin-top:35px;
 }
 
-footer p{
+footer {
 	margin:auto;
 	width:100%;
-	text-align:center;
+	height:50px;
+	
 }
+
+hr{
+    border: none; 
+    border-bottom: 1px solid lightgray; 
+}
+
+ul.social {
+	list-style:none;
+	float:right;
+}
+
+ul.social a{
+	display: inline-block;
+	width: 30px;
+	height: 30px;
+	text-indent: -99999px;
+}
+
+ul.social #facebook{
+	background: url('../img/fb.jpg');
+}
+
+ul.social #youtube{
+	background: url('../img/yt.jpg');
+}
+
+ul.social #facebook:hover, ul.social  #youtube:hover {
+	background-position: 0 30px;
+}
+
+.navbar .top a{
+	color:white;
+}
+
+.navbar .top a h4{
+	display:inline;
+	position:relative;
+	top:7px;
+}
+
 
 /*news*/
 .navbar-fixed-top.news, .news .navbar-header, .news .navbar-inverse, .navbar.news .collapse.in, .navbar.news .collapsing, .navbar-inverse.news .navbar-collapse{
@@ -239,20 +295,10 @@ footer p{
     background-attachment: fixed;
 }
 
-.navbar.news .top a{
-	color:white;
-}
-
-.navbar.news .top a h4{
-	display:inline;
-	position:relative;
-	top:7px;
-}
 
 .page-content.admin, .pagecontent.news{
 	margin-top:60px;
 }
-
 
 .btn-file {/*fileinput*/
     position: relative;

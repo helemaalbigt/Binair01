@@ -18,13 +18,14 @@ $errorVisibility="none";
 $postTitle ="";
 $postTags ="";
 $postSortdate ="";
+$youtubeCover ="";
 $postBody="";
 $editedID="";
 $editingPost = false;
+$editingEvent = false;
 //check whether editing blogpost
 if(isset($_GET['editingPost']) && isset($_GET['id'])){
 	$editingPost = true;
-	
 	$editedID = $_GET['id'];
 	
 	$blogpost = new Blogpost(FALSE);
@@ -33,6 +34,7 @@ if(isset($_GET['editingPost']) && isset($_GET['id'])){
 	$postTitle = $blogpost->title;
 	$postTags = $blogpost->tagsOriginal;
 	$postSortdate = $blogpost->sortdateArray["day"]."/".$blogpost->sortdateArray["month"]."/".$blogpost->sortdateArray["year"];
+	$youtubeCover = $blogpost->youtubeCover;
 	$postBody = $blogpost->body;
 }
 ?>
@@ -281,6 +283,7 @@ if(isset($_GET['editingPost']) && isset($_GET['id'])){
 	    	
 	    	
 	    	<!-- LOGOUT START -->
+	    	<?php if(!$editingPost && !$editingEvent){ //don't display if we're editing a post ?>
 	    	<div class="row">
                 <div class="col-sm-2">&nbsp;</div>
                 <div class="col-sm-4">
@@ -296,6 +299,7 @@ if(isset($_GET['editingPost']) && isset($_GET['id'])){
 				</div>
 				
             </div>
+            <?php } ?>
 	    	<!-- LOGOUT END -->
 	    	
 	    	
@@ -303,7 +307,7 @@ if(isset($_GET['editingPost']) && isset($_GET['id'])){
             <div class="row">
                 <div class="col-sm-2">&nbsp;</div>
                 <div class="col-sm-10">
-                	<h2>Add new blogpost</h2>
+                	<?php echo ($editingPost) ? "<h2>Edit blogpost</h2>" :  "<h2>Add new blogpost</h2>"  ?>
                		<div class="infotext">*required fields</div><br>
                 </div>
             </div>
@@ -347,6 +351,16 @@ if(isset($_GET['editingPost']) && isset($_GET['id'])){
 			                </span>
 			                <input type="text" class="form-control" readonly>
 			            </div>
+                    </div>
+                </div>
+                
+                <!--youtubecover-->
+                <div class="form-group">
+                    <label class="control-label col-sm-2" for="title">Youtube Cover:</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="youtubecover" name="youtubecover" placeholder="eg: https://www.youtube.com/watch?v=SHqIWb1m0Sg" value="<?php echo $youtubeCover ?>">
+                    	<div class="infotext">Must be a youtube link! If this field is filled in, the coverimage on the newspage will be replaced by the youtube video.</div>
+                    	<div class="infotext">Coverimage is still required for the small preview on the main page.</div>
                     </div>
                 </div>
                 
@@ -478,12 +492,7 @@ if(isset($_GET['editingPost']) && isset($_GET['id'])){
 	    		} 
 	    	?>
              	
-	      <hr>
-	
-	      <footer>
-	        <p class="footer">&copy; Binair01 - <?php echo date("Y"); ?></p>
-	      </footer>
-	      
+	      <?php printFooter() ?>
 	      
 	    </div> 
 	    

@@ -13,6 +13,7 @@ if (session_id() == '' || !isset($_SESSION)) {
 
 
 //perform verification of input and required values
+
 /*Post a blogpost*/
 if($_SERVER['REQUEST_METHOD'] == 'POST' 
 //&& $_POST['posttype'] == "save blogpost"

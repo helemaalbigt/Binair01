@@ -16,6 +16,7 @@
 		public $tagsOriginal;
 		public $tags;
 		public $coverimage;
+		public $youtubeCover;
 		public $bodyOriginal;
 		public $body;
 		
@@ -33,6 +34,7 @@
 				$this->sortdateArray = NULL;
 				$this->tags = NULL;
 				$this->coverimage = "img/default.jpg";
+				$this->youtubeCover = NULL;
 				$this->body = NULL;
 			}
 		}
@@ -69,6 +71,7 @@
 			$this -> tags = $tagArray;
 			
 			$this -> coverimage = $e['coverimage'];
+			$this -> youtubeCover = $e['youtubecover'];
 			$this -> body = str_replace("style=\"line-height: 0.7;\"", "style=\"line-height: 1.4;\"", htmlspecialchars_decode($e['body'])); 
 		}
 		
@@ -80,7 +83,6 @@
 		 * @return array array with results
 		 */
 		function retrieveProjectById($id) {
-			//$sql = "SELECT number, name, coverimage, otherimages, program, startdate, enddate, countrycode, city, clienttype, date, city_pcode, street, street_number, clientname, description, projecttype, competitionwon, newnumber, status, interventiontype, category, scale, area_gross, area_weighted, eelevel, eevalue, eeloldvalue, eeloldunit, budget_estimate, budget_final, budget_type, consultants, teamUP, awards, publications, timebudget_estimate, timebudget_final, internalbudget_estimate, internalbudget_final FROM projects WHERE id=? LIMIT 1";
 			$sql = "SELECT * FROM blogposts WHERE id=? LIMIT 1";
 			$stmt = $this -> db -> prepare($sql);
 			$stmt -> execute(array($id));
@@ -89,7 +91,7 @@
 			$e = $stmt -> fetch();
 			$stmt -> closeCursor();
 			
-			if(count($e) <= 16){	
+			if(count($e) <= 18){	
 				return $e;
 			} else{
 				exit("ERROR: database query returned more values than allowed (".count($e).")");
@@ -135,10 +137,10 @@
 				}
 	
 				//prepare the sql query and append a part if we're adding images
-				$sql = "UPDATE blogposts SET title=?, tags=?, sortdate=?, body=?".$appendSQL." WHERE id=? LIMIT 1";
+				$sql = "UPDATE blogposts SET title=?, tags=?, sortdate=?, youtubecover=?, body=?".$appendSQL." WHERE id=? LIMIT 1";
 	
 				if ($stmt = $this -> db -> prepare($sql)) {
-					$A = array_merge(array_merge(array($p['title'], $p['tags'], $date, $p['body']), $appendSTMT),array($p['id']));
+					$A = array_merge(array_merge(array($p['title'], $p['tags'], $date, $p['youtubecover'], $p['body']), $appendSTMT),array($p['id']));
 					$stmt -> execute($A);
 					$stmt -> closeCursor();
 					
@@ -149,9 +151,9 @@
 			//save the entry into the database
 			else
 			{
-				$sql = "INSERT INTO blogposts (title, tags, sortdate, coverimage, body) VALUES (?, ?, ?, ?, ?)";
+				$sql = "INSERT INTO blogposts (title, tags, sortdate, coverimage, youtubecover, body) VALUES (?, ?, ?, ?, ?, ?)";
 				if ($stmt = $this -> db -> prepare($sql)) {
-					$stmt -> execute(array( $p['title'], $p['tags'], $date, $filename, $p['body']));	
+					$stmt -> execute(array( $p['title'], $p['tags'], $date, $filename, $p['youtubecover'], $p['body']));	
 					$stmt -> closeCursor();
 					
 					//get the ID of the entry that was just saved
@@ -214,7 +216,15 @@ PREVIEW;
 			
 			$taglinks ="";
 			foreach($this->tags as $tag){
-				$taglinks.= "<span><a class=\"taglink gray\" href=\"#\">".$tag."</a></span> ";
+				$taglinks.= "<span><a class=\"taglink\" href=\"./search.php?tag=".$tag."\">".$tag."</a></span> ";
+			}
+			
+			$cover="";
+			if($this->youtubeCover != NULL && $this->youtubeCover != ""){
+				$videoCode = explode("watch?v=", $this->youtubeCover)[1];
+				$cover = "<div class='embed-responsive embed-responsive-16by9'><iframe class='embed-responsive-item' src='//www.youtube.com/embed/".$videoCode."'></iframe></div>";
+			} else{
+				$cover = "<img src='".$imgPath."' class='img-responsive' />";
 			}
 			
 			$formattedProject .= <<<PREVIEW
@@ -229,10 +239,10 @@ PREVIEW;
 					<div class="body-content">
 				        <div class="col-md-8">	
 					        <a href="news.php?id=$id">
-						        <img src="$imgPath" class="img-responsive" />
+						        $cover
 						    </a>
-				          		<h1>$title</h1>
-			          		<div class="subtitle gray">tags: $taglinks</div>
+				          	<h1>$title</h1>
+			          		<div class="italic gray">tags: $taglinks</div>
 			          		<p class="body">$body</p>
 			          	
 				        </div>
@@ -266,7 +276,7 @@ PREVIEW;
 			
 			$taglinks ="";
 			foreach($this->tags as $tag){
-				$taglinks.= "<span><a class=\"taglink gray\" href=\"#\">".$tag."</a></span> ";
+				$taglinks.= "<span><a class=\"taglink\" href=\"./search.php?tag=".$tag."\">".$tag."</a></span> ";
 			}
 			
 			$formattedProject .= <<<POST
@@ -284,10 +294,10 @@ PREVIEW;
 						        <img src="$imgPath" class="img-responsive" />
 						    </a>
 				          		<h1>$title</h1>
-			          		<div class="subtitle gray">tags: $taglinks</div>
+			          		<div class="italic gray">tags: $taglinks</div>
 			          		<p class="body">$body</p>
 			          	
-			          		<div class="fb-share-button" data-href="$fblink" data-layout="button_count"></div>
+			          		<!--<div class="fb-share-button" data-href="$fblink" data-layout="button_count"></div>-->
 				        </div>
 			        </div>
 				</div>
@@ -312,7 +322,7 @@ POST;
 		/**
 		 * Method for deleting a post
 		 *
-		 * @param string $id The id of the priject to delete
+		 * @param string $id The id of the post to delete
 		 */
 		public function deleteBlogpost($id) {
 			$sql = "DELETE FROM blogposts WHERE id=? LIMIT 1";

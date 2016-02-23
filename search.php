@@ -9,19 +9,19 @@
 		session_start();
 	}
 	
-	//how to render page?
-	$showAll = true;	//show all blogposts or just one
-	$blogpost = null;	//if we're showing only one blogpost, save it's instance in this variable
+	//page variables
+	$tag = "";
 	$postsPerPage = 5;	//posts to load per page - ajax will load this n° of posts eachtime you reach the bottom of the page
 	
-	if (isset($_GET['id'])) 
+	if (isset($_GET['tag'])) 
 	{
 		$showAll = false;
-		
-		//formatSinglePost();
-		$blogpost = new Blogpost(FALSE);
-		$blogpost -> updateParameters($_GET['id']);
-	} 
+		$tag = $_GET['tag'];
+	} else{
+		//if no tag was passed redirect to frontpage
+		header('Location:./index.php');
+		exit;
+	}
 	
 	//check logged in
 	$loggedin = (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == 1) ? TRUE : FALSE;
@@ -41,7 +41,6 @@
         <title></title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-
         <link rel="stylesheet" href="css/bootstrap.min.css">
         <link rel="stylesheet" href="css/bootstrap-theme.min.css">
         <link rel="stylesheet" href="css/main.css">
@@ -98,68 +97,24 @@
         </script>
     </head>
     <body>
-    	
-    	<!--facebook widget-->
-    	<div id="fb-root"></div>
-		<script>(function(d, s, id) {
-		  var js, fjs = d.getElementsByTagName(s)[0];
-		  if (d.getElementById(id)) return;
-		  js = d.createElement(s); js.id = id;
-		  js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.5";
-		  fjs.parentNode.insertBefore(js, fjs);
-		}(document, 'script', 'facebook-jssdk'));</script>
-		
+    
         <!--[if lt IE 8]>
             <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
         
         <!-- Nav -->
-	    <nav class="navbar navbar-inverse navbar-fixed-top news" role="navigation">
-	      <div class="container">
-	      	
-	        <div class="navbar-header top">
-        		<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
-			        <span class="icon-bar"></span>
-			        <span class="icon-bar"></span>
-			        <span class="icon-bar"></span>                        
-		      	</button>
-	          	<a href="index.php"><img src="img/LogoSmall.png" class="logo"/></a> <a href="news.php"><span><h4> / NEWS</h4></span></a> 
-	        </div>
-	        
-	        <div class="collapse navbar-collapse" id="myNavbar">
-			      <ul class="nav navbar-nav navbar-right">
-			        <li class="menuoption"><a href="#" class="white"><h4>ABOUT</h4></a></li>
-			        <li class="menuoption"><a href="#" class="white"><h4>EVENTS</h4></a></li>
-			        <li class="menuoption"><a href="#" class="white"><h4>NEWS</h4></a></li>
-			      </ul>
-			</div>
-	        
-	      </div>
-	    </nav>
+	    <?php printHeader(true, true, "green", "tag: ".$tag, "./search.php?tag=".$tag) ?>
 	    
 	    <div class="container pagecontent news">
 	    	
 	    	<!-- NEWS ITEMS -->
 			<div class="content-segment" id="content">
-				
-				<?php 
-				//Load the newsitems
-				//if we're looking at one post
-				if (!$showAll) 
-				{
-					echo $blogpost -> formatSinglePost($loggedin);
-				} 
-				//give overview
-				else
-				{
-					retrieveBlogposts(0,$postsPerPage) ;
-				}
-				?>
-								
+				<?php echo retrievePostsWithTag($tag, 0, $postsPerPage) ?>				
 			</div>
 	
-	      <?php printFooter() ?>
 	    </div> 
+	    
+	    <?php printFooter() ?>
 	    
     	<!-- /container -->        
         <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.11.2.min.js"><\/script>')</script>

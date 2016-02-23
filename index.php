@@ -20,31 +20,7 @@
         <title></title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        
-        <link rel="apple-touch-icon" sizes="57x57" href="/apple-icon-57x57.png">
-		<link rel="apple-touch-icon" sizes="60x60" href="/apple-icon-60x60.png">
-		<link rel="apple-touch-icon" sizes="72x72" href="/apple-icon-72x72.png">
-		<link rel="apple-touch-icon" sizes="76x76" href="/apple-icon-76x76.png">
-		<link rel="apple-touch-icon" sizes="114x114" href="/apple-icon-114x114.png">
-		<link rel="apple-touch-icon" sizes="120x120" href="/apple-icon-120x120.png">
-		<link rel="apple-touch-icon" sizes="144x144" href="/apple-icon-144x144.png">
-		<link rel="apple-touch-icon" sizes="152x152" href="/apple-icon-152x152.png">
-		<link rel="apple-touch-icon" sizes="180x180" href="/apple-icon-180x180.png">
-		<link rel="icon" type="image/png" sizes="192x192"  href="/android-icon-192x192.png">
-		<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-		<link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png">
-		<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-		<link rel="manifest" href="/manifest.json">
-		<meta name="msapplication-TileColor" content="#ffffff">
-		<meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
-		<meta name="theme-color" content="#ffffff">
-
         <link rel="stylesheet" href="css/bootstrap.min.css">
-        <style>
-            body {
-                padding-bottom: 20px;
-            }
-        </style>
         <link rel="stylesheet" href="css/bootstrap-theme.min.css">
         <link rel="stylesheet" href="css/main.css">
 		<link rel="stylesheet" href="css/style.css">
@@ -83,7 +59,10 @@
 		<!-- HomePage CoverImage-->
 	    <div class="coverimage">
 	    	
-	    	<!-- menu -->
+	    	<!-- Nav -->
+	    	<?php printHeader(false, false, "none", "home", "./index.php") ?>
+	    	
+	    	<!-- menu 
 		    <nav class="navbar navbar-inverse" role="navigation">
 		      	
 			        <div class="navbar-header">
@@ -102,13 +81,13 @@
 					      </ul>
 					</div>
 		        
-		    </nav>
+		    </nav>-->
 	    	
 	    	<!-- content -->
 		    <div class="inner">
 				<div class="content">
 					<img src="./img/Logo.png" class="img-responsive" />
-					<h1 class="white">Website Under Construction</h1>
+					<!--<h1 class="white">Website Under Construction</h1>-->
 					<iframe class="deezer" width="375" height="100" src="https://www.mixcloud.com/widget/iframe/?embed_type=widget_standard&amp;embed_uuid=e4ddf103-1c24-4903-9fae-0c642c6b3465&amp;feed=https%3A%2F%2Fwww.mixcloud.com%2Fmnsr_z%25C3%25A9r0%2F&amp;hide_cover=1&amp;hide_tracklist=1&amp;replace=0&color=ffffff" frameborder="0"></iframe>
 				</div>
 			</div>
@@ -180,15 +159,11 @@
 				</div>
 				<a class="btn btn-default link-more" href="#" role="button">more events &raquo;</a>
 			</div>
-	     
-	    
-	
-	      <hr>
-	
-	      <footer>
-	        <p class="footer">&copy; Binair01 - <?php echo date("Y"); ?></p>
-	      </footer>
+	      
 	    </div> 
+	    
+	    <!--  footer -->
+	    <?php printFooter() ?>
 	    
     	<!-- /container -->        
     	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
