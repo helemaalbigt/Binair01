@@ -10,7 +10,7 @@ html, body {
 }
 
 .gray, a.gray, .gray a, a.gray:hover{
-	color:rgb(190,190,190);
+	color:rgb(160,160,160);
 }
 
 .darkgray, a.darkgray, .darkgray a, a.darkgray:hover{
@@ -22,6 +22,10 @@ html, body {
 	font-style:italic;
 }
 
+.floatright{
+	float:right;
+}
+
 .italic{
 	font-style:italic;
 }
@@ -29,33 +33,7 @@ html, body {
 h4{
 	margin:0;
 	padding:0;
-}
-
-
-.navbar-fixed-top, .navbar-header, .navbar-inverse, .navbar .collapse.in, .navbar .collapsing, .navbar-inverse .navbar-collapse{
-	background:url("../img/temp/main.jpg") no-repeat 50% 50%;
-}
-
-.navbar-fixed-top, .navbar-header, .navbar-inverse{
-	z-index:10;
-	height:60px;
-	-webkit-background-size: cover;
-	-moz-background-size: cover;
-	-o-background-size: cover;
-	background-size: cover !important;
-    background-attachment: fixed;
-    border:0;
-    border-color:none;
-}
-
- .navbar-header, .navbar-inverse{
- 	border:0;
- 	height:60px;
-    border-color:none;
- }
-
-.navbar{
-	z-index:10;
+	text-decoration:none;
 }
 
 .navbar-header .logo{
@@ -86,7 +64,6 @@ h4{
 }
 
 .navbar-inverse .navbar-nav>li>a:hover{
-	text-decoration:underline;
 	text-shadow:none;
 }
 
@@ -114,41 +91,11 @@ h4{
 	margin-top:13px;	
 }
 
-nav ul li {
+ {
   list-style:none;
   margin-left: 0 0 0 50px;
 }
 
-@media screen and (max-width: 767px){
-	.navbar .menuoption{
-		width:100%;
-		text-align:center;
-	}
-	
-	.navbar-fixed-top .navbar-right{
-		position:relative;
-		top:0px;
-	}
-	
-	.deezer{
-		display:none;
-	}
-	
-	.navbar .collapse.in, .navbar .collapsing, .navbar-inverse .navbar-collapse, .navbar-fixed-top, .navbar-header.top, .navbar-inverse{
-		background:none;
-		background-color:rgb(200,70,80);
-	}
-	
-	/*.navbar li{
-		border-bottom:solid 1px white;
-		margin:0;
-		padding:0;
-	}*/
-}
-
-.container.footer{
-
-}
 
 /*home*/
 .coverimage{
@@ -173,6 +120,7 @@ nav ul li {
 	width:100%;
 	max-width:none;
 	margin:auto;
+	position:relative;
 }
 
 .coverimage .inner .content{
@@ -183,22 +131,24 @@ nav ul li {
 }
 
 .img-responsive {
-    margin: 0 auto;
+    margin:0 auto 50px;
 }
 
 .coverimage .navbar {
   width:100%;
 }
 
-nav ul li {
+ {
   list-style:none;
   float:left;
   margin-left:40px;
 }
 
 .body-content{
-	margin-top:25px;
+	margin-top:10px;
 }
+
+
 
 .content-segment{
 	margin-bottom:100px;
@@ -221,6 +171,20 @@ nav ul li {
 	margin-bottom:5px;	
 }
 
+.content-segment a img, .content-segment iframe{
+	-webkit-transition-property: outline-offset; /* Safari */
+    -webkit-transition-duration: 0.0s; /* Safari */
+    transition-property: outline-offset;
+    transition-duration: 0.0s;
+    
+    outline-offset:0px;
+}
+
+.content-segment a:hover img, .content-segment iframe:hover{
+  outline:white solid 5px;
+  outline-offset:-10px;
+}
+
 .content-segment .subtitle{
 	color:gray;
 	font-style:italic;
@@ -229,6 +193,7 @@ nav ul li {
 
 .content-segment a h4{
 	color:black;
+	text-decoration: none;
 }
 .content-segment a:hover h4{
 	text-decoration:none;
@@ -269,8 +234,11 @@ ul.social #facebook{
 ul.social #youtube{
 	background: url('../img/yt.jpg');
 }
+ul.social #mixcloud{
+	background: url('../img/mc.jpg');
+}
 
-ul.social #facebook:hover, ul.social  #youtube:hover {
+ul.social #facebook:hover, ul.social  #youtube:hover, ul.social  #mixcloud:hover {
 	background-position: 0 30px;
 }
 
@@ -282,22 +250,25 @@ ul.social #facebook:hover, ul.social  #youtube:hover {
 	display:inline;
 	position:relative;
 	top:7px;
+	text-decoration: none;
+}
+
+.sidetitle{
+	color:black;
+	text-decoration: none;
+    border-bottom: 5px solid black;
+    font-size:250%;
+}
+
+.sidetitle.noninteractive{
+	border-bottom: none;
 }
 
 
 /*news*/
-.navbar-fixed-top.news, .news .navbar-header, .news .navbar-inverse, .navbar.news .collapse.in, .navbar.news .collapsing, .navbar-inverse.news .navbar-collapse{
-	background:url("../img/temp/news.jpg") no-repeat 50% 50%;
-	-webkit-background-size: cover;
-	-moz-background-size: cover;
-	-o-background-size: cover;
-	background-size: cover !important;
-    background-attachment: fixed;
-}
-
 
 .page-content.admin, .pagecontent.news{
-	margin-top:60px;
+	margin-top:100px;
 }
 
 .btn-file {/*fileinput*/
@@ -327,4 +298,163 @@ input[readonly] {
 
 .news-preview {
 	margin-bottom:50px;
+}
+
+.news_overview{
+	max-width:750px;
+	margin:auto;
+}
+
+a.sidetitle_link{
+	color:black;
+	text-decoration:none;
+    border-bottom: none;
+    font-size:250%;
+}
+
+a.sidetitle_link:hover{
+	text-decoration:none;
+	border-bottom: 5px solid black;
+}
+
+.news_subtitle{
+	font-size:130%;
+	margin-top:-8px;
+	margin-bottom:5px;
+}
+
+/*NAVBAR*/
+
+.navbar-inverse{
+	background-color:transparent;
+	background-image:none;
+}
+
+.nav > li a {
+  margin-left:50px;
+  text-decoration: none;
+}
+
+/*
+.navbar-fixed-top, .navbar-header, .navbar-inverse, .navbar .collapse.in, .navbar .collapsing, .navbar-inverse .navbar-collapse{
+	background:url("../img/temp/main.jpg") no-repeat 50% 50%;
+}
+
+.navbar-fixed-top, .navbar-header, .navbar-inverse{
+	z-index:10;
+	height:60px;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover !important;
+    background-attachment: fixed;
+    border:0;
+    border-color:none;
+} */
+
+ .navbar-fixed-top, .navbar-header, .navbar, .navbar-header, .navbar-inverse{
+ 	z-index:10;
+ 	border:0;
+ 	height:60px;
+    border-color:none;
+    
+    -webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover !important;
+    background-attachment: fixed;
+ }
+
+.navbar.green{
+	background:url("../img/temp/news.jpg") no-repeat 50% 50%;
+	background-attachment: fixed;
+}
+
+.navbar.red{
+	//background-color:rgb(200,70,80);
+	background:url("../img/temp/main.jpg") no-repeat 50% 50%;
+	background-attachment: fixed;
+}
+
+.navbar.beige{
+	//background-color:rgb(200,70,80);
+	background:url("../img/temp/events.jpg") no-repeat 50% 50%;
+	background-attachment: fixed;
+}
+
+.menuoption a, .menuoption a:hover, .menuoption a:focus, .navbar-header a h4{
+	text-decoration: none;
+    border-bottom: none;
+}
+
+.menuoption a:hover h4, .menuoption.current h4{
+	text-decoration: none;
+    border-bottom: 5px solid white;
+}
+
+@media screen and (max-width: 767px){
+	.navbar .menuoption{
+		width:100%;
+		text-align:center;
+		text-decoration: none;
+	}
+	
+	.menuoption a:hover h4, .menuoption.current h4, .navbar-header a:hover h4{
+		text-decoration: none;
+	    border-bottom: 0px solid white;
+	}
+	
+	.navbar-fixed-top .navbar-right{
+		position:relative;
+		top:0px;
+	}
+	
+	.nav > li a {
+	  margin-left:0px;
+	  text-decoration: none;
+	}
+	
+	.deezer{
+		display:none;
+	}
+	
+	.navbar-collapse {
+		background:none;
+		background-color:rgb(200,70,80);
+	}
+	
+	.navbar.red .collapse.in, .navbar.red .collapsing, .navbar-inverse.red .navbar-collapse, .navbar.red {
+		background:none;
+		background-color:rgb(200,70,80);
+	}
+	
+	.navbar.green .collapse.in, .navbar.green .collapsing, .navbar-inverse.green .navbar-collapse, .navbar.green {
+		background:none;
+		background-color:rgb(100,140,140);
+	}
+	
+	.navbar.beige .collapse.in, .navbar.beige .collapsing, .navbar-inverse.beige .navbar-collapse, .navbar.beige {
+		background:none;
+		background-color:rgb(135,135,95);
+	}
+}
+
+/*flaot tickets link to right when bootstrap resizes*/
+@media screen and (max-width: 991px){
+	.link-more{
+		float:none;
+		margin-top:5px;
+		margin-bottom:10px;
+	}
+}
+
+
+a:hover span h4{
+	text-decoration:none;
+}
+
+/*EVENTS*/
+.event-title{
+	padding-right:10px;
+	margin-top:8px;
 }

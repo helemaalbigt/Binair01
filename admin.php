@@ -1,6 +1,7 @@
 <?php
 include_once './inc/db.inc.php';
 include_once './inc/blogpost.inc.php';
+include_once './inc/event.inc.php';
 
 //initialize session if none exists
 if (session_id() == '' || !isset($_SESSION)) {
@@ -13,16 +14,30 @@ $loggedin = (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == 1) ? TRUE 
 $isAdmin = (isset($_SESSION['usertype']) && $_SESSION['usertype'] == "admin") ? TRUE : FALSE;
 $errorVisibility="none";
 
+$editedID="";
 
 //blogpost values
 $postTitle ="";
 $postTags ="";
 $postSortdate ="";
 $youtubeCover ="";
+$postCoverImage ="./img/default.jpg";
 $postBody="";
-$editedID="";
 $editingPost = false;
+
+//event values
+$eventTitle ="";
+$eventTags ="";
+$eventSortdate ="";
+$eventHour ="";
+$eventVenue ="";
+$eventAddress = "";
+$eventTicketLink ="";
+$eventCoverImage ="./img/default.jpg";
+$eventPreview ="";
+$eventBody="";
 $editingEvent = false;
+
 //check whether editing blogpost
 if(isset($_GET['editingPost']) && isset($_GET['id'])){
 	$editingPost = true;
@@ -35,7 +50,28 @@ if(isset($_GET['editingPost']) && isset($_GET['id'])){
 	$postTags = $blogpost->tagsOriginal;
 	$postSortdate = $blogpost->sortdateArray["day"]."/".$blogpost->sortdateArray["month"]."/".$blogpost->sortdateArray["year"];
 	$youtubeCover = $blogpost->youtubeCover;
+	$postCoverImage =  "./img/medium/".$blogpost->coverimage;
 	$postBody = $blogpost->body;
+}
+
+//check whether editing event
+if(isset($_GET['editingEvent']) && isset($_GET['id'])){
+	$editingEvent = true;
+	$editedID = $_GET['id'];
+	
+	$event = new Event(FALSE);
+	$event -> updateParameters($_GET['id']);
+	
+	$eventTitle = $event->title;
+	$eventTags = $event->tagsOriginal;
+	$eventSortdate = $event->sortdateArray["day"]."/".$event->sortdateArray["month"]."/".$event->sortdateArray["year"];
+	$eventHour = $event->hour;
+	$eventVenue = $event->venue;
+	$eventAddress = $event->address;
+	$eventTicketLink = $event->ticketsurl;
+	$eventCoverImage =  "./img/medium/".$event->coverimage;
+	$eventPreview = $event->preview;
+	$eventBody = $event->body;
 }
 ?>
 
@@ -84,13 +120,41 @@ if(isset($_GET['editingPost']) && isset($_GET['id'])){
 		  	toolbar: [
 			    // [groupName, [list of button]]
 			    ['style', ['bold', 'italic', 'underline', 'clear']],
-			    ['font', ['strikethrough', 'superscript', 'subscript']],
+			    ['font', ['strikethrough']],
 			    ['para', ['ul', 'ol', 'paragraph']],
-			    ['insert', ['link', 'video']]
+			    ['insert', ['link']]
 			  ]
 		  });
 		  
 		  $('#summernote').summernote('lineHeight', 1.4);
+		  
+		  
+		  $('#summernote2').summernote({
+		  	height:100,
+		  	toolbar: [
+			    // [groupName, [list of button]]
+			    ['style', ['bold', 'italic', 'underline', 'clear']],
+			    ['font', ['strikethrough']],
+			    ['para', ['ul', 'ol', 'paragraph']],
+			    ['insert', ['link']]
+			  ]
+		  });
+		  
+		  $('#summernote2').summernote('lineHeight', 1.4);
+		  
+		  
+		  $('#summernote3').summernote({
+		  	height:300,
+		  	toolbar: [
+			    // [groupName, [list of button]]
+			    ['style', ['bold', 'italic', 'underline', 'clear']],
+			    ['font', ['strikethrough']],
+			    ['para', ['ul', 'ol', 'paragraph']],
+			    ['insert', ['link']]
+			  ]
+		  });
+		  
+		  $('#summernote3').summernote('lineHeight', 1.4);
 		});
 		
 		//date picker
@@ -242,6 +306,24 @@ if(isset($_GET['editingPost']) && isset($_GET['id'])){
 				return false;
 			}
 		}
+		
+		/**
+		 * In a form, replace preview image when a new image is selected
+		 *  
+		 * @param 
+		 * @return
+		 */
+		function updatePreviewImage(input) {
+		    if (input.files && input.files[0]) {
+		        var reader = new FileReader();            
+		        reader.onload = function (event) {
+		        	//get the img element above the file input and change the src
+		           $(input).parent().parent().parent().parent().siblings('img').filter(':first').attr('src', event.target.result); 
+		        }            
+		        reader.readAsDataURL(input.files[0]);
+		    }
+		}
+
 
 		</script>
         
@@ -252,28 +334,7 @@ if(isset($_GET['editingPost']) && isset($_GET['id'])){
         <![endif]-->
         
         <!-- Nav -->
-	    <nav class="navbar navbar-inverse navbar-fixed-top news" role="navigation">
-	      <div class="container">
-	      	
-	        <div class="navbar-header top">
-        		<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
-			        <span class="icon-bar"></span>
-			        <span class="icon-bar"></span>
-			        <span class="icon-bar"></span>                        
-		      	</button>
-	          	<a href="index.php"><img src="img/LogoSmall.png" class="logo"/></a><a href="#"><span><h4> / ADMIN</h4></span></a>
-	        </div>
-	        
-	        <div class="collapse navbar-collapse" id="myNavbar">
-			      <ul class="nav navbar-nav navbar-right">
-			        <li class="menuoption"><a href="#" class="white"><h4>ABOUT</h4></a></li>
-			        <li class="menuoption"><a href="#" class="white"><h4>EVENTS</h4></a></li>
-			        <li class="menuoption"><a href="news.php" class="white"><h4>NEWS</h4></a></li>
-			      </ul>
-			</div>
-	        
-	      </div>
-	    </nav>
+	    <?php echo printHeader(true, true, "red", "admin", "./admin.php") ?>
 	    
 	    <div class="container page-content admin">
 	    	<?php 
@@ -304,6 +365,7 @@ if(isset($_GET['editingPost']) && isset($_GET['id'])){
 	    	
 	    	
             <!-- ADD BLOGPOST START -->
+            <?php if(!$editingEvent){ //don't display if we're editing an event ?>
             <div class="row">
                 <div class="col-sm-2">&nbsp;</div>
                 <div class="col-sm-10">
@@ -342,11 +404,12 @@ if(isset($_GET['editingPost']) && isset($_GET['id'])){
                 <!--coverimage-->
                 <div class="form-group">
                     <label class="control-label col-sm-2" for="coverimage">*Cover Image:</label>
-                    <div class="col-sm-10">
+                    <img class="col-sm-3 imagepreview img-responsive" src="<?php echo $postCoverImage?>"/>
+                    <div class="col-sm-7">
                     	<div class="input-group">
 			                <span class="input-group-btn">
 			                    <span class="btn btn-default btn-file">
-			                        Browse&hellip; <input name="coverimage" id="coverimage" type="file" >
+			                        Browse&hellip; <input name="coverimage" id="coverimage" type="file" onchange="updatePreviewImage(this)">
 			                    </span>
 			                </span>
 			                <input type="text" class="form-control" readonly>
@@ -372,7 +435,6 @@ if(isset($_GET['editingPost']) && isset($_GET['id'])){
 					</div>
                 </div>
                 
-                <br>
                 
                 <!--gallery
                 <div class="form-group">
@@ -389,18 +451,150 @@ if(isset($_GET['editingPost']) && isset($_GET['id'])){
                     </div>
                 </div>-->
 
-                <br><br>
+          
                 
 				<!--submit-->
                 <div class="form-group"> 
                     <div class="col-sm-offset-2 col-sm-10">
                     	<input type="hidden" name="id" id="id" value="<?php echo $editedID ?>" >
                     	<input type="hidden" name="posttype" value="save blogpost" >
-                    	<button type="submit" class="btn btn-primary">Submit</button>
+                    	<button type="submit" class="btn btn-primary floatright">Submit</button>
                     </div>
                 </div>
              </form>
+             <br>
+             <?php } ?>
              <!-- ADD BLOGPOST END -->
+             
+             
+             <!-- ADD EVENT START -->
+             <?php if(!$editingPost){ //don't display if we're editing an event ?>
+            <div class="row">
+                <div class="col-sm-2">&nbsp;</div>
+                <div class="col-sm-10">
+                	<?php echo ($editingEvent) ? "<h2>Edit event</h2>" :  "<h2>Add new event</h2>"  ?>
+               		<div class="infotext">*required fields</div><br>
+                </div>
+            </div>
+
+            <form class="form-horizontal" method="post" action="./inc/update.inc.php" enctype="multipart/form-data" role="form" onsubmit="return checkInputFormEvent(false)"> <!-- <?php echo $edit ?>-->
+            	
+                <!--title-->
+                <div class="form-group">
+                    <label class="control-label col-sm-2" for="title">*Title:</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="title" name="title" placeholder="Enter title" value="<?php echo $eventTitle ?>">
+                    </div>
+                </div>
+                
+                <!--tags-->
+                <div class="form-group">
+                    <label class="control-label col-sm-2" for="title">*Tags:</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="tags" name="tags" placeholder="separate multiple tags by comma eg: party, folk, music" value="<?php echo $eventTags ?>">
+                    </div>
+                </div>
+                
+                <!--sortdate-->
+                <div class="form-group">
+                    <label class="control-label col-sm-2" for="sortdate">*Event Date:</label>
+                    <div class="col-sm-10">
+                    	<input type="text" id="sortdate" name="sortdate" value="<?php echo $eventSortdate ?>" />
+                    	<div class="infotext">The exact date of the event</div>
+                    </div>
+                </div>
+                
+                <!--hour-->
+                <div class="form-group">
+                    <label class="control-label col-sm-2" for="hour">*Starting Hour:</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="hour" name="hour" placeholder="eg: 21h30" value="<?php echo $eventHour ?>">
+                    </div>
+                </div>
+                
+                <!--venue-->
+                <div class="form-group">
+                    <label class="control-label col-sm-2" for="venue">*Venue:</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="venue" name="venue" placeholder="eg: Kunstencentrum Vooruit " value="<?php echo $eventVenue ?>">
+                    </div>
+                </div>
+                
+                 <!--address-->
+                <div class="form-group">
+                    <label class="control-label col-sm-2" for="address">*Address:</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="address" name="address" placeholder="eg: Kantienberg 5, 9000 Gent " value="<?php echo $eventAddress ?>">
+                    </div>
+                </div>
+                
+                 <!--ticketsurl-->
+                <div class="form-group">
+                    <label class="control-label col-sm-2" for="address">*Event Ticket Link:</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="ticketsurl" name="ticketsurl" placeholder="Add link to where tickets can be bought" value="<?php echo $eventTicketLink ?>">
+                    </div>
+                </div>
+                
+                <!--coverimage-->
+                <div class="form-group">
+                    <label class="control-label col-sm-2" for="coverimage">*Cover Image:</label>
+                    <img class="col-sm-3 imagepreview img-responsive" src="<?php echo $eventCoverImage?>"/>
+                    <div class="col-sm-7">
+                    	<div class="input-group">
+			                <span class="input-group-btn">
+			                    <span class="btn btn-default btn-file">
+			                        Browse&hellip; <input name="coverimage" id="coverimage" type="file" onchange="updatePreviewImage(this)">
+			                    </span>
+			                </span>
+			                <input type="text" class="form-control" readonly>
+			            </div>
+                    </div>
+                </div>
+                
+                <!--preview-->
+                <div class="row">
+                    <label class="control-label col-sm-2" for="preview">*Previewtext:</label>
+                    <div class="col-sm-10 nopadding">
+						<textarea id="summernote2" name="preview"><?php echo $eventPreview ?></textarea>
+					</div>
+                </div>
+                
+                <!--body-->
+                <div class="row">
+                    <label class="control-label col-sm-2" for="body">*Body:</label>
+                    <div class="col-sm-10 nopadding">
+						<textarea id="summernote3" name="body"><?php echo $eventBody ?></textarea>
+					</div>
+                </div>
+                
+                <!--gallery
+                <div class="form-group">
+                    <label class="control-label col-sm-2" for="imagegallery">Image Gallery:</label>
+                    <div class="col-sm-10">
+                    	<div class="input-group">
+			                <span class="input-group-btn">
+			                    <span class="btn btn-default btn-file">
+			                        Browse&hellip; <input name="imagegallery" id="imagegallery" type="file" multiple>
+			                    </span>
+			                </span>
+			                <input type="text" class="form-control" readonly>
+			            </div>
+                    </div>
+                </div>-->
+                
+				<!--submit-->
+                <div class="form-group"> 
+                    <div class="col-sm-offset-2 col-sm-10">
+                    	<input type="hidden" name="id" id="id" value="<?php echo $editedID ?>" >
+                    	<input type="hidden" name="posttype" value="save event" >
+                    	<button type="submit" class="btn btn-primary floatright">Submit</button>
+                    </div>
+                </div>
+             </form>
+             <?php } ?>
+             <!-- ADD EVENT END -->
+             
              
              <?php if($isAdmin){ ?>
 		             <!--create users (admin only)-->

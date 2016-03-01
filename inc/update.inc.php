@@ -2,6 +2,7 @@
 include_once 'db.inc.php';
 include_once 'functions.inc.php';
 include_once 'blogpost.inc.php';
+include_once 'event.inc.php';
 
 //initialize session if none exists
 if (session_id() == '' || !isset($_SESSION)) {
@@ -14,8 +15,38 @@ if (session_id() == '' || !isset($_SESSION)) {
 
 //perform verification of input and required values
 
-/*Post a blogpost*/
+/*Post a Event*/
 if($_SERVER['REQUEST_METHOD'] == 'POST' 
+//&& $_POST['posttype'] == "save blogpost"
+&& !empty($_POST['title']) 
+&& !empty($_POST['tags']) 
+&& !empty($_POST['sortdate']) 
+&& !empty($_POST['address'])
+&& !empty($_POST['hour'])
+&& !empty($_FILES['coverimage'])) {
+
+//var_dump($_POST);exit;
+//var_dump($_FILES);
+//echo htmlspecialchars($_POST['body']);
+	//instantiate the blogpost class
+	$event = new Event();
+
+	//clean post data
+	$cleanedPost = cleanData($_POST);
+	//update the project
+	$id = $event -> updateEvent($cleanedPost);
+	if (!empty($id)) {
+		//go to
+		//echo "succesfully posted event with id: ".$id;
+		header('Location:../events.php?id=' . $id );
+		exit;
+	} else {
+		exit('ERROR: problem updating project');	 
+	}
+}
+
+/*Post a blogpost*/
+else if($_SERVER['REQUEST_METHOD'] == 'POST' 
 //&& $_POST['posttype'] == "save blogpost"
 && !empty($_POST['title']) 
 && !empty($_POST['tags']) 
@@ -34,7 +65,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'
 	$id = $blogpost -> updateBlogpost($cleanedPost);
 	if (!empty($id)) {
 		//go to
-		echo "succesfully posted blogpost with id: ".$id;
+		//echo "succesfully posted blogpost with id: ".$id;
 		header('Location:../news.php?id=' . $id );
 		exit;
 	} else {

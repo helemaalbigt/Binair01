@@ -8,8 +8,13 @@ if (session_id() == '' || !isset($_SESSION)) {
 /*
  * AJAX functions
  */
- if(isset($_GET['load']) && isset($_GET['offset'])){
+ //load more blogposts
+ if(isset($_GET['loadblogposts']) && isset($_GET['load']) && isset($_GET['offset'])){
  	retrieveBlogposts($_GET['offset'], $_GET['load']);
+ }
+ //load more events
+ if(isset($_GET['loadevents']) && isset($_GET['load']) && isset($_GET['offset'])){
+ 	retrieveEvents($_GET['offset'], $_GET['load']);
  }
 
 /**
@@ -34,7 +39,7 @@ if (session_id() == '' || !isset($_SESSION)) {
  			$find = array("<?php", "?>");
 			$replace  = array("", "");
 			//trips possible tags (excluding links, bold, italic, lists, paragraphs) first, then removes certain forbidden strings, then removes backslashes, removes the first pargraph tag, removes the first closing paragraph tag, then converts remaining special characters to htmlentities
- 		  $returnArray[$key] =htmlspecialchars( preg_replace('~<p>(.*?)</p>~is', '$1',stripslashes(str_replace($find, $replace, strip_tags($value, "<a><i><b><strong><em><li><ul><ol><br><p><iframe>"))), 1),ENT_QUOTES); 
+ 		  	$returnArray[$key] =htmlspecialchars( preg_replace('~<p>(.*?)</p>~is', '$1',stripslashes(str_replace($find, $replace, strip_tags($value, "<a><i><b><strong><em><li><ul><ol><br><p>"))), 1),ENT_QUOTES); 
 		}
  	}
  	//return the cleaned array
@@ -185,6 +190,53 @@ ROW;
 
 
 /**
+  * Print Latest events preview format
+  *	
+  * @param int $numberOfPosts
+  * @return
+  */
+function retrieveEventsPreview($numberOfPosts) {
+
+	include_once 'event.inc.php';
+	include_once 'db.inc.php';
+
+	//Open a database connection and store it
+	$db = new PDO(DB_INFO, DB_USER, DB_PASS);
+
+	//compose sql query
+	$sql = "SELECT id
+			FROM events ORDER BY sortdate DESC, created DESC 
+			LIMIT ".$numberOfPosts;
+	$stmt = $db -> prepare($sql);
+	$stmt -> execute();
+	
+	$counter = 0;
+	
+	while ($row = $stmt -> fetch()) {
+		
+		//echo in case of a new row of previews (3 per row)
+		if($counter%3 == 0 && $counter > 0){
+			echo <<<ROW
+			<div class="col-md-3 col-sm-0">
+				&nbsp;
+			</div>
+ROW;
+		}
+		
+		//echo blogpost
+		$event = new Event(FALSE);
+		$event -> updateParameters($row['id']);
+		echo $event -> formatPreview();
+		flush();
+		
+		$counter++;
+	}
+
+	$stmt -> closeCursor();
+}
+
+
+/**
   * Print Latest newsItems 
   *	
   * @param int $offset 
@@ -217,6 +269,79 @@ function retrieveBlogposts($offset, $numberOfPosts) {
 	$stmt -> closeCursor();
 }
 
+
+/**
+  * Print Latest newsItems 
+  *	
+  * @param int $offset 
+  * @param int $numberOfPosts
+  * @return
+  */
+function retrieveUpcomingEvents() {
+
+	include_once 'event.inc.php';
+	include_once 'db.inc.php';
+
+	//Open a database connection and store it
+	$db = new PDO(DB_INFO, DB_USER, DB_PASS);
+
+	//compose sql query
+	$sql = "SELECT id FROM events 
+			WHERE sortdate >= ".date("Y").date("m").date("d")."
+			ORDER BY sortdate ASC, created DESC";
+			
+	
+	$stmt = $db -> prepare($sql);
+	$stmt -> execute();
+	
+	while ($row = $stmt -> fetch()) {
+		//echo blogpost
+		$event = new Event(FALSE);
+		$event -> updateParameters($row['id']);
+		echo $event -> formatEventpage();
+		flush();
+	}
+
+	$stmt -> closeCursor();
+}
+
+
+/**
+  * Print Latest newsItems 
+  *	
+  * @param int $offset 
+  * @param int $numberOfPosts
+  * @return
+  */
+function retrieveEvents($offset, $numberOfPosts) {
+
+	include_once 'event.inc.php';
+	include_once 'db.inc.php';
+
+	//Open a database connection and store it
+	$db = new PDO(DB_INFO, DB_USER, DB_PASS);
+
+	//compose sql query
+	$sql = "SELECT id
+			FROM events 
+			WHERE sortdate < ".date("Y").date("m").date("d")."
+			ORDER BY sortdate DESC, created DESC 
+			LIMIT ".$numberOfPosts . " OFFSET " . $offset;
+	$stmt = $db -> prepare($sql);
+	$stmt -> execute();
+	
+	while ($row = $stmt -> fetch()) {
+		//echo blogpost
+		$event = new Event(FALSE);
+		$event -> updateParameters($row['id']);
+		echo $event -> formatEventpage();
+		flush();
+	}
+
+	$stmt -> closeCursor();
+}
+
+
 /**
   * Print Latest newsItems 
   *	
@@ -227,6 +352,7 @@ function retrieveBlogposts($offset, $numberOfPosts) {
 function retrievePostsWithTag($tag, $offset, $numberOfPosts) {
 
 	include_once 'blogpost.inc.php';
+	include_once 'event.inc.php';
 	include_once 'db.inc.php';
 
 	//Open a database connection and store it
@@ -247,11 +373,21 @@ function retrievePostsWithTag($tag, $offset, $numberOfPosts) {
 	while ($row = $stmt -> fetch()) {
 		array_push($results, array("id" => $row['id'], "created" => $row['created'], "sortdate" => $row['sortdate'], "posttype" => "blogpost"));
 		flush();
-		//echo blogpost
-		/*$blogpost = new Blogpost(FALSE);
-		$blogpost -> updateParameters($row['id']);
-		echo $blogpost -> formatNewspage();
-		flush();*/
+	}
+	$stmt -> closeCursor();
+	
+	//search events
+	$sql = "SELECT id, sortdate, created
+			FROM events 
+			WHERE tags LIKE '%".$tag."%'"; 
+			//LIMIT ".$numberOfPosts . " OFFSET " . $offset;
+	$stmt = $db -> prepare($sql);
+	$stmt -> execute();
+	
+	//add results to results array
+	while ($row = $stmt -> fetch()) {
+		array_push($results, array("id" => $row['id'], "created" => $row['created'], "sortdate" => $row['sortdate'], "posttype" => "event"));
+		flush();
 	}
 	$stmt -> closeCursor();
 	
@@ -272,6 +408,13 @@ function retrievePostsWithTag($tag, $offset, $numberOfPosts) {
 				echo $blogpost -> formatNewspage();
 				flush();
 				break;
+				
+			case 'event':
+				$event = new Event(FALSE);
+				$event -> updateParameters($result['id']);
+				echo $event -> formatEventpage();
+				flush();
+				break;
 		}
 	}
 }
@@ -288,17 +431,24 @@ function retrievePostsWithTag($tag, $offset, $numberOfPosts) {
   */
 function printHeader($logoVisible, $fixed, $background, $page, $pageLink){
 	
-	$logo = ($logoVisible) ? "<a href='index.php'><img src='img/LogoSmall.png' class='logo'/></a>" : "";
+	$logo = ($logoVisible) ? "<a href='index.php'><img src='img/LogoSmall.png' class='logo'/></a>" : "";//<h1 class='white'>BINAIR 01</h1>
 	$navFixed = ($fixed) ? "navbar-fixed-top" : "";
 	$pageBreadcrumb = ($page == "home" || $page == "") ? "": "<a href='".$pageLink."'><span><h4> / ".strtoupper($page)."</h4></span></a>" ;
+	//$pageBreadcrumb = ($page == "home" || $page == "") ? "": "<span><h4> / ".strtoupper($page)."</h4></span>" ;
+	$rand = rand(0,10000);
+	
+	$aboutClass = ($page == "about") ? "current" : "";
+	$eventsClass = ($page == "events") ? "current" : "";
+	$newsClass = ($page == "news") ? "current" : "";
+	
 	      
-	      echo <<<HEADER
+	      return <<<HEADER
 	      
 	       <nav class="navbar navbar-inverse $navFixed $background" role="navigation">
 	       <div class="container">
 	      	
 	        <div class="navbar-header top">
-        		<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        		<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar$rand">
 			        <span class="icon-bar"></span>
 			        <span class="icon-bar"></span>
 			        <span class="icon-bar"></span>                        
@@ -306,11 +456,11 @@ function printHeader($logoVisible, $fixed, $background, $page, $pageLink){
 	          	$logo  $pageBreadcrumb 
 	        </div>
 	        
-	        <div class="collapse navbar-collapse" id="myNavbar">
+	        <div class="collapse navbar-collapse" id="myNavbar$rand">
 			      <ul class="nav navbar-nav navbar-right">
-			        <li class="menuoption"><a href="about.php" class="white"><h4>ABOUT</h4></a></li>
-			        <li class="menuoption"><a href="events.php" class="white"><h4>EVENTS</h4></a></li>
-			        <li class="menuoption"><a href="news.php" class="white"><h4>NEWS</h4></a></li>
+			        <li class="menuoption $aboutClass"><a href="index.php#about_segment" class="white"><h4>ABOUT</h4></a></li>
+			        <li class="menuoption $eventsClass"><a href="events.php" class="white"><h4>EVENTS</h4></a></li>
+			        <li class="menuoption $newsClass"><a href="news.php" class="white"><h4>NEWS</h4></a></li>
 			      </ul>
 			</div>
 	        
@@ -339,8 +489,9 @@ function printFooter(){
 	        	<span class="footer darkgray">&copy; Binair01 - $year </span>
 		        <ul class="social">
 		        	<li>
-		        		<a href="https://www.facebook.com/binair01-182905618426061/?fref=ts" target="_blank" id="facebook">fb &nbsp;</a>
-		        		<a href="https://www.youtube.com/user/binair01" target="_blank" id="youtube">yt &nbsp;</a>         		
+		        		<a data-toggle="tooltip" title="mixcloud" href="https://www.mixcloud.com/mnsr_z%C3%A9r0/" target="_blank" id="mixcloud">mc &nbsp;</a>  
+		        		<a data-toggle="tooltip" title="facebook" href="https://www.facebook.com/binair01-182905618426061/?fref=ts" target="_blank" id="facebook">fb &nbsp;</a>
+		        		<a data-toggle="tooltip" title="youtube" href="https://www.youtube.com/user/binair01" target="_blank" id="youtube">yt &nbsp;</a>       		
 		        	</li>
 		        </ul>
 	      	</footer>

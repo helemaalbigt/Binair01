@@ -3,7 +3,7 @@
 	include_once 'functions.inc.php';
 	include_once 'SimpleImage.inc.php';
 	
-	class Blogpost{
+	class Event{
 		
 		//the database connection
 		public $db;
@@ -12,12 +12,16 @@
 		public $id;
 		public $title;
 		public $sortdate;
-		public $sortdayeArray;
+		public $sortdateArray;
 		public $tagsOriginal;
 		public $tags;
+		public $hour;
+		public $venue;
+		public $address;
 		public $coverimage;
-		public $youtubeCover;
+		public $ticketsurl;
 		public $bodyOriginal;
+		public $preview;
 		public $body;
 		
 		//Upon class instantiation, open a database connection, and generate all default values.
@@ -33,20 +37,24 @@
 				$this->sortdate = NULL;
 				$this->sortdateArray = NULL;
 				$this->tags = NULL;
+				$this->hour = NULL;
+				$this->venue = NULL;
+				$this->address = NULL;
+				$this->ticketsurl = NULL;
 				$this->coverimage = "img/default.jpg";
-				$this->youtubeCover = NULL;
+				$this->preview = NULL;
 				$this->body = NULL;
 			}
 		}
 		
 		/**
-		 * Replaces default parameters with blogpost-specific values
+		 * Replaces default parameters with event-specific values
 		 *
 		 * @param string $id
 		 */
 		public function updateParameters($id) {
 			
-			$e = $this -> retrieveProjectById($id);
+			$e = $this -> retrieveEventById($id);
 			
 			//replace default values for parameters with those of the edited project
 			//textfields are already split into arrays containging the three languages
@@ -54,14 +62,22 @@
 			
 			$this -> title = $e['title'];
 			
-			list($Y, $M, $D) = split('[-.-]', $e['sortdate']);
+			list($Y, $M, $D) = explode("-", $e['sortdate']);
+			//list($Y,$M,$D) = array($e['sortdate'],$e['sortdate'],$e['sortdate']);
 			$this->sortdate = $D."/".$M."/".$Y;
-			
 			$this->sortdateArray = array(
 										    "year" => $Y,
 										    "month" => $M,
 										    "day"   => $D
 										);
+										
+			$this -> hour = $e['hour'];
+			
+			$this -> venue = $e['venue'];
+			
+			$this -> address = $e['address'];
+			
+			$this -> ticketsurl = $e['ticketsurl'];
 			
 			$this->tagsOriginal = $e['tags'];
 			$tagArray = explode(",", $e['tags']);
@@ -71,19 +87,21 @@
 			$this -> tags = $tagArray;
 			
 			$this -> coverimage = $e['coverimage'];
-			$this -> youtubeCover = $e['youtubecover'];
+			
+			$this -> preview = str_replace("style=\"line-height: 0.7;\"", "style=\"line-height: 1.4;\"", htmlspecialchars_decode($e['preview'])); 
+			
 			$this -> body = str_replace("style=\"line-height: 0.7;\"", "style=\"line-height: 1.4;\"", htmlspecialchars_decode($e['body'])); 
 		}
 		
 		
 		/**
-		 *Retrieves one blogpost from the database based on a passed id
+		 *Retrieves one event from the database based on a passed id
 		 *
 		 * @param string $id project id to fetch
 		 * @return array array with results
 		 */
-		function retrieveProjectById($id) {
-			$sql = "SELECT * FROM blogposts WHERE id=? LIMIT 1";
+		function retrieveEventById($id) {
+			$sql = "SELECT * FROM events WHERE id=? LIMIT 1";
 			$stmt = $this -> db -> prepare($sql);
 			$stmt -> execute(array($id));
 	
@@ -91,7 +109,7 @@
 			$e = $stmt -> fetch();
 			$stmt -> closeCursor();
 			
-			if(count($e) <= 18){	
+			if(count($e) <= 26){	
 				return $e;
 			} else{
 				exit("ERROR: database query returned more values than allowed (".count($e).")");
@@ -100,12 +118,12 @@
 		
 		
 		/**
-		 * Updates a blogpost or stores a new one
+		 * Updates a event or stores a new one
 		 * 
 		 * @param array $p The $_POST superglobal
 		 * @return
 		 */
-		 public function updateBlogpost($p){
+		 public function updateEvent($p){
 		 	/*PREP DATA*/
 		 	//handle date
 		 	list($day, $month, $year) = split('[/.-]', $p['sortdate']);
@@ -123,7 +141,6 @@
 				}
 			}
 		 	
-		 	
 		 	/*UPLOADING DATA*/
 		 	//if an id was passed, edit the existing entry
 			if (!empty($p['id'])) 
@@ -137,10 +154,10 @@
 				}
 	
 				//prepare the sql query and append a part if we're adding images
-				$sql = "UPDATE blogposts SET title=?, tags=?, sortdate=?, youtubecover=?, body=?".$appendSQL." WHERE id=? LIMIT 1";
+				$sql = "UPDATE events SET title=?, tags=?, sortdate=?, hour=?, address=?, venue=?, ticketsurl=?, preview=?, body=?".$appendSQL." WHERE id=? LIMIT 1";
 	
 				if ($stmt = $this -> db -> prepare($sql)) {
-					$A = array_merge(array_merge(array($p['title'], $p['tags'], $date, $p['youtubecover'], $p['body']), $appendSTMT),array($p['id']));
+					$A = array_merge(array_merge(array($p['title'], $p['tags'], $date, $p['hour'], $p['address'], $p['venue'], $p['ticketsurl'], $p['preview'], $p['body']), $appendSTMT),array($p['id']));
 					$stmt -> execute($A);
 					$stmt -> closeCursor();
 					
@@ -151,9 +168,9 @@
 			//save the entry into the database
 			else
 			{
-				$sql = "INSERT INTO blogposts (title, tags, sortdate, coverimage, youtubecover, body) VALUES (?, ?, ?, ?, ?, ?)";
+				$sql = "INSERT INTO events (title, tags, sortdate, hour, address, venue, ticketsurl, coverimage, preview, body) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 				if ($stmt = $this -> db -> prepare($sql)) {
-					$stmt -> execute(array( $p['title'], $p['tags'], $date, $filename, $p['youtubecover'], $p['body']));	
+					$stmt -> execute(array( $p['title'], $p['tags'], $date, $p['hour'], $p['address'], $p['venue'], $p['ticketsurl'], $filename, $p['preview'], $p['body']));	
 					$stmt -> closeCursor();
 					
 					//get the ID of the entry that was just saved
@@ -169,6 +186,7 @@
 			return $this -> id;
 		 }
 
+
 		/**
 		 * Updates a blogpost or stores a new one
 		 * 
@@ -181,15 +199,16 @@
 			$imgPath = "img/medium/".$this->coverimage;
 			$title = $this->title;
 			$date = $this->sortdate;
+			$venue = $this->venue;
 			$id = $this->id;
 			
 			$formattedProject .= <<<PREVIEW
 			<div class="col-md-3 col-sm-4">
-	        	<a href="news.php?id=$id">
+	        	<a href="events.php?id=$id">
 		        	<img src="$imgPath" class="img-responsive" />
 	          	</a>
 	          	<h4><b>$title</b></h4>
-		        <div class="subtitle">posted $date</div>
+		        <div class="subtitle"> <b>$venue</b> <br> $date</div>
 			</div>
 PREVIEW;
 
@@ -198,19 +217,21 @@ PREVIEW;
 		 
 		 
 		 /**
-		 * Format for the news overview page
+		 * Format for the events overview page
 		 * 
 		 * @param array $p The $_POST superglobal
 		 * @return
 		 */
-		 public function formatNewspage(){
+		 public function formatEventpage(){
 		 	$formattedProject = "";
 			
 			$imgPath = "img/medium/".$this->coverimage;
 			$title = $this->title;
-			$date = $this->sortdate;
+			$date = $this->sortdate." <i>at ".$this->hour."</i>";
+			$where = strtoupper($this->venue).", ".$this->address;
+			$tickets = $this->ticketsurl;
 			$id = $this->id;
-			$body = $this->body;
+			$body = $this->preview;
 			
 			$fblink = "http://binair01.be/dev/news.php?id=".$id;
 			
@@ -219,28 +240,31 @@ PREVIEW;
 				$taglinks.= "<span><a class=\"taglink\" href=\"./search.php?tag=".$tag."\">".$tag."</a></span> ";
 			}
 			
-			$cover="";
-			if($this->youtubeCover != NULL && $this->youtubeCover != ""){
-				$videoCode = explode("watch?v=", $this->youtubeCover)[1];
-				$cover = "<div class='embed-responsive embed-responsive-16by9'><iframe class='embed-responsive-item' src='//www.youtube.com/embed/".$videoCode."'></iframe></div>";
-			} else{
-				$cover = "<img src='".$imgPath."' class='img-responsive' />";
-			}
-			
 			$formattedProject .= <<<PREVIEW
 			<!--preview-->
 			<div class="news-preview">
-				<div class="body-content news_overview">
-				        <a href="news.php?id=$id">
-					        $cover
-					    </a>
-			          	<h1>$title</h1>
-			          	<div class="gray news_subtitle">$date</div>
-		          		
-		          		<p class="body">$body</p>
-		          		
-		          		<div class="italic gray">tags: $taglinks</div>
-		        </div>
+   	
+					<!--post-->
+					<div class="body-content  news_overview">
+			
+					        <a href="events.php?id=$id">
+						        <img src='$imgPath' class='img-responsive' />
+						    </a>
+						    <div class="row">
+						    	<div class="col-md-10">
+						          	<h1 class="event-title">$title</h1>
+						          	<div class="gray news_subtitle"><b>$where</b></div>
+					          		<div class="gray news_subtitle">$date</div>
+					          	</div>
+					          	<div class="col-md-2">
+						    		<a class="btn btn-default link-more" target="_blank" href="$tickets" role="button">Get Tickets &raquo;</a>
+						    	</div>
+			          		</div>
+			          		<p class="body">$body</p>
+			          		
+			          		<br>
+			          		<div class="italic gray">tags: $taglinks</div>
+			        </div>
 			</div>
 PREVIEW;
 
@@ -254,14 +278,16 @@ PREVIEW;
 		 * @param array $p The $_POST superglobal
 		 * @return
 		 */
-		 public function formatSinglePost($loggedIn = false){
+		 public function formatSingleEvent($loggedIn = false){
 		 	$formattedProject = "";
 			
-			$imgPath = "img/medium/".$this->coverimage;
+			$imgPath = "img/original/".$this->coverimage;
 			$title = $this->title;
 			$date = $this->sortdate;
 			$id = $this->id;
 			$body = $this->body;
+			
+			$nav = printHeader(true, false, "none", "events", "./events.php?id=".$id);
 			
 			$adminVisibility = ($loggedIn) ? "block" : "none";
 			
@@ -271,28 +297,36 @@ PREVIEW;
 			foreach($this->tags as $tag){
 				$taglinks.= "<span><a class=\"taglink\" href=\"./search.php?tag=".$tag."\">".$tag."</a></span> ";
 			}
-			
-			$cover="";
-			if($this->youtubeCover != NULL && $this->youtubeCover != ""){
-				$videoCode = explode("watch?v=", $this->youtubeCover)[1];
-				$cover = "<div class='embed-responsive embed-responsive-16by9'><iframe class='embed-responsive-item' src='//www.youtube.com/embed/".$videoCode."'></iframe></div>";
-			} else{
-				$cover = "<img src='".$imgPath."' class='img-responsive' />";
-			}
-			
+
 			$formattedProject .= <<<POST
 			<!--preview-->
+			
+			<!-- CoverImage-->
+		    <div class="coverimage" style="background:url('./$imgPath') no-repeat 50% 50%;">
+		    	
+		    	<!-- Nav -->
+		    	$nav 
+		    	
+		    	<!-- content -->
+			    <div class="inner">
+					<div class="content">
+						&nbsp;
+					</div>
+				</div>
+			  
+		    </div>
+			
+			
 			<div class="news-preview">
 	    		<div class="row">
 	    			<!--date-->
-	    			<div class="col-md-4 title">
-		        		<a class="sidetitle_link" href="news.php"><span>« BACK</span></a>
+	    			<div class="col-md-3 title">
+		        		<a class="gray" href="news.php"><h1 class="gray">« BACK</h1></a>
 					</div>
 					<!--post-->
 					<div class="body-content">
 				        <div class="col-md-8">	
-						         $cover
-				          		<h1>$title</h1>
+				          	<h1>$title</h1>
 			          		<div class="italic gray">tags: $taglinks</div>
 			          		<p class="body">$body</p>
 			          	
@@ -301,12 +335,12 @@ PREVIEW;
 			        </div>
 				</div>
 				<div class="row" style="display:$adminVisibility">
-					<div class="col-md-4 title">
+					<div class="col-md-3 title">
 						&nbsp;
 					</div>
 					<div class="col-md-8">	
 						<a class="btn btn-danger delete"  href="./inc/update.inc.php?action=project_delete&id=$id" >delete</a> 
-						<a class="btn btn-primary" href="admin.php?editingPost=1&id=$id">edit</a>
+						<a class="btn btn-primary" href="admin.php?editingEvent=1&id=$id">edit</a>
 					</div>
 				</div>
 			</div>
