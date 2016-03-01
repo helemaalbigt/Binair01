@@ -97,13 +97,20 @@
         </script>
     </head>
     <body>
+    	<script>(function(d, s, id) {
+		  var js, fjs = d.getElementsByTagName(s)[0];
+		  if (d.getElementById(id)) return;
+		  js = d.createElement(s); js.id = id;
+		  js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.5";
+		  fjs.parentNode.insertBefore(js, fjs);
+		}(document, 'script', 'facebook-jssdk'));</script>
     
         <!--[if lt IE 8]>
             <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
         
         <!-- Nav -->
-	    <?php printHeader(true, true, "green", "tag: ".$tag, "./search.php?tag=".$tag) ?>
+	    <?php echo printHeader(true, true, "green", "tag: ".$tag, "./search.php?tag=".$tag) ?>
 	    
 	    <div class="container pagecontent news">
 	    	

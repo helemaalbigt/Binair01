@@ -64,7 +64,7 @@
 					//update variables
 					projectsOffset = projectsOffset+parseInt(postsPP);
 					//get data
-					$.get("inc/functions.inc.php?load="+postsPP+"&offset="+projectsOffset, function(data) {
+					$.get("inc/functions.inc.php?loadblogposts=1&load="+postsPP+"&offset="+projectsOffset, function(data) {
 						$(data).appendTo("#content");
 						isLoading = false;
 					});
@@ -114,52 +114,31 @@
         <![endif]-->
         
         <!-- Nav -->
-	    <nav class="navbar navbar-inverse navbar-fixed-top news" role="navigation">
-	      <div class="container">
-	      	
-	        <div class="navbar-header top">
-        		<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
-			        <span class="icon-bar"></span>
-			        <span class="icon-bar"></span>
-			        <span class="icon-bar"></span>                        
-		      	</button>
-	          	<a href="index.php"><img src="img/LogoSmall.png" class="logo"/></a> <a href="news.php"><span><h4> / NEWS</h4></span></a> 
-	        </div>
-	        
-	        <div class="collapse navbar-collapse" id="myNavbar">
-			      <ul class="nav navbar-nav navbar-right">
-			        <li class="menuoption"><a href="#" class="white"><h4>ABOUT</h4></a></li>
-			        <li class="menuoption"><a href="#" class="white"><h4>EVENTS</h4></a></li>
-			        <li class="menuoption"><a href="#" class="white"><h4>NEWS</h4></a></li>
-			      </ul>
-			</div>
-	        
-	      </div>
-	    </nav>
+	    <?php echo printHeader(true, true, "green", "news", "./news.php") ?>
+        
 	    
 	    <div class="container pagecontent news">
-	    	
 	    	<!-- NEWS ITEMS -->
 			<div class="content-segment" id="content">
-				
-				<?php 
-				//Load the newsitems
-				//if we're looking at one post
-				if (!$showAll) 
-				{
-					echo $blogpost -> formatSinglePost($loggedin);
-				} 
-				//give overview
-				else
-				{
-					retrieveBlogposts(0,$postsPerPage) ;
-				}
-				?>
-								
+					
+					<?php 
+					//Load the newsitems
+					//if we're looking at one post
+					if (!$showAll) 
+					{
+						echo $blogpost -> formatSinglePost($loggedin);
+					} 
+					//give overview
+					else
+					{
+						retrieveBlogposts(0,$postsPerPage);
+					}
+					?>
+									
 			</div>
-	
-	      <?php printFooter() ?>
 	    </div> 
+	    
+	    <?php printFooter() ?>
 	    
     	<!-- /container -->        
         <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.11.2.min.js"><\/script>')</script>

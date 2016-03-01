@@ -33,28 +33,7 @@
         <![endif]-->
         
         <!-- Nav -->
-	    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-	      <div class="container">
-	      	
-	        <div class="navbar-header top">
-        		<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
-			        <span class="icon-bar"></span>
-			        <span class="icon-bar"></span>
-			        <span class="icon-bar"></span>                        
-		      	</button>
-	          	<a href="#"><img src="img/LogoSmall.png" class="logo"/></a>
-	        </div>
-	        
-	        <div class="collapse navbar-collapse" id="myNavbar">
-			      <ul class="nav navbar-nav navbar-right">
-			        <li class="menuoption"><a href="#" class="white"><h4>ABOUT</h4></a></li>
-			        <li class="menuoption"><a href="#" class="white"><h4>EVENTS</h4></a></li>
-			        <li class="menuoption"><a href="news.php" class="white"><h4>NEWS</h4></a></li>
-			      </ul>
-			</div>
-	        
-	      </div>
-	    </nav>
+        <?php echo printHeader(true, true, "red", "home", "./index.php") ?>
 
 		<!-- HomePage CoverImage-->
 	    <div class="coverimage">
@@ -62,46 +41,26 @@
 	    	<!-- Nav -->
 	    	<?php printHeader(false, false, "none", "home", "./index.php") ?>
 	    	
-	    	<!-- menu 
-		    <nav class="navbar navbar-inverse" role="navigation">
-		      	
-			        <div class="navbar-header">
-		        		<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar2">
-					        <span class="icon-bar"></span>
-					        <span class="icon-bar"></span>
-					        <span class="icon-bar"></span>                        
-				      	</button>
-			        </div>
-			        
-			        <div class="collapse navbar-collapse" id="myNavbar2">
-					      <ul class="nav navbar-nav navbar-right">
-					        <li class="menuoption"><a href="#" class="white"><h4>ABOUT</h4></a></li>
-					        <li class="menuoption"><a href="#" class="white"><h4>EVENTS</h4></a></li>
-					        <li class="menuoption"><a href="news.php" class="white"><h4>NEWS</h4></a></li>
-					      </ul>
-					</div>
-		        
-		    </nav>-->
-	    	
 	    	<!-- content -->
 		    <div class="inner">
 				<div class="content">
 					<img src="./img/Logo.png" class="img-responsive" />
 					<!--<h1 class="white">Website Under Construction</h1>-->
-					<iframe class="deezer" width="375" height="100" src="https://www.mixcloud.com/widget/iframe/?embed_type=widget_standard&amp;embed_uuid=e4ddf103-1c24-4903-9fae-0c642c6b3465&amp;feed=https%3A%2F%2Fwww.mixcloud.com%2Fmnsr_z%25C3%25A9r0%2F&amp;hide_cover=1&amp;hide_tracklist=1&amp;replace=0&color=ffffff" frameborder="0"></iframe>
+					<iframe  width="100%" height="60" style="max-width:375px;" src="https://www.mixcloud.com/widget/iframe/?feed=https%3A%2F%2Fwww.mixcloud.com%2Fmnsr_z%25C3%25A9r0%2Fmnsr-z%25C3%25A9r0_live-mix-radio-taxi_urgent-301115%2F&hide_cover=1&mini=1&hide_artwork=1&light=1" frameborder="0"></iframe>
+					<!--<iframe class="deezer" width="375" height="100" src="https://www.mixcloud.com/widget/iframe/?embed_type=widget_standard&amp;embed_uuid=e4ddf103-1c24-4903-9fae-0c642c6b3465&amp;feed=https%3A%2F%2Fwww.mixcloud.com%2Fmnsr_z%25C3%25A9r0%2F&amp;hide_cover=1&amp;hide_tracklist=1&amp;replace=0&color=ffffff" frameborder="0"></iframe>-->
 				</div>
 			</div>
 		  
 	    </div>
 	    
 	    <!-- Homepage Content-->
-	    <div class="container">
+	    <div class="container" id="about_segment">
 	    	
 	    	<!-- About Short -->
-	    	<div class="content-segment">
+	    	<div class="content-segment" >
 	    		<div class="row about">
 		        	<div class="col-md-3 title">
-		        		<h1 class="gray">BINAIR 01</h1>
+		        		<span class="sidetitle">BINAIR 01</span><br><br>
 					</div>
 					<div class="col-md-9 body-content">
 						<h4>
@@ -116,7 +75,7 @@
 			<div class="content-segment">
 	    		<div class="row news">
 		        	<div class="col-md-3 col-sm-12 title">
-		        		<h1 class="gray">NEWS</h1>
+		        		<span class="sidetitle">NEWS</span><br><br>
 					</div>
 					<div class="body-content">
 						<?php retrieveBlogpostsPreview(6) ?>
@@ -125,40 +84,22 @@
 
 				<a class="btn btn-default link-more" href="news.php" role="button">more news &raquo;</a>
 			</div>
-	
-	
-			<!-- Events -->
+			
+			
+			<!-- Latest Events -->
 			<div class="content-segment">
 	    		<div class="row news">
-		        	<div class="col-md-3 title">
-		        		<h1 class="gray">EVENTS</h1>
+		        	<div class="col-md-3 col-sm-12 title">
+		        		<span class="sidetitle">EVENTS</span><br><br>
 					</div>
 					<div class="body-content">
-				        <div class="col-md-3">
-				        	<a href="#">
-					        	<img src="img/temp/coverimage.jpg" class="img-responsive" />
-					          	<h4><b>Lorem ipsum doloramet, consectetur adipiscing elit</b></h4>
-					          	<div class="subtitle">posted 15/02/2016</div>
-				          	</a>
-				        </div>
-				        <div class="col-md-3">
-				        	<a href="#">
-					        	<img src="img/temp/coverimage.jpg" class="img-responsive" />
-					          	<h4><b>Lorem ipsum dolor sit amet, consectetur adipiscing elit</b></h4>
-					          	<div class="subtitle">posted 15/02/2016</div>
-				          	</a>
-				       </div>
-				        <div class="col-md-3">
-				        	<a href="#">
-					        	<img src="img/temp/coverimage.jpg" class="img-responsive" />
-					          	<h4><b>Lorem ipsum dolor sit amet, consectetur adipiscing elit</b></h4>
-					          	<div class="subtitle">posted 15/02/2016</div>
-				          	</a>
-				        </div>
+						<?php retrieveEventsPreview(3) ?>
 			        </div>
 				</div>
-				<a class="btn btn-default link-more" href="#" role="button">more events &raquo;</a>
+
+				<a class="btn btn-default link-more" href="events.php" role="button">more events &raquo;</a>
 			</div>
+	
 	      
 	    </div> 
 	    
