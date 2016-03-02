@@ -205,10 +205,12 @@
 			$formattedProject .= <<<PREVIEW
 			<div class="col-md-3 col-sm-4">
 	        	<a href="events.php?id=$id">
-		        	<img src="$imgPath" class="img-responsive" />
-	          	</a>
-	          	<h4><b>$title</b></h4>
-		        <div class="subtitle"> <b>$venue</b> <br> $date</div>
+	        		<div class='embed-responsive embed-responsive-16by9'>
+		        		<img src="$imgPath" class="img-responsive" />
+		        	</div>
+		          	<h4><b>$title</b></h4>
+			        <div class="subtitle"> <b>$venue</b> <br> $date</div>
+			    </a>
 			</div>
 PREVIEW;
 
@@ -233,6 +235,11 @@ PREVIEW;
 			$id = $this->id;
 			$body = $this->preview;
 			
+			//only display ticket link if eventdate is after todays date   			date("Y").date("m").date("d")
+			$tickets = ( $this->sortdateArray["year"].$this->sortdateArray["month"].$this->sortdateArray["day"] >= date("Y").date("m").date("d")) 
+			? "<a class='thin_button' target='_blank' href='". $this->ticketsurl ."' role='button'><span>Tickets &raquo;</span></a>" 
+			: "&nbsp;";
+			
 			$fblink = "http://binair01.be/dev/news.php?id=".$id;
 			
 			$taglinks ="";
@@ -246,18 +253,22 @@ PREVIEW;
    	
 					<!--post-->
 					<div class="body-content  news_overview">
-			
-					        <a href="events.php?id=$id">
-						        <img src='$imgPath' class='img-responsive' />
-						    </a>
-						    <div class="row">
-						    	<div class="col-md-10">
-						          	<h1 class="event-title">$title</h1>
-						          	<div class="gray news_subtitle"><b>$where</b></div>
-					          		<div class="gray news_subtitle">$date</div>
-					          	</div>
+							<div class="row">
+					        	<a href="events.php?id=$id">
+						       
+						       		<img src='$imgPath' class='img-responsive' />
+						    
+						    
+							    	<div class="col-md-10">
+							          	<h1 class="event-title"><span>$title</span></h1>
+							          	<div class="gray news_subtitle"><b>$where</b></div>
+						          		<div class="gray news_subtitle">$date</div>
+						          	</div>
+					          	
+					          	</a>
+					          	
 					          	<div class="col-md-2">
-						    		<a class="btn btn-default link-more" target="_blank" href="$tickets" role="button">Get Tickets &raquo;</a>
+						    		$tickets <!-- btn btn-default link-more -->
 						    	</div>
 			          		</div>
 			          		<p class="body">$body</p>
@@ -283,7 +294,16 @@ PREVIEW;
 			
 			$imgPath = "img/original/".$this->coverimage;
 			$title = $this->title;
-			$date = $this->sortdate;
+			$date =  date('F', strtotime($this->sortdateArray["year"].$this->sortdateArray["month"].$this->sortdateArray["day"]))." ".$this->sortdateArray["day"].date('S').", ".$this->sortdateArray["year"];//$this->sortdate;
+			$hour = $this->hour;
+			$venue = $this->venue;
+			$address = $this->address;
+			
+			//only display ticket link if eventdate is after todays date   			date("Y").date("m").date("d")
+			$tickets = ( $this->sortdateArray["year"].$this->sortdateArray["month"].$this->sortdateArray["day"] >= date("Y").date("m").date("d")) 
+			? "<a class='ticket-link' target='_blank' href='". $this->ticketsurl ."' role='button'><h1>Get Tickets</h1></a><br>" 
+			: "&nbsp;";
+			
 			$id = $this->id;
 			$body = $this->body;
 			
@@ -307,7 +327,7 @@ PREVIEW;
 		    	<!-- Nav -->
 		    	$nav 
 		    	
-		    	<!-- content -->
+		    	<!-- cover image content -->
 			    <div class="inner">
 					<div class="content">
 						&nbsp;
@@ -316,35 +336,107 @@ PREVIEW;
 			  
 		    </div>
 			
-			
-			<div class="news-preview">
-	    		<div class="row">
-	    			<!--date-->
-	    			<div class="col-md-3 title">
-		        		<a class="gray" href="news.php"><h1 class="gray">« BACK</h1></a>
-					</div>
-					<!--post-->
-					<div class="body-content">
-				        <div class="col-md-8">	
-				          	<h1>$title</h1>
-			          		<div class="italic gray">tags: $taglinks</div>
-			          		<p class="body">$body</p>
-			          	
-			          		<!--<div class="fb-share-button" data-href="$fblink" data-layout="button_count"></div>-->
+			<!-- Main Content-->
+	    	<div class="container" id="about_segment">
+				<div class="news-preview">
+				
+		    		<div class="row">
+		    		
+		    			<!--tickets-->
+		    			<div class="body-content">
+		    				<div class="col-md-3">
+			        			$tickets 
+							</div>
+						</div>
+						
+						<!--post-->
+						<div class="body-content">
+					        <div class="col-md-8 black eventpage-title">	
+					          	<h1>$title</h1>
+					        </div>
 				        </div>
-			        </div>
-				</div>
-				<div class="row" style="display:$adminVisibility">
-					<div class="col-md-3 title">
-						&nbsp;
+				        
 					</div>
-					<div class="col-md-8">	
-						<a class="btn btn-danger delete"  href="./inc/update.inc.php?action=project_delete&id=$id" >delete</a> 
-						<a class="btn btn-primary" href="admin.php?editingEvent=1&id=$id">edit</a>
+					
+					
+					
+					<div class="row">
+						<div class="col-md-3 event-sidebar">
+						<p>
+							<ul>
+								<li>
+								<b>
+								
+									<table>
+										<tr>
+										
+											<td>
+												<span class="glyphicon glyphicon-map-marker"></span>
+											</td>
+												
+											<td>
+												<div class="uppercase">
+													$venue<br>
+												</div>
+												<div>
+													$address
+												</div>
+											</td>
+											
+										</tr>
+									</table>
+									
+								</b>
+								</li>
+								
+															
+								<li>
+								<b>
+								
+								<table>
+										<tr>
+										
+											<td>
+												<span class="glyphicon glyphicon-time"></span>
+											</td>
+												
+											<td>
+												<div>
+													$date 
+												</div>
+												<div>
+													at $hour
+												</div>
+											</td>
+											
+										</tr>
+									</table>
+									
+								</b>
+								</li>
+								
+							</ul>
+							
+						</div>
+						<div class="col-md-8">	
+						    <p class="body">$body</p>
+			          		<div class="italic gray">tags: $taglinks</div>	
+						</div>
+					</div>
+					
+					<br><br>
+					
+					<div class="row" style="display:$adminVisibility">
+						<div class="col-md-3 title">
+							&nbsp;
+						</div>
+						<div class="col-md-8">	
+							<a class="btn btn-danger delete"  href="./inc/update.inc.php?action=project_delete&id=$id" >delete</a> 
+							<a class="btn btn-primary" href="admin.php?editingEvent=1&id=$id">edit</a>
+						</div>
 					</div>
 				</div>
 			</div>
-			
 POST;
 
 			return $formattedProject;

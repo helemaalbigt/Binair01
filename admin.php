@@ -16,6 +16,10 @@ $errorVisibility="none";
 
 $editedID="";
 
+//website parameters
+$webCoverImage ="./img/original/cover_original.jpg";
+$playlist = getPlaylistID();
+
 //blogpost values
 $postTitle ="";
 $postTags ="";
@@ -360,8 +364,65 @@ if(isset($_GET['editingEvent']) && isset($_GET['id'])){
 				</div>
 				
             </div>
+            <!-- LOGOUT END -->
+            
+            
+            <!-- WEBSITE PARAMETERS START -->
+            <div class="row">
+                <div class="col-sm-2">&nbsp;</div>
+                <div class="col-sm-10">
+                	<h2>Website parameters</h2>
+                </div>
+            </div>
+            
+				 <!-- COVERIMAGE -->
+	            <form class="form-horizontal" method="post" action="./inc/update.inc.php" enctype="multipart/form-data" role="form"> <!-- <?php echo $edit ?>-->
+	
+	                <!--coverimage-->
+	                <div class="form-group">
+	                    <label class="control-label col-sm-2" for="coverimage">Cover Image:</label>
+	                    <img class="col-sm-3 imagepreview img-responsive" src="<?php echo $webCoverImage?>"/>
+	                    <div class="col-sm-6">
+	                    	<div class="input-group">
+				                <span class="input-group-btn">
+				                    <span class="btn btn-default btn-file">
+				                        Browse&hellip; <input name="coverimage" id="coverimage" type="file" onchange="updatePreviewImage(this)">
+				                    </span>
+				                </span>
+				                <input type="text" class="form-control" readonly>
+				            </div>
+	                    </div>
+	                    <!--submit-->
+	                    <div class="col-sm-1">
+	                    	<input type="hidden" name="updatecoverimage" value="updatecoverimage" >
+	                    	<button type="submit" class="btn btn-primary floatright">Update</button>
+	                    </div>
+	                </div>
+	
+	             </form>
+	             
+	             <!-- PLAYLIST -->
+	            <form class="form-horizontal" method="post" action="./inc/update.inc.php" enctype="multipart/form-data" role="form"> <!-- <?php echo $edit ?>-->
+	
+	                <!--coverimage-->
+	                <div class="form-group">
+	                    <label class="control-label col-sm-2" for="playlist">Deezer Playlist:</label>
+	                    <div class="col-sm-9">
+                        	<input type="text" class="form-control" id="playlist" name="playlist" placeholder="eg:1256571301" value="<?php echo $playlist?>">
+                    		<div class="infotext">Enter Deezer playlist ID, found on playlist embed page </div>
+                    	</div>
+	                    <!--submit-->
+	                     <div class="col-sm-1">
+	                    	<input type="hidden" name="updateplaylist" value="updateplaylist" >
+	                    	<button type="submit" class="btn btn-primary floatright">Update</button>
+	                    </div>
+	                </div>
+	
+	             </form>
+	             
+			<br><br><br>
             <?php } ?>
-	    	<!-- LOGOUT END -->
+	    	<!-- WEBSITE PARAMETERS END -->
 	    	
 	    	
             <!-- ADD BLOGPOST START -->
@@ -417,13 +478,12 @@ if(isset($_GET['editingEvent']) && isset($_GET['id'])){
                     </div>
                 </div>
                 
-                <!--youtubecover-->
+                <!--mediacover-->
                 <div class="form-group">
-                    <label class="control-label col-sm-2" for="title">Youtube Cover:</label>
+                    <label class="control-label col-sm-2" for="title">Media Cover:</label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control" id="youtubecover" name="youtubecover" placeholder="eg: https://www.youtube.com/watch?v=SHqIWb1m0Sg" value="<?php echo $youtubeCover ?>">
-                    	<div class="infotext">Must be a youtube link! If this field is filled in, the coverimage on the newspage will be replaced by the youtube video.</div>
-                    	<div class="infotext">Coverimage is still required for the small preview on the main page.</div>
+                        <input type="text" class="form-control" id="youtubecover" name="youtubecover" placeholder="paste embed code here" value="<?php echo $youtubeCover ?>">
+                    	<div class="infotext">Paste the embedcode here (starts and ends with < iframe > tags)</div>
                     </div>
                 </div>
                 

@@ -9,6 +9,18 @@ html, body {
 	color:white;
 }
 
+.black{
+	color:black;
+}
+
+.uppercase{
+	text-transform: uppercase;
+}
+
+.nomargin{
+	margin:0;
+}
+
 .gray, a.gray, .gray a, a.gray:hover{
 	color:rgb(160,160,160);
 }
@@ -106,7 +118,7 @@ h4{
 	height:100%;
 	width:100%;
 	margin:auto;
-	background:url("../img/temp/main.jpg") no-repeat 50% 50%;
+	background:url("../img/cover_red.jpg") no-repeat 50% 50%;
 		-webkit-background-size: cover;
 	-moz-background-size: cover;
 	-o-background-size: cover;
@@ -128,20 +140,33 @@ h4{
 	max-width:600px;
 	margin:auto;
 	text-align:center;
+	height:100%;
+	position:relative;
 }
 
 .img-responsive {
     margin:0 auto 50px;
 }
 
+.coverimage .biglogo{
+  position:relative;
+  top:calc(50% - 230px);
+  vertical-align:middle;
+}
+
+.coverimage .playlist{
+	position:absolute;
+	bottom:15px;
+	width:calc(100% - 40px);
+}
+
 .coverimage .navbar {
   width:100%;
 }
 
- {
-  list-style:none;
-  float:left;
-  margin-left:40px;
+.logo_wrapper{
+	position:relative;
+	height:100%;
 }
 
 .body-content{
@@ -181,8 +206,41 @@ h4{
 }
 
 .content-segment a:hover img, .content-segment iframe:hover{
-  outline:white solid 5px;
-  outline-offset:-10px;
+  //outline:white solid 5px;
+  //outline-offset:-10px;
+}
+
+.content-segment a:hover .embed-responsive, .content-segment a:hover .embed-responsive iframe{
+	//outline:white solid 5px;
+    //outline-offset:-10px;
+}
+
+.content-segment a h4, .news-preview a h1, a:hover .event-title span{
+	border-bottom:solid white 2px;
+	text-decoration:none;
+	margin-top:5px;
+	color:black;
+}
+
+.news-preview a h1{
+	border-bottom:solid white 4px;
+	text-decoration:none;
+	margin-top:8px;
+	color:black;
+}
+
+.content-segment a:hover{
+	text-decoration:none;
+}
+
+.content-segment a:hover h4 b{
+	text-decoration:none;
+	border-bottom:solid black 2px;
+}
+
+.news-preview a:hover h1 span{
+	text-decoration:none;
+	border-bottom:solid black 4px;
 }
 
 .content-segment .subtitle{
@@ -256,8 +314,11 @@ ul.social #facebook:hover, ul.social  #youtube:hover, ul.social  #mixcloud:hover
 .sidetitle{
 	color:black;
 	text-decoration: none;
-    border-bottom: 5px solid black;
     font-size:250%;
+}
+
+.underscore{
+	border-bottom: 5px solid black;
 }
 
 .sidetitle.noninteractive{
@@ -366,19 +427,19 @@ a.sidetitle_link:hover{
  }
 
 .navbar.green{
-	background:url("../img/temp/news.jpg") no-repeat 50% 50%;
+	background:url("../img/cover_green.jpg") no-repeat 50% 50%;
 	background-attachment: fixed;
 }
 
 .navbar.red{
 	//background-color:rgb(200,70,80);
-	background:url("../img/temp/main.jpg") no-repeat 50% 50%;
+	background:url("../img/cover_red.jpg") no-repeat 50% 50%;
 	background-attachment: fixed;
 }
 
 .navbar.beige{
 	//background-color:rgb(200,70,80);
-	background:url("../img/temp/events.jpg") no-repeat 50% 50%;
+	background:url("../img/cover_beige.jpg") no-repeat 50% 50%;
 	background-attachment: fixed;
 }
 
@@ -392,6 +453,146 @@ a.sidetitle_link:hover{
     border-bottom: 5px solid white;
 }
 
+
+
+/*EVENTS*/
+.event-title{
+	padding-right:10px;
+	margin-top:8px;
+}
+
+.event-sidebar ul{
+	list-style:none;
+    margin-bottom:0;
+    padding-left:0;
+}
+
+
+.event-sidebar li{
+	margin-bottom:15px;
+}
+
+.event-sidebar ul div:first-child{
+	text-transform: capitalize;
+	font-size:130%;
+}
+
+a.ticket-link{
+	color:black;
+	text-align:center;
+	text-decoration:none;
+}
+
+a.ticket-link h1{
+	font-size:200%;
+	padding: 5px;
+	border: 5px solid black;
+}
+
+a.ticket-link:hover h1{
+	font-size:200%;
+	padding: 5px;
+	color:white;
+	background-color:black;
+	border: 5px solid black;
+}
+
+.eventpage-title{
+	margin-top:-5px;
+}
+
+.glyphicon {
+    font-size: 25px;
+    margin-right:10px;
+}
+
+iframe{
+	z-index:0;
+}
+
+a.thin_button, a.thin_button:visited, a.thin_button:active{
+  border:2px solid gray;
+  color:gray;
+  float:right;
+  font-weight:bold;
+  margin-top:13px;
+  padding:5px;
+}
+
+a.thin_button:hover{
+	border:2px solid black;
+	color:white;
+	background-color:black;
+}
+
+
+/*float tickets link to right when bootstrap resizes*/
+@media screen and (max-width: 991px){
+	.link-more{
+		float:none;
+		margin-top:5px;
+		margin-bottom:10px;
+	}
+}
+
+/*ABOUT PAGE*/
+.slagzin{
+	margin-top:5px;
+	line-height:140%;	
+}
+
+.slagzin a{
+	color:black;
+	text-decoration:none;
+	padding:0px 6px 2px 3px;
+}
+
+.slagzin a.red{
+	background-color:#bf1e2e;
+}
+
+.slagzin a.red:hover{
+	color:white;
+}
+
+.slagzin a.green{
+	background-color:#648c8c;
+}
+
+.slagzin a.green:hover{
+	color:white;
+}
+
+.slagzin a.beige{
+	background-color:#a1a274;
+}
+
+.slagzin a.beige:hover{
+	color:white;
+}
+
+.fill{
+	border-bottom:solid 5px;
+}
+
+.fill.red{
+	border-color:#bf1e2e;
+}
+
+.fill.green{
+	border-color:#648c8c;
+}
+
+.fill.beige{
+	border-color:#a1a274;
+}
+
+#musictext a:hover{
+	text-decoration:underline;
+}
+
+
+/*SMALL SCREEN STYLE CHANGES*/
 @media screen and (max-width: 767px){
 	.navbar .menuoption{
 		width:100%;
@@ -437,24 +638,17 @@ a.sidetitle_link:hover{
 		background:none;
 		background-color:rgb(135,135,95);
 	}
-}
-
-/*flaot tickets link to right when bootstrap resizes*/
-@media screen and (max-width: 991px){
-	.link-more{
-		float:none;
-		margin-top:5px;
-		margin-bottom:10px;
+	
+	.logo_wrapper{
+		margin:20px;
+	}
+	
+	a.thin_button, a.thin_button:visited, a.thin_button:active{
+		float:left;	
 	}
 }
 
 
 a:hover span h4{
 	text-decoration:none;
-}
-
-/*EVENTS*/
-.event-title{
-	padding-right:10px;
-	margin-top:8px;
 }

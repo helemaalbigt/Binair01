@@ -183,13 +183,20 @@
 			$date = $this->sortdate;
 			$id = $this->id;
 			
+			$cover="";
+			if($this->youtubeCover != NULL && $this->youtubeCover != ""){
+				$cover = "<div class='embed-responsive embed-responsive-16by9'>".htmlspecialchars_decode($this->youtubeCover)."</div>";
+			} else{
+				$cover = "<div class='embed-responsive embed-responsive-16by9'><img src='".$imgPath."' class='img-responsive' /></div>";
+			}
+			
 			$formattedProject .= <<<PREVIEW
 			<div class="col-md-3 col-sm-4">
-	        	<a href="news.php?id=$id">
-		        	<img src="$imgPath" class="img-responsive" />
-	          	</a>
-	          	<h4><b>$title</b></h4>
-		        <div class="subtitle">posted $date</div>
+	        	<a href="news.php?id=$id" class="previewcover">
+		        	$cover 
+	          		<h4><b>$title</b></h4>
+		        	<div class="subtitle">posted $date</div>
+		        </a>
 			</div>
 PREVIEW;
 
@@ -221,8 +228,7 @@ PREVIEW;
 			
 			$cover="";
 			if($this->youtubeCover != NULL && $this->youtubeCover != ""){
-				$videoCode = explode("watch?v=", $this->youtubeCover)[1];
-				$cover = "<div class='embed-responsive embed-responsive-16by9'><iframe class='embed-responsive-item' src='//www.youtube.com/embed/".$videoCode."'></iframe></div>";
+				$cover = "<div class='embed-responsive embed-responsive-16by9'>".htmlspecialchars_decode($this->youtubeCover)."</div>";
 			} else{
 				$cover = "<img src='".$imgPath."' class='img-responsive' />";
 			}
@@ -233,9 +239,9 @@ PREVIEW;
 				<div class="body-content news_overview">
 				        <a href="news.php?id=$id">
 					        $cover
-					    </a>
-			          	<h1>$title</h1>
-			          	<div class="gray news_subtitle">$date</div>
+			          		<h1><span>$title</span></h1>
+			          		<div class="gray news_subtitle">$date</div>
+			          	</a>
 		          		
 		          		<p class="body">$body</p>
 		          		
@@ -274,8 +280,7 @@ PREVIEW;
 			
 			$cover="";
 			if($this->youtubeCover != NULL && $this->youtubeCover != ""){
-				$videoCode = explode("watch?v=", $this->youtubeCover)[1];
-				$cover = "<div class='embed-responsive embed-responsive-16by9'><iframe class='embed-responsive-item' src='//www.youtube.com/embed/".$videoCode."'></iframe></div>";
+				$cover = "<div class='embed-responsive embed-responsive-16by9'>".htmlspecialchars_decode($this->youtubeCover)."</div>";
 			} else{
 				$cover = "<img src='".$imgPath."' class='img-responsive' />";
 			}
@@ -286,7 +291,7 @@ PREVIEW;
 	    		<div class="row">
 	    			<!--date-->
 	    			<div class="col-md-4 title">
-		        		<a class="sidetitle_link" href="news.php"><span>« BACK</span></a>
+		        		<a class="sidetitle_link" href="news.php"><span>« ALL NEWS</span></a>
 					</div>
 					<!--post-->
 					<div class="body-content">

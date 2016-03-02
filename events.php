@@ -115,8 +115,12 @@
         
         <?php 
         if(!$showAll){
+        	//if id was passed in url
+        	//show the event page of one event
         	echo $event -> formatSingleEvent($loggedin);
         } else{
+        	//no id passed in url
+        	//show all events
         ?>
         
         <!-- Nav -->
@@ -129,7 +133,7 @@
 	    	<div class="row">
     			<!--date-->
     			<div class="col-md-4 title">
-	        		<span class="sidetitle">UPCOMING</span><br><br>
+	        		<span class="sidetitle underscore">UPCOMING</span><br><br>
 				</div>
 			
 				<div class="content-segment col-md-8" >
@@ -144,7 +148,7 @@
 	    	<div class="row">
     			<!--date-->
     			<div class="col-md-4 title">
-	        		<span class="sidetitle">PAST EVENTS</span><br><br>
+	        		<span class="sidetitle underscore">PAST EVENTS</span><br><br>
 				</div>
 			
 				<div class="content-segment col-md-8" id="content">

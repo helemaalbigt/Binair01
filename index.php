@@ -9,6 +9,8 @@
 	}
 ?>
 
+<!-- Website by Thomas Van Bouwel - www.tvb-design.com-->
+
 <!doctype html>
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang=""> <![endif]-->
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8" lang=""> <![endif]-->
@@ -35,23 +37,31 @@
         <!-- Nav -->
         <?php echo printHeader(true, true, "red", "home", "./index.php") ?>
 
+
+
 		<!-- HomePage CoverImage-->
 	    <div class="coverimage">
 	    	
 	    	<!-- Nav -->
-	    	<?php printHeader(false, false, "none", "home", "./index.php") ?>
+	    	<?php echo printHeader(false, false, "none", "home", "./index.php") ?>
 	    	
 	    	<!-- content -->
 		    <div class="inner">
 				<div class="content">
-					<img src="./img/Logo.png" class="img-responsive" />
+					<div class="logo_wrapper">
+						<img src="./img/Logo.png" class="img-responsive biglogo" />
+					</div>
 					<!--<h1 class="white">Website Under Construction</h1>-->
-					<iframe  width="100%" height="60" style="max-width:375px;" src="https://www.mixcloud.com/widget/iframe/?feed=https%3A%2F%2Fwww.mixcloud.com%2Fmnsr_z%25C3%25A9r0%2Fmnsr-z%25C3%25A9r0_live-mix-radio-taxi_urgent-301115%2F&hide_cover=1&mini=1&hide_artwork=1&light=1" frameborder="0"></iframe>
-					<!--<iframe class="deezer" width="375" height="100" src="https://www.mixcloud.com/widget/iframe/?embed_type=widget_standard&amp;embed_uuid=e4ddf103-1c24-4903-9fae-0c642c6b3465&amp;feed=https%3A%2F%2Fwww.mixcloud.com%2Fmnsr_z%25C3%25A9r0%2F&amp;hide_cover=1&amp;hide_tracklist=1&amp;replace=0&color=ffffff" frameborder="0"></iframe>-->
+					<div class="playlist">
+						<iframe scrolling="no" frameborder="0" allowTransparency="true" src="http://www.deezer.com/plugins/player?format=classic&autoplay=false&playlist=false&width=700&height=350&color=007FEB&layout=&size=medium&type=playlist&id=<?php echo getPlaylistID()?>&app_id=1"  width="100%" height="90px"></iframe>
+						<!-- <iframe scrolling="no" frameborder="0" allowTransparency="true" src="http://www.deezer.com/plugins/player?format=classic&autoplay=false&playlist=false&width=700&height=350&color=007FEB&layout=&size=medium&type=playlist&id=1222291061&app_id=1"  width="100%" height="90px"></iframe>-->
+					</div>
 				</div>
 			</div>
 		  
 	    </div>
+	    
+	    
 	    
 	    <!-- Homepage Content-->
 	    <div class="container" id="about_segment">
@@ -60,29 +70,16 @@
 	    	<div class="content-segment" >
 	    		<div class="row about">
 		        	<div class="col-md-3 title">
-		        		<span class="sidetitle">BINAIR 01</span><br><br>
+		        		<span class="sidetitle underscore">BINAIR 01</span><br><br>
 					</div>
 					<div class="col-md-9 body-content">
 						<h4>
-							Donec id elit non mi porta gravida at <b>eget metus</b>. Fusce dapibus, tellus ac cursus commodo, <b>tortor</b> mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. <b>Donec sed odio dui.</b> </p>
-		         		<h4>
+							Binair 01 cares about music <b>diversity</b>. 
+							We offer quality dance music <b>neglected by mainstream media</b>, who only focus on Anglo-Saxon pop music.
+						<h4>
 					</div>
 				</div>
-				<a class="btn btn-default link-more" href="#" role="button">learn more &raquo;</a>
-			</div>
-			
-			<!-- Latest News -->
-			<div class="content-segment">
-	    		<div class="row news">
-		        	<div class="col-md-3 col-sm-12 title">
-		        		<span class="sidetitle">NEWS</span><br><br>
-					</div>
-					<div class="body-content">
-						<?php retrieveBlogpostsPreview(6) ?>
-			        </div>
-				</div>
-
-				<a class="btn btn-default link-more" href="news.php" role="button">more news &raquo;</a>
+				<a class="thin_button" href="#" role="button"><span>learn more &raquo;</span></a>
 			</div>
 			
 			
@@ -90,16 +87,33 @@
 			<div class="content-segment">
 	    		<div class="row news">
 		        	<div class="col-md-3 col-sm-12 title">
-		        		<span class="sidetitle">EVENTS</span><br><br>
+		        		<span class="sidetitle underscore">EVENTS</span><br><br>
 					</div>
 					<div class="body-content">
 						<?php retrieveEventsPreview(3) ?>
 			        </div>
 				</div>
 
-				<a class="btn btn-default link-more" href="events.php" role="button">more events &raquo;</a>
+				<a class="thin_button" href="events.php" role="button"><span>more events &raquo;</span></a>
 			</div>
 	
+	      				
+			<!-- Latest News -->
+			<div class="content-segment">
+	    		<div class="news">
+	    			<div class="row">
+			        	<div class="col-md-3 col-sm-12 title">
+			        		<span class="sidetitle underscore">NEWS</span><br><br>
+						</div>
+
+						<?php retrieveBlogpostsPreview(6) ?>
+
+				    </div>
+				</div>
+
+				<a class="thin_button" href="news.php" role="button"><span>more news &raquo;</span></a>
+			</div>
+	      
 	      
 	    </div> 
 	    

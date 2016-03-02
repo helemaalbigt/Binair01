@@ -17,6 +17,7 @@ if (session_id() == '' || !isset($_SESSION)) {
  	retrieveEvents($_GET['offset'], $_GET['load']);
  }
 
+
 /**
  * Clean form data data
  * 
@@ -25,7 +26,6 @@ if (session_id() == '' || !isset($_SESSION)) {
  * @param array $p Post data from a form
  * @return array $p
  */
- 
  function cleanData($p){
  	$returnArray = array();
  	foreach($p as $key => $value){
@@ -39,7 +39,7 @@ if (session_id() == '' || !isset($_SESSION)) {
  			$find = array("<?php", "?>");
 			$replace  = array("", "");
 			//trips possible tags (excluding links, bold, italic, lists, paragraphs) first, then removes certain forbidden strings, then removes backslashes, removes the first pargraph tag, removes the first closing paragraph tag, then converts remaining special characters to htmlentities
- 		  	$returnArray[$key] =htmlspecialchars( preg_replace('~<p>(.*?)</p>~is', '$1',stripslashes(str_replace($find, $replace, strip_tags($value, "<a><i><b><strong><em><li><ul><ol><br><p>"))), 1),ENT_QUOTES); 
+ 		  	$returnArray[$key] =htmlspecialchars( preg_replace('~<p>(.*?)</p>~is', '$1',stripslashes(str_replace($find, $replace, strip_tags($value, "<a><i><b><strong><em><li><ul><ol><br><p><iframe>"))), 1),ENT_QUOTES); 
 		}
  	}
  	//return the cleaned array
@@ -121,6 +121,34 @@ function getImageExtensions($type) {
 	//3.return filename
 	return $filename;
  }
+ 
+/**
+ * Save image in various colors
+ * 
+ * @param
+ * @return
+ */
+ function saveWebCoverImage($image){
+ 	//1.Original Image
+	// Separate the uploaded file array
+	list($name, $type, $tmp, $err, $size) = array_values($image);
+	//get extension
+	$ext = getImageExtensions($type);
+	//rename
+	$filename = "cover_original".$ext;
+	$coverimagePath = $_SERVER['DOCUMENT_ROOT'].APP_FOLDER."/img/original/".$filename;
+	//save original
+	if (!move_uploaded_file($tmp, $coverimagePath)) {
+	 	throw new Exception("Couldn't save the uploaded image!");
+    }
+	
+	//2.save small and medium image
+	$destination = '../img/'."cover_red".$ext;
+	$img = new abeautifulsite\SimpleImage($coverimagePath);
+	$img->desaturate()->contrast(30)->brightness(-40)->colorize('#bf1e2e', .8)->save('../img/'."cover_red".$ext);
+	$img->desaturate()->contrast(10)->brightness(-80)->colorize('#648c8c', .8)->save('../img/'."cover_green".$ext);
+	$img->desaturate()->contrast(0)->brightness(-100)->colorize('#a1a274', .8)->save('../img/'."cover_beige".$ext);	
+ }
 
 /**
  * Resize and save an image
@@ -140,6 +168,25 @@ function getImageExtensions($type) {
 	}
 	
  }
+ 
+ /**
+  * Return current playlist id
+  * 
+  * @param
+  * @return
+  */
+  function getPlaylistID(){
+  	$db = new PDO(DB_INFO, DB_USER, DB_PASS);
+	$sql = "SELECT playlist FROM parameters WHERE id=1 LIMIT 1";
+	$stmt = $db -> prepare($sql);
+	$stmt -> execute(array());
+
+	//save the returned playlist
+	$e = $stmt -> fetch();
+	$stmt -> closeCursor();
+	
+	return $e['playlist'];
+  }
  
  
  /**
@@ -165,14 +212,20 @@ function retrieveBlogpostsPreview($numberOfPosts) {
 	
 	$counter = 0;
 	
+	echo "<div class='body-content'>";
+	
 	while ($row = $stmt -> fetch()) {
 		
 		//echo in case of a new row of previews (3 per row)
 		if($counter%3 == 0 && $counter > 0){
 			echo <<<ROW
-			<div class="col-md-3 col-sm-0">
-				&nbsp;
 			</div>
+				</div>
+					<div class='body-content'>
+						<div class="row news">
+							<div class="col-md-3 col-sm-0">
+								&nbsp;
+							</div>
 ROW;
 		}
 		
@@ -184,6 +237,8 @@ ROW;
 		
 		$counter++;
 	}
+	
+	echo "</div>";
 
 	$stmt -> closeCursor();
 }
@@ -391,33 +446,42 @@ function retrievePostsWithTag($tag, $offset, $numberOfPosts) {
 	}
 	$stmt -> closeCursor();
 	
-	//sort the results array by sortdate and created
-	foreach ($results as $key => $row) {			// Obtain a list of columns
-	    $sortdate[$key]  = $row['sortdate'];
-	    $created[$key] = $row['created'];
-	}
-	array_multisort($sortdate, SORT_DESC, $created, SORT_DESC, $results);
-	
-	
-	//echo posts
-	foreach($results as $result){
-		switch($result['posttype']){
-			case 'blogpost':
-				$blogpost = new Blogpost(FALSE);
-				$blogpost -> updateParameters($result['id']);
-				echo $blogpost -> formatNewspage();
-				flush();
-				break;
-				
-			case 'event':
-				$event = new Event(FALSE);
-				$event -> updateParameters($result['id']);
-				echo $event -> formatEventpage();
-				flush();
-				break;
+	//if we found results, print them
+	if(count($results) > 0){
+		
+		//sort the results array by sortdate and created
+		foreach ($results as $key => $row) {			// Obtain a list of columns
+		    $sortdate[$key]  = $row['sortdate'];
+		    $created[$key] = $row['created'];
 		}
+		array_multisort($sortdate, SORT_DESC, $created, SORT_DESC, $results);
+		
+		
+		//echo posts
+		foreach($results as $result){
+			switch($result['posttype']){
+				case 'blogpost':
+					$blogpost = new Blogpost(FALSE);
+					$blogpost -> updateParameters($result['id']);
+					echo $blogpost -> formatNewspage();
+					flush();
+					break;
+					
+				case 'event':
+					$event = new Event(FALSE);
+					$event -> updateParameters($result['id']);
+					echo $event -> formatEventpage();
+					flush();
+					break;
+			}
+		}
+		
+	} else{
+		echo "<h4>Sorry, we found no news articles or events with this tag</h4><br>
+		<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>";
 	}
 }
+
 
 /**
   * Prints standard header
@@ -458,7 +522,7 @@ function printHeader($logoVisible, $fixed, $background, $page, $pageLink){
 	        
 	        <div class="collapse navbar-collapse" id="myNavbar$rand">
 			      <ul class="nav navbar-nav navbar-right">
-			        <li class="menuoption $aboutClass"><a href="index.php#about_segment" class="white"><h4>ABOUT</h4></a></li>
+			        <li class="menuoption $aboutClass"><a href="about.php" class="white"><h4>ABOUT</h4></a></li>
 			        <li class="menuoption $eventsClass"><a href="events.php" class="white"><h4>EVENTS</h4></a></li>
 			        <li class="menuoption $newsClass"><a href="news.php" class="white"><h4>NEWS</h4></a></li>
 			      </ul>

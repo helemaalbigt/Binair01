@@ -12,10 +12,11 @@ if (session_id() == '' || !isset($_SESSION)) {
 }
 
 
-
 //perform verification of input and required values
 
+/**************/
 /*Post a Event*/
+/**************/
 if($_SERVER['REQUEST_METHOD'] == 'POST' 
 //&& $_POST['posttype'] == "save blogpost"
 && !empty($_POST['title']) 
@@ -45,7 +46,9 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'
 	}
 }
 
+/*****************/
 /*Post a blogpost*/
+/*****************/
 else if($_SERVER['REQUEST_METHOD'] == 'POST' 
 //&& $_POST['posttype'] == "save blogpost"
 && !empty($_POST['title']) 
@@ -73,12 +76,55 @@ else if($_SERVER['REQUEST_METHOD'] == 'POST'
 	}
 }
 
+/***************************/
+/*Update Website Coverimage*/
+/***************************/
+else if($_SERVER['REQUEST_METHOD'] == 'POST' 
+&& !empty($_POST['updatecoverimage'])
+&& !empty($_FILES['coverimage'])){
+	
+	//clean post data
+	$cleanedPost = cleanData($_POST);
+	
+	//save image in various colors
+	saveWebCoverImage($_FILES['coverimage']);
+	
+	//go back to admin page
+	header('Location:../admin.php');
+	exit;
+}
+
+/*****************/
+/*Update Playlist*/
+/*****************/
+else if($_SERVER['REQUEST_METHOD'] == 'POST' 
+&& !empty($_POST['playlist'])){
+	
+	//clean post data
+	$cleanedPost = cleanData($_POST);
+	
+	//Open a database connection and store it
+	$db = new PDO(DB_INFO, DB_USER, DB_PASS);
+	$sql = "UPDATE parameters SET playlist=? WHERE id=1 LIMIT 1";
+	$stmt = $db->prepare($sql);
+	$stmt->execute(array($cleanedPost['playlist']));
+	$response = $stmt->fetch();
+	$stmt -> closeCursor();
+	
+	//go back to admin page
+	header('Location:../admin.php');
+	exit;
+}
+
+/*******/
 /*Login*/
+/*******/
 else if($_SERVER['REQUEST_METHOD'] == 'POST' 
 //&& $_POST['posttype'] == "login"
 && !empty($_POST['login_name']) 
 && !empty($_POST['login_password'])) 
 {
+	
 	//clean post data
 	$cleanedPost = cleanData($_POST);
 		
@@ -106,9 +152,10 @@ else if($_SERVER['REQUEST_METHOD'] == 'POST'
 	}
 }
 
+/*************/
 /*Create user*/
+/*************/
 else if($_SERVER['REQUEST_METHOD'] == 'POST' 
-&& $_POST['action'] == 'create_user' 
 && !empty($_POST['create_user_name']) 
 && !empty($_POST['create_user_password']) 
 && !empty($_POST['create_user_usertype'])){
@@ -143,8 +190,10 @@ else if($_SERVER['REQUEST_METHOD'] == 'POST'
 	exit;
 }
 
-//delete project
-else if ($_GET['action'] == 'project_delete') {
+/*****************/
+/*delete project */
+/*****************/
+else if (isset($_GET['action']) && $_GET['action'] == 'project_delete') {
 	//check if logged in and logged in as admin or editor before deleting
 	if(isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == 1){	
 		//instantiate the Project class
@@ -166,7 +215,9 @@ else if ($_GET['action'] == 'project_delete') {
 	};
 } 
 
-//if logout is pressed, log out
+/*******************************/
+/*if logout is pressed, log out*/
+/*******************************/
 else if($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['logout_submit'])){
 	//unset all login session variables
 	if(isset($_SESSION['loggedin'])) unset($_SESSION['loggedin']);
