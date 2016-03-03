@@ -54,7 +54,7 @@ if(isset($_GET['editingPost']) && isset($_GET['id'])){
 	$postTags = $blogpost->tagsOriginal;
 	$postSortdate = $blogpost->sortdateArray["day"]."/".$blogpost->sortdateArray["month"]."/".$blogpost->sortdateArray["year"];
 	$youtubeCover = $blogpost->youtubeCover;
-	$postCoverImage =  "./img/medium/".$blogpost->coverimage;
+	$postCoverImage =  ($blogpost->coverimage != NULL) ? "./img/medium/".$blogpost->coverimage : $postCoverImage;
 	$postBody = $blogpost->body;
 }
 
@@ -462,9 +462,18 @@ if(isset($_GET['editingEvent']) && isset($_GET['id'])){
                     </div>
                 </div>
                 
-                <!--coverimage-->
+                <!--mediacover-->
                 <div class="form-group">
-                    <label class="control-label col-sm-2" for="coverimage">*Cover Image:</label>
+                    <label class="control-label col-sm-2" for="title">Media Cover:</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="youtubecover" name="youtubecover" placeholder="paste embed code here" value="<?php echo $youtubeCover ?>">
+                    	<div class="infotext">Paste the embedcode here (starts and ends with < iframe > tags)</div>
+                    </div>
+                </div>
+                
+                 <!--coverimage-->
+                <div class="form-group">
+                    <label class="control-label col-sm-2" for="coverimage">Cover Image:</label>
                     <img class="col-sm-3 imagepreview img-responsive" src="<?php echo $postCoverImage?>"/>
                     <div class="col-sm-7">
                     	<div class="input-group">
@@ -475,15 +484,9 @@ if(isset($_GET['editingEvent']) && isset($_GET['id'])){
 			                </span>
 			                <input type="text" class="form-control" readonly>
 			            </div>
-                    </div>
-                </div>
-                
-                <!--mediacover-->
-                <div class="form-group">
-                    <label class="control-label col-sm-2" for="title">Media Cover:</label>
-                    <div class="col-sm-10">
-                        <input type="text" class="form-control" id="youtubecover" name="youtubecover" placeholder="paste embed code here" value="<?php echo $youtubeCover ?>">
-                    	<div class="infotext">Paste the embedcode here (starts and ends with < iframe > tags)</div>
+			            <div class="infotext">You need to either have a mediacover or a cover image. <br> 
+			                	If both are filled in, the small preview on the front page will display the coverimage instead of the mediacover
+			            </div>
                     </div>
                 </div>
                 

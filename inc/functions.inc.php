@@ -216,7 +216,7 @@ function retrieveBlogpostsPreview($numberOfPosts) {
 	
 	while ($row = $stmt -> fetch()) {
 		
-		//echo in case of a new row of previews (3 per row)
+		//echo in case of a new row of previews (3 per row): adds an empty row as a spacer
 		if($counter%3 == 0 && $counter > 0){
 			echo <<<ROW
 			</div>
@@ -478,7 +478,7 @@ function retrievePostsWithTag($tag, $offset, $numberOfPosts) {
 		
 	} else{
 		echo "<h4>Sorry, we found no news articles or events with this tag</h4><br>
-		<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>";
+		<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><!-- sorry, I was lazy -->";
 	}
 }
 

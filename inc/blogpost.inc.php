@@ -33,7 +33,7 @@
 				$this->sortdate = NULL;
 				$this->sortdateArray = NULL;
 				$this->tags = NULL;
-				$this->coverimage = "img/default.jpg";
+				$this->coverimage = NULL;
 				$this->youtubeCover = NULL;
 				$this->body = NULL;
 			}
@@ -113,8 +113,8 @@
 			
 		 	//handle coverimage
 		 	$filename="";
-		 	//if clause prevent execution if project was edited(id exists) and no new image was added (image is not empty)
-			if (empty($p['id']) || $_FILES['coverimage']['name'] != '') {
+		 	//if clause prevent execution if no new image was added (image is not empty)
+			if ($_FILES['coverimage']['name'] != '') {
 				try {
 					$filename = saveImage($_FILES['coverimage']);
 				} catch (Exception $e) {
@@ -184,7 +184,7 @@
 			$id = $this->id;
 			
 			$cover="";
-			if($this->youtubeCover != NULL && $this->youtubeCover != ""){
+			if($this->youtubeCover != NULL && $this->youtubeCover != "" && ($this->coverimage == "" || $this->coverimage == NULL)){
 				$cover = "<div class='embed-responsive embed-responsive-16by9'>".htmlspecialchars_decode($this->youtubeCover)."</div>";
 			} else{
 				$cover = "<div class='embed-responsive embed-responsive-16by9'><img src='".$imgPath."' class='img-responsive' /></div>";
@@ -205,7 +205,7 @@ PREVIEW;
 		 
 		 
 		 /**
-		 * Format for the news overview page
+		 * Format post for the news overview page
 		 * 
 		 * @param array $p The $_POST superglobal
 		 * @return
