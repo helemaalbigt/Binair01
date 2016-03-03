@@ -40,6 +40,7 @@ $eventTicketLink ="";
 $eventCoverImage ="./img/default.jpg";
 $eventPreview ="";
 $eventBody="";
+$eventGalleryImages=NULL;
 $editingEvent = false;
 
 //check whether editing blogpost
@@ -76,6 +77,7 @@ if(isset($_GET['editingEvent']) && isset($_GET['id'])){
 	$eventCoverImage =  "./img/medium/".$event->coverimage;
 	$eventPreview = $event->preview;
 	$eventBody = $event->body;
+	$eventGalleryImages = $event->galleryimages;
 }
 ?>
 
@@ -100,6 +102,7 @@ if(isset($_GET['editingEvent']) && isset($_GET['id'])){
         <link rel="stylesheet" href="css/bootstrap-theme.min.css">
         <link rel="stylesheet" href="css/main.css">
 		<link rel="stylesheet" href="css/style.css">
+		<link rel="stylesheet" type="text/css" media="all" href="css/lightbox.css" />
 		
         <script src="js/vendor/modernizr-2.8.3-respond-1.4.2.min.js"></script>
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
@@ -643,8 +646,28 @@ if(isset($_GET['editingEvent']) && isset($_GET['id'])){
 			                </span>
 			                <input type="text" class="form-control" readonly>
 			            </div>
+			            <div class="infotext">Select one or more images <br> Note: to add images to an existing gallery, the original images need to be re-uploaded as well</div>
+			            <br>
+			            <div>
+			            	<?php
+			            		//if event has gallery images show them here
+			            		if($eventGalleryImages != NULL){     			
+			            			foreach ($eventGalleryImages as $key => $value) {
+										$galleryImgPath = "img/small/".$value;
+										$galleryImgPathXL = "img/original/".$value;
+
+										echo <<<IMAGE
+										<a href="$galleryImgPathXL" data-lightbox="eventalbum" title=""> 
+											<img src='$galleryImgPath' class='img-responsive event' />
+										</a>							
+IMAGE;
+			            			}
+								}
+			            	?>
+			            </div>
                     </div>
                 </div>
+                
                 
 				<!--submit-->
                 <div class="form-group"> 
@@ -767,5 +790,7 @@ if(isset($_GET['editingEvent']) && isset($_GET['id'])){
             r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));
             ga('create','UA-XXXXX-X','auto');ga('send','pageview');
         </script>
+         <!--lightbox script-->
+        <script type="text/javascript" src="js/lightbox.js"></script>
     </body>
 </html>

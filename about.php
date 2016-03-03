@@ -35,22 +35,31 @@
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
         <script type="text/javascript" >
         
-        /**
-		 * In a form, replace preview image when a new image is selected
-		 *  
-		 * @param 
-		 * @return
+				
+		/**
+		 * Cycle through each slagzin word 
 		 */
-		function goto(input) {
-		    var target = document.getElementById(input);
-		    var rect = target.getBoundingClientRect();
-		    var dist = rect.top - 70;
-			
-			$('html, body').animate({
-		        scrollTop: dist
-		    }, 800);
-		}
+		var slagZinLinks;
+		var slagZinIndex = 0;
+		var auto = true;
+
+		window.setInterval(function(){
+		 	
+		 	if(auto){
+			 	for(var i =0; i<slagZinLinks.length; i++){
+			 		slagZinLinks[i].setAttribute("active", "false");
+			 		document.getElementById(slagZinLinks[i].getAttribute("targetid")).style.display = 'none';	
+			 	}
+			 	
+			 	slagZinIndex = (slagZinIndex + 1) % slagZinLinks.length;
+			 	
+			 	slagZinLinks[slagZinIndex].setAttribute("active", "true");
+			 	document.getElementById(slagZinLinks[slagZinIndex].getAttribute("targetid")).style.display = 'block';	
+		 	}
+		 	
+		}, 3000);
 		
+				
 		/**
 		 *Add links to tags in "music" section
 		 */
@@ -67,8 +76,44 @@
 				att2.value = "_blank";   							// Set the value of the class attribute
 				links[i].setAttributeNode(att2);                    // Add the class attribute to <h1>
 			}
+			
+			//prep for auto word switch 
+			slagZinLinks = document.getElementById('slagzin').getElementsByTagName('a');	//get all links in slagzin
+			//show only first text
+			for(var i =0; i<slagZinLinks.length; i++){
+		 		slagZinLinks[i].setAttribute("active", "false");
+		 		document.getElementById(slagZinLinks[i].getAttribute("targetid")).style.display = 'none';	
+			}
+		 	slagZinLinks[slagZinIndex].setAttribute("active", "true");
+		 	document.getElementById(slagZinLinks[slagZinIndex].getAttribute("targetid")).style.display = 'block';	
 		};
 		
+		/**
+		 * In a form, replace preview image when a new image is selected
+		 *  
+		 * @param 
+		 * @return
+		 */
+		function goto(e) {
+			auto = false;
+			
+			for(var i =0; i<slagZinLinks.length; i++){
+		 		slagZinLinks[i].setAttribute("active", "false");
+		 		document.getElementById(slagZinLinks[i].getAttribute("targetid")).style.display = 'none';	
+		 	}
+		 	
+		 	e.setAttribute("active", "true"); 
+		 	document.getElementById(e.getAttribute("targetid")).style.display = 'block';	
+			
+			
+		   /* var target = document.getElementById(input);
+		    var rect = target.getBoundingClientRect();
+		    var dist = rect.top - 70;
+			
+			$('html, body').animate({
+		        scrollTop: dist
+		    }, 800);*/
+		}
         
         </script>
     </head>
@@ -90,15 +135,15 @@
 		        		<span class="sidetitle underscore">BINAIR 01</span><br><br>
 					</div>
 					<div class="col-md-8">
-						<h2 class="nomargin slagzin">
-							<a class="red" href="javascript:goto('bin01');">Binair 01</a> cares about <a class="red" href="javascript:goto('music');">music</a> <a class="red" href="javascript:goto('diversity');">diversity</a>. 
-							We <a class="green" href="javascript:goto('offer');">offer</a> <a class="green" href="javascript:goto('quality');">quality</a> <a class="green" href="javascript:goto('dance');">dance music</a> neglected 
-							by <a class="beige" href="javascript:goto('mainstream');">mainstream media</a>, who only focus on <a class="beige" href="javascript:goto('anglo');">Anglo-Saxon pop music</a>.
+						<h2 class="nomargin slagzin" id="slagzin">
+							<a class="red activated" href="#" active="true" targetid="bin01" onclick="goto(this)">Binair 01</a> cares about <a class="red" href="#" active="false" targetid="music" onclick="goto(this)">music</a> <a class="red" href="#" active="false" targetid="diversity" onclick="goto(this)">diversity</a>. 
+							We <a class="green" href="#" active="false" targetid="offer" onclick="goto(this)">offer</a> <a class="green" href="#" active="false" targetid="quality" onclick="goto(this)">quality</a> <a class="green" href="#" targetid="dance" onclick="goto(this)">dance music</a> neglected 
+							by <a class="beige" href="#" active="false" targetid="mainstream" onclick="goto(this)">mainstream media</a>, who only focus on <a class="beige" href="#" active="false" targetid="anglo" onclick="goto(this)">Anglo-Saxon pop music</a>.
 						<h2>
 					</div>
 				</div>
 				
-				<br>
+				
 				
 				<!-- woorden -->
 				<div class="row">
@@ -108,8 +153,8 @@
 					<div class="col-md-8">
 						
 						<!-- Binair01 -->
-						<h2 id="bin01"><span class="fill red">binair 01</span></h2>
-						<br>
+						<div id="bin01">
+						<h2><span class="fill red">binair 01</span></h2>
 						<p>
 							Binair01 is a music platform located in Ghent, Belgium, 
 							striving for more music diversity and an increased attention 
@@ -120,10 +165,11 @@
 							as an essential addition to the limited Anglo-Saxon pop music in the mainstream Flemish media.
 						</p>
 						<br>
+						</div>
 		
 						<!-- music -->
-						<h2 id="music"><span class="fill red">music</span></h2>
-						<br>
+						<div id="music">
+						<h2 ><span class="fill red">music</span></h2>
 						<p id="musictext">
 							Binair01 promotes music complementary to the selection made by the 
 							traditional public media. We pay attention to regions and genres 
@@ -142,10 +188,11 @@
 							unable to broaden its audience in the current media framing. 
 						</p>
 						<br>
+						</div>
 						
 						<!-- diversity -->
-						<h2 id="diversity"><span class="fill red">diversity</span></h2>
-						<br>
+						<div id="diversity">
+						<h2 ><span class="fill red">diversity</span></h2>
 						<p>
 							Music in Flanders is stuck behind imaginary linguistic and cultural barriers. 
 							National public radio broadcast neglects all music styles, origins and 
@@ -159,10 +206,11 @@
 							including musical development.
 						</p>
 						<br>
+						</div>
 						
 						<!-- offer -->
-						<h2 id="offer"><span class="fill green">offer</span></h2>
-						<br>
+						<div id="offer">
+						<h2 ><span class="fill green">offer</span></h2>
 						<p>
 							The music we discover in Belgium, in neighbor countries or at the other side of the planet, 
 							is shared on social media and streaming services such as Deezer, Spotify and Soundcloud. 
@@ -177,10 +225,11 @@
 							dance addicts the opportunity to hear and experience what radio leaves uncovered.
 						</p>
 						<br>
+						</div>
 						
 						<!-- quality -->
-						<h2 id="quality"><span class="fill green">quality</span></h2>
-						<br>
+						<div id="quality">
+						<h2 ><span class="fill green">quality</span></h2>
 						<p>
 							If not quality but the lack of airplay is the reason why not being programmed 
 							in the regular circuit, we consider this mechanism an increasing and vicious 
@@ -191,10 +240,11 @@
 							interesting music-technical features and fresh rhythm variations. 
 						</p>
 						<br>
+						</div>
 						
 						<!-- dance -->
-						<h2 id="dance"><span class="fill green">dance music</span></h2>
-						<br>
+						<div id="dance">
+						<h2 ><span class="fill green">dance music</span></h2>
 						<p>
 							The music we collect is carefully selected on its dance pedigree 
 							and complexity of influences and variety of rhythms. Dancing is the very core of our 
@@ -206,10 +256,11 @@
 							enjoyable and give your shoes all the space they need.  So dance, dance, otherwise we are lost.
 						</p>
 						<br>
+						</div>
 						
 						<!-- mainstream media -->
-						<h2 id="mainstream"><span class="fill beige">mainstream media</span></h2>
-						<br>
+						<div id="mainstream">
+						<h2 ><span class="fill beige">mainstream media</span></h2>
 						<p>
 							Most dance music played on the radio is focusing on catchy tunes rather than rich rhythms. 
 							Mid-Western Europe lost in bits and pieces the art of dancing together. The responsibility 
@@ -220,10 +271,11 @@
 							by broadcast mainstream media is decreasing and exclusively focusing on a 1% part of economically dominant music.
 						</p>
 						<br>
+						</div>
 						
 						<!-- anglo -->
-						<h2 id="anglo"><span class="fill beige">Anglo-Saxon pop-music</span></h2>
-						<br>
+						<div id="anglo">
+						<h2 ><span class="fill beige">Anglo-Saxon pop-music</span></h2>
 						<p>
 							Don’t be misunderstood: we actually like the good part of Anglo-Saxon pop, 
 							rock and dance music just like any genres. We just aim for the right balance, 
@@ -231,11 +283,12 @@
 							the conventional radio channels in Flanders.
 						</p>
 						<br>
+						</div>
 						
 					</div>
 				</div>
 				
-				<br><br>
+				<br><br><br><br><br>
 				
 				<!-- HISTORY -->
 				<div class="row">
@@ -258,6 +311,75 @@
 						</p>
 					</div>
 				</div>
+				
+				<br><br>
+				
+				<!-- MEMBERS -->
+				<div class="row">
+					<div class="col-md-3 title">
+		        		<span class="sidetitle underscore">MEMBERS</span><br><br>
+					</div>
+					
+					<!--Olivier-->
+					<div class="col-md-2 title">
+		        		<img src="img/temp.jpg" />
+					</div>
+					
+					<div class="col-md-6">
+						<h2 id="anglo"><span class="">Olivier Roegiest</span></h2>
+						<br>
+						<p>
+							Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam volutpat, 
+							ipsum non tristique tincidunt, leo mi dignissim lorem, quis pellentesque 
+							nunc augue sit amet nibh.
+						</p>
+						<br>
+					</div>		
+				</div><br>
+				
+				<div class="row">
+					<div class="col-md-3 title">
+		        		&nbsp;
+					</div>
+												
+					<!--Tijl-->
+					<div class="col-md-2 title">
+		        		<img src="img/temp.jpg" />
+					</div>
+					
+					<div class="col-md-6">
+						<h2 id="anglo"><span class="">Tijl</span></h2>
+						<br>
+						<p>
+							Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam volutpat, 
+							ipsum non tristique tincidunt, leo mi dignissim lorem, quis pellentesque 
+							nunc augue sit amet nibh.
+						</p>
+						<br>
+					</div>
+				</div><br>
+				
+				<div class="row">
+					<div class="col-md-3 title">
+		        		&nbsp;
+					</div>
+					
+					<!--Thomas-->
+					<div class="col-md-2 title">
+		        		<img src="img/temp.jpg" />
+					</div>
+					
+					<div class="col-md-6">
+						<h2 id="anglo"><span class="">Thomas</span></h2>
+						<br>
+						<p>
+							Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam volutpat, 
+							ipsum non tristique tincidunt, leo mi dignissim lorem, quis pellentesque 
+							nunc augue sit amet nibh.
+						</p>
+						<br>
+					</div>		
+				</div><br>
 				
 				<br><br>
 				

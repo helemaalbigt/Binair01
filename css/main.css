@@ -275,7 +275,12 @@ hr{
 
 ul.social {
 	list-style:none;
-	float:right;
+	padding:0;
+//	float:right;
+}
+
+.footertitle{
+	margin-bottom:5px;
 }
 
 ul.social a{
@@ -526,6 +531,11 @@ a.thin_button:hover{
 }
 
 
+.img-responsive.event{
+	margin:0 5px 5px 0;
+	float:left;
+}
+
 /*float tickets link to right when bootstrap resizes*/
 @media screen and (max-width: 991px){
 	.link-more{
@@ -548,27 +558,36 @@ a.thin_button:hover{
 }
 
 .slagzin a.red{
+	color:#bf1e2e;
+}
+
+.slagzin a.red:hover, .slagzin a.red[active=true]{
+	//color:black;
+	color:white;
+	//border-bottom:solid 5px #bf1e2e;
 	background-color:#bf1e2e;
 }
 
-.slagzin a.red:hover{
-	color:white;
+.slagzin a.green{
+	color:#648c8c;
 }
 
-.slagzin a.green{
+.slagzin a.green:hover, .slagzin a.green[active=true]{
+	//color:black;
+	color:white;
+	//border-bottom:solid 5px #648c8c;
 	background-color:#648c8c;
 }
 
-.slagzin a.green:hover{
-	color:white;
-}
-
 .slagzin a.beige{
-	background-color:#a1a274;
+	color:#a1a274;
 }
 
-.slagzin a.beige:hover{
+.slagzin a.beige:hover, .slagzin a.beige[active=true]{
+	//color:black;
 	color:white;
+	//border-bottom:solid 5px #a1a274;
+	background-color:#a1a274;
 }
 
 .fill{
@@ -577,14 +596,17 @@ a.thin_button:hover{
 
 .fill.red{
 	border-color:#bf1e2e;
+	color:#bf1e2e;
 }
 
 .fill.green{
 	border-color:#648c8c;
+	color:#648c8c;
 }
 
 .fill.beige{
 	border-color:#a1a274;
+	color:#a1a274;
 }
 
 #musictext a:hover{

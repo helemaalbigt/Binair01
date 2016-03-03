@@ -113,7 +113,7 @@ function getImageExtensions($type) {
 	//2.save small and medium image
 	
 	$destination = '../img/small/'.$filename;
-	resizeAndSaveImage($coverimagePath, $destination, 265, 155);
+	resizeAndSaveImage($coverimagePath, $destination, 143, 143);
 	
 	$destination = '../img/medium/'.$filename;
 	resizeAndSaveImage($coverimagePath, $destination, 750, 450);
@@ -550,14 +550,37 @@ function printFooter(){
 	      <div class="container footer">
 	      	<hr>
 			<footer>
-	        	<span class="footer darkgray">&copy; Binair01 - $year </span>
-		        <ul class="social">
-		        	<li>
-		        		<a data-toggle="tooltip" title="mixcloud" href="https://www.mixcloud.com/mnsr_z%C3%A9r0/" target="_blank" id="mixcloud">mc &nbsp;</a>  
-		        		<a data-toggle="tooltip" title="facebook" href="https://www.facebook.com/binair01-182905618426061/?fref=ts" target="_blank" id="facebook">fb &nbsp;</a>
-		        		<a data-toggle="tooltip" title="youtube" href="https://www.youtube.com/user/binair01" target="_blank" id="youtube">yt &nbsp;</a>       		
-		        	</li>
-		        </ul>
+				<div class="row">
+				
+					<div class="col-sm-4">
+						<div class="footer darkgray">&copy; Binair01 - $year </div><br>
+						<div class="footer darkgray">website by Thomas Van Bouwel <br> www.tvb-design.com</div>
+						<br>
+		        		<br>
+			        </div>
+			        
+			        <div class="col-sm-4">
+			        	<div class="footer darkgray footertitle">CONTACT</div>
+			        	
+		        		<div class="footer darkgray">binair01@binair01.be</div>
+		        		<div class="footer darkgray">Begijnhoflaan 121, B-9000 Gent</div>
+		        		<div class="footer darkgray">t: 09 233 80 23</div>
+		        		<br><br>
+			        </div>
+			        
+			        <div class="col-sm-4">
+			        	<div class="footer darkgray footertitle">SOCIAL</div>
+			        	
+				        <ul class="social">
+				        	<li>
+				        		<a data-toggle="tooltip" title="mixcloud" href="https://www.mixcloud.com/mnsr_z%C3%A9r0/" target="_blank" id="mixcloud">mc &nbsp;</a>  
+				        		<a data-toggle="tooltip" title="facebook" href="https://www.facebook.com/binair01-182905618426061/?fref=ts" target="_blank" id="facebook">fb &nbsp;</a>
+				        		<a data-toggle="tooltip" title="youtube" href="https://www.youtube.com/user/binair01" target="_blank" id="youtube">yt &nbsp;</a>       		
+				        	</li>
+				        </ul>
+				    </div>
+				    
+			    </div>
 	      	</footer>
 	      </div>
 			

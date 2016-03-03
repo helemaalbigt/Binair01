@@ -23,6 +23,7 @@
 		public $bodyOriginal;
 		public $preview;
 		public $body;
+		public $galleryimages;
 		
 		//Upon class instantiation, open a database connection, and generate all default values.
 		public function __construct($set_defaults = TRUE) {
@@ -44,6 +45,7 @@
 				$this->coverimage = "img/default.jpg";
 				$this->preview = NULL;
 				$this->body = NULL;
+				$this->galleryimages = NULL;
 			}
 		}
 		
@@ -91,6 +93,8 @@
 			$this -> preview = str_replace("style=\"line-height: 0.7;\"", "style=\"line-height: 1.4;\"", htmlspecialchars_decode($e['preview'])); 
 			
 			$this -> body = str_replace("style=\"line-height: 0.7;\"", "style=\"line-height: 1.4;\"", htmlspecialchars_decode($e['body'])); 
+			
+			$this -> galleryimages = ($e['galleryimages'] != "") ? unserialize($e['galleryimages']) : NULL;
 		}
 		
 		
@@ -143,20 +147,35 @@
 			
 			//handle image gallery
 			$galleryimages = array();
-			 if(!empty($_FILES['imagegallery']['name'][0])){
+			$galleryimagesSerialized = "";
+			//check if there are gallery images, then loop through them
+			if(!empty($_FILES['imagegallery']['name'][0])){
+			 	//loop through gallery images
 			 	foreach($_FILES["imagegallery"]["name"] as $key=>$tmp_name)
-            	{
-	                $file_name=$_FILES["files"]["name"][$key];
-	               list($name, $type, $tmp, $err, $size)
-				   $filename = saveImage(array($_FILES['coverimage']));
+            	{				   
+				   	try {
+						$filename = saveImage(array($_FILES['imagegallery']['name'][$key], 
+													$_FILES['imagegallery']['type'][$key], 
+													$_FILES['imagegallery']['tmp_name'][$key], 
+													$_FILES['imagegallery']['error'][$key], 
+													$_FILES['imagegallery']['size'][$key]));
+					} catch (Exception $e) {
+						//if an error occurred, output your custom error message
+						die($e -> getMessage());
+					}
+					//add filename to array
+					array_push($galleryimages, $filename); 
 				}
-            
-			 }
-		 	
+				//serialize arrayvalue into single string
+				$galleryimagesSerialized = serialize($galleryimages);
+			}
+			
 		 	/*UPLOADING DATA*/
 		 	//if an id was passed, edit the existing entry
 			if (!empty($p['id'])) 
 			{
+				//the coverimage and gallery images are optional when editing events 
+				//that's why we append these fields to the sql query only if they have a new value
 				$appendSQL ="";
 				$appendSTMT = array();
 				//check if new image was added, add some stuff to the query if it is
@@ -164,7 +183,12 @@
 					$appendSQL .= ", coverimage=?";
 					$appendSTMT = array($filename);
 				}
-	
+				//check if galleryimages were added, and add some stuff to the query if its the case
+				if(!empty($_FILES['imagegallery']['name'][0])){
+					$appendSQL .= ", galleryimages=?";
+					array_push($appendSTMT, $galleryimagesSerialized);
+				}
+				
 				//prepare the sql query and append a part if we're adding images
 				$sql = "UPDATE events SET title=?, tags=?, sortdate=?, hour=?, address=?, venue=?, ticketsurl=?, preview=?, body=?".$appendSQL." WHERE id=? LIMIT 1";
 	
@@ -180,9 +204,9 @@
 			//save the entry into the database
 			else
 			{
-				$sql = "INSERT INTO events (title, tags, sortdate, hour, address, venue, ticketsurl, coverimage, preview, body) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+				$sql = "INSERT INTO events (title, tags, sortdate, hour, address, venue, ticketsurl, coverimage, preview, body, galleryimages) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 				if ($stmt = $this -> db -> prepare($sql)) {
-					$stmt -> execute(array( $p['title'], $p['tags'], $date, $p['hour'], $p['address'], $p['venue'], $p['ticketsurl'], $filename, $p['preview'], $p['body']));	
+					$stmt -> execute(array( $p['title'], $p['tags'], $date, $p['hour'], $p['address'], $p['venue'], $p['ticketsurl'], $filename, $p['preview'], $p['body'], $galleryimagesSerialized));	
 					$stmt -> closeCursor();
 					
 					//get the ID of the entry that was just saved
@@ -302,8 +326,10 @@ PREVIEW;
 		 * @return
 		 */
 		 public function formatSingleEvent($loggedIn = false){
+		 	//the heredoc html that will be returned
 		 	$formattedProject = "";
 			
+			//prepare variables for the heredoc
 			$imgPath = "img/original/".$this->coverimage;
 			$title = $this->title;
 			$date =  date('F', strtotime($this->sortdateArray["year"].$this->sortdateArray["month"].$this->sortdateArray["day"]))." ".$this->sortdateArray["day"].date('S').", ".$this->sortdateArray["year"];//$this->sortdate;
@@ -329,7 +355,44 @@ PREVIEW;
 			foreach($this->tags as $tag){
 				$taglinks.= "<span><a class=\"taglink\" href=\"./search.php?tag=".$tag."\">".$tag."</a></span> ";
 			}
-
+			
+			//format imagegallery only if event has images
+			$imagegallery = "";
+			if($this->galleryimages != NULL){
+				
+				$imagegallery .= <<<GALLERYOPEN
+				
+				<div class="row">
+					
+					<!--images-->
+					<div class="body-content">
+				 
+GALLERYOPEN;
+				
+				//add each image
+				foreach ($this->galleryimages as $key => $value) {
+					$galleryImgPath = "img/small/".$value;
+					$galleryImgPathXL = "img/original/".$value;
+					
+					$imagegallery .=<<<IMAGE
+														
+								<a href="$galleryImgPathXL" data-lightbox="eventalbum" title="image"> 
+									<img src='$galleryImgPath' class='img-responsive event' />
+								</a>
+								
+IMAGE;
+				}
+			
+				$imagegallery .=<<<GALARYCLOSE
+				
+					
+			        </div>
+					        
+				</div>		
+GALARYCLOSE;
+			}
+			
+			//format the heredoc
 			$formattedProject .= <<<POST
 			<!--preview-->
 			
@@ -373,6 +436,7 @@ PREVIEW;
 					
 					
 					<div class="row">
+						<!--metadata-->
 						<div class="col-md-3 event-sidebar">
 						<p>
 							<ul>
@@ -430,14 +494,30 @@ PREVIEW;
 							</ul>
 							
 						</div>
+						
+						<!--body text and tag links-->
 						<div class="col-md-8">	
 						    <p class="body">$body</p>
 			          		<div class="italic gray">tags: $taglinks</div>	
 						</div>
+						
 					</div>
 					
-					<br><br>
+					<br><br><br>
 					
+					<!--imagegallery-->
+					<div>
+						<div class="col-md-3">
+							&nbsp;
+						</div>
+						<div class="col-md-8">
+							$imagegallery
+						</div>
+					</div>
+					
+					<br><br><br><br>
+					
+					<!-- admin links-->
 					<div class="row" style="display:$adminVisibility">
 						<div class="col-md-3 title">
 							&nbsp;

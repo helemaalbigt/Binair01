@@ -170,7 +170,7 @@
 		 }
 
 		/**
-		 * Updates a blogpost or stores a new one
+		 * Formats preview version of post
 		 * 
 		 * @param array $p The $_POST superglobal
 		 * @return
