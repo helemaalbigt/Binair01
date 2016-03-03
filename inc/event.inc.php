@@ -140,6 +140,18 @@
 					die($e -> getMessage());
 				}
 			}
+			
+			//handle image gallery
+			$galleryimages = array();
+			 if(!empty($_FILES['imagegallery']['name'][0])){
+			 	foreach($_FILES["imagegallery"]["name"] as $key=>$tmp_name)
+            	{
+	                $file_name=$_FILES["files"]["name"][$key];
+	               list($name, $type, $tmp, $err, $size)
+				   $filename = saveImage(array($_FILES['coverimage']));
+				}
+            
+			 }
 		 	
 		 	/*UPLOADING DATA*/
 		 	//if an id was passed, edit the existing entry

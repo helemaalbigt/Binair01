@@ -420,7 +420,7 @@ if(isset($_GET['editingEvent']) && isset($_GET['id'])){
 	
 	             </form>
 	             
-			<br><br><br>
+			<br><br><br><br>
             <?php } ?>
 	    	<!-- WEBSITE PARAMETERS END -->
 	    	
@@ -525,7 +525,7 @@ if(isset($_GET['editingEvent']) && isset($_GET['id'])){
                     </div>
                 </div>
              </form>
-             <br>
+             <br><br><br>
              <?php } ?>
              <!-- ADD BLOGPOST END -->
              
@@ -631,20 +631,20 @@ if(isset($_GET['editingEvent']) && isset($_GET['id'])){
 					</div>
                 </div>
                 
-                <!--gallery
+                <!--gallery-->
                 <div class="form-group">
                     <label class="control-label col-sm-2" for="imagegallery">Image Gallery:</label>
                     <div class="col-sm-10">
                     	<div class="input-group">
 			                <span class="input-group-btn">
 			                    <span class="btn btn-default btn-file">
-			                        Browse&hellip; <input name="imagegallery" id="imagegallery" type="file" multiple>
+			                        Browse&hellip; <input name="imagegallery[]" id="imagegallery" type="file" multiple>
 			                    </span>
 			                </span>
 			                <input type="text" class="form-control" readonly>
 			            </div>
                     </div>
-                </div>-->
+                </div>
                 
 				<!--submit-->
                 <div class="form-group"> 
@@ -659,6 +659,7 @@ if(isset($_GET['editingEvent']) && isset($_GET['id'])){
              <!-- ADD EVENT END -->
              
              
+             <!-- ADD USERS START --> 
              <?php if($isAdmin){ ?>
 		             <!--create users (admin only)-->
 			    	<div class="red">CREATE NEW USER</div>
@@ -684,6 +685,7 @@ if(isset($_GET['editingEvent']) && isset($_GET['id'])){
 						</fieldset>
 					</form>
 			<?php } ?>
+            <!-- ADD USERS END -->  	
              	
              	
             <!-- LOGIN FORM START --> 	

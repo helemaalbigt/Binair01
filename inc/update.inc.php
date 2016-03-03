@@ -27,7 +27,6 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'
 && !empty($_FILES['coverimage'])) {
 
 //var_dump($_POST);exit;
-//var_dump($_FILES);exit;
 //echo htmlspecialchars($_POST['body']);
 	//instantiate the blogpost class
 	$event = new Event();
