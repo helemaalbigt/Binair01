@@ -28,6 +28,25 @@
 		<link rel="stylesheet" href="css/style.css">
 		
         <script src="js/vendor/modernizr-2.8.3-respond-1.4.2.min.js"></script>
+        
+        <script>
+        	/**
+			 *change iframe dimensions
+			 */
+			window.onload = function() {
+				
+			  	var iframe = document.getElementsByTagName("iframe")[0]
+			  
+				var att = document.createAttribute("width");       // Create a "width" attribute
+				att.value = "100%";   								// Set the value of the class attribute
+				iframe.setAttributeNode(att);                   	// Add the class attribute to <iframe>
+				
+				var att = document.createAttribute("height");       // Create a "width" attribute
+				att.value = "90";   								// Set the value of the class attribute
+				iframe.setAttributeNode(att);                   	// Add the class attribute to <iframe>  	
+			};
+        </script>
+        
     </head>
     <body>
         <!--[if lt IE 8]>
@@ -53,7 +72,8 @@
 					</div>
 					<!--<h1 class="white">Website Under Construction</h1>-->
 					<div class="playlist">
-						<iframe scrolling="no" frameborder="0" allowTransparency="true" src="http://www.deezer.com/plugins/player?format=classic&autoplay=false&playlist=false&width=700&height=350&color=007FEB&layout=&size=medium&type=playlist&id=<?php echo getPlaylistID()?>&app_id=1"  width="100%" height="90px"></iframe>
+						<?php echo getPlaylistIFrame()?>
+						<!-- <iframe scrolling="no" frameborder="0" allowTransparency="true" src="http://www.deezer.com/plugins/player?format=classic&autoplay=false&playlist=false&width=700&height=350&color=007FEB&layout=&size=medium&type=playlist&id=<?php echo getPlaylistIFrame()?>&app_id=1"  width="100%" height="90px"></iframe>-->
 						<!-- <iframe scrolling="no" frameborder="0" allowTransparency="true" src="http://www.deezer.com/plugins/player?format=classic&autoplay=false&playlist=false&width=700&height=350&color=007FEB&layout=&size=medium&type=playlist&id=1222291061&app_id=1"  width="100%" height="90px"></iframe>-->
 					</div>
 				</div>

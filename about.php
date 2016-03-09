@@ -89,7 +89,7 @@
 		};
 		
 		/**
-		 * In a form, replace preview image when a new image is selected
+		 * Slagzin mink function: loads respective piece of text
 		 *  
 		 * @param 
 		 * @return
@@ -104,15 +104,6 @@
 		 	
 		 	e.setAttribute("active", "true"); 
 		 	document.getElementById(e.getAttribute("targetid")).style.display = 'block';	
-			
-			
-		   /* var target = document.getElementById(input);
-		    var rect = target.getBoundingClientRect();
-		    var dist = rect.top - 70;
-			
-			$('html, body').animate({
-		        scrollTop: dist
-		    }, 800);*/
 		}
         
         </script>
@@ -136,9 +127,14 @@
 					</div>
 					<div class="col-md-8">
 						<h2 class="nomargin slagzin" id="slagzin">
-							<a class="red activated" href="#" active="true" targetid="bin01" onclick="goto(this)">Binair 01</a> cares about <a class="red" href="#" active="false" targetid="music" onclick="goto(this)">music</a> <a class="red" href="#" active="false" targetid="diversity" onclick="goto(this)">diversity</a>. 
-							We <a class="green" href="#" active="false" targetid="offer" onclick="goto(this)">offer</a> <a class="green" href="#" active="false" targetid="quality" onclick="goto(this)">quality</a> <a class="green" href="#" targetid="dance" onclick="goto(this)">dance music</a> neglected 
-							by <a class="beige" href="#" active="false" targetid="mainstream" onclick="goto(this)">mainstream media</a>, who only focus on <a class="beige" href="#" active="false" targetid="anglo" onclick="goto(this)">Anglo-Saxon pop music</a>.
+							<a class="red activated" href="#" active="true" targetid="bin01" onclick="goto(this)">Binair 01&#x25BE</a> cares about 
+							<a class="red" href="#" active="false" targetid="music" onclick="goto(this)">music&#x25BE</a> 
+							<a class="red" href="#" active="false" targetid="diversity" onclick="goto(this)">diversity&#x25BE</a>. <br> We 
+							<a class="green" href="#" active="false" targetid="offer" onclick="goto(this)">offer&#x25BE</a> 
+							<a class="green" href="#" active="false" targetid="quality" onclick="goto(this)">quality&#x25BE</a> 
+							<a class="green" href="#" targetid="dance" onclick="goto(this)">dance music&#x25BE</a> neglected by 
+							<a class="beige" href="#" active="false" targetid="mainstream" onclick="goto(this)">mainstream media&#x25BE</a>, who only focus on 
+							<a class="beige" href="#" active="false" targetid="anglo" onclick="goto(this)">Anglo-Saxon pop music&#x25BE</a>.
 						<h2>
 					</div>
 				</div>

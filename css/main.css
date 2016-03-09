@@ -561,33 +561,45 @@ a.thin_button:hover{
 	color:#bf1e2e;
 }
 
-.slagzin a.red:hover, .slagzin a.red[active=true]{
+.slagzin a.red[active=true]{
 	//color:black;
 	color:white;
 	//border-bottom:solid 5px #bf1e2e;
 	background-color:#bf1e2e;
 }
 
+.slagzin a.red:hover{
+	border-bottom:solid 5px #bf1e2e;
+}
+
 .slagzin a.green{
 	color:#648c8c;
 }
 
-.slagzin a.green:hover, .slagzin a.green[active=true]{
+.slagzin a.green[active=true]{
 	//color:black;
 	color:white;
 	//border-bottom:solid 5px #648c8c;
 	background-color:#648c8c;
 }
 
+.slagzin a.green:hover{
+	border-bottom:solid 5px #648c8c;
+}
+
 .slagzin a.beige{
 	color:#a1a274;
 }
 
-.slagzin a.beige:hover, .slagzin a.beige[active=true]{
+.slagzin a.beige[active=true]{
 	//color:black;
 	color:white;
 	//border-bottom:solid 5px #a1a274;
 	background-color:#a1a274;
+}
+
+.slagzin a.beige:hover{
+	border-bottom:solid 5px #a1a274;
 }
 
 .fill{

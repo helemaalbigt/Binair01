@@ -41,6 +41,22 @@
         <title></title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        
+		<?php if (isset($_GET['id'])){
+		
+		$thistitle = $event -> title;
+		$thisurl = $_SERVER['REQUEST_URI'];
+		$imgurl =  $_SERVER['DOCUMENT_ROOT'].APP_FOLDER."/img/medium/".$event -> coverimage;
+		 
+			echo <<<META
+			
+		<meta property="og:title" content="$thistitle" />
+		<meta property="og:url" content="$thisurl" />
+		<meta property="og:image" content="$imgurl" />
+META;
+		
+		}
+		?>
 
         <link rel="stylesheet" href="css/bootstrap.min.css">
         <link rel="stylesheet" href="css/bootstrap-theme.min.css">
@@ -99,16 +115,6 @@
         </script>
     </head>
     <body>
-    	
-    	<!--facebook widget-->
-    	<div id="fb-root"></div>
-		<script>(function(d, s, id) {
-		  var js, fjs = d.getElementsByTagName(s)[0];
-		  if (d.getElementById(id)) return;
-		  js = d.createElement(s); js.id = id;
-		  js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.5";
-		  fjs.parentNode.insertBefore(js, fjs);
-		}(document, 'script', 'facebook-jssdk'));</script>
 		
         <!--[if lt IE 8]>
             <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>

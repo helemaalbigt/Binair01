@@ -412,7 +412,7 @@ if(isset($_GET['editingEvent']) && isset($_GET['id'])){
 	                    <label class="control-label col-sm-2" for="playlist">Deezer Playlist:</label>
 	                    <div class="col-sm-9">
                         	<input type="text" class="form-control" id="playlist" name="playlist" placeholder="eg:1256571301" value="<?php echo $playlist?>">
-                    		<div class="infotext">Enter Deezer playlist ID, found on playlist embed page </div>
+                    		<div class="infotext">Enter Deezer or Mixcloud IFrames. When choosing the style for the IFrame embed, keep it light of color and small in size (simple iframe will work better than a complex one)</div>
                     	</div>
 	                    <!--submit-->
 	                     <div class="col-sm-1">

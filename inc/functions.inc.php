@@ -190,6 +190,30 @@ function getImageExtensions($type) {
  
  
  /**
+  * Return current playlist IFrame
+  * 
+  * @param
+  * @return
+  */
+  function getPlaylistIFrame(){
+  	$db = new PDO(DB_INFO, DB_USER, DB_PASS);
+	$sql = "SELECT playlist FROM parameters WHERE id=1 LIMIT 1";
+	$stmt = $db -> prepare($sql);
+	$stmt -> execute(array());
+
+	//save the returned playlist
+	$e = $stmt -> fetch();
+	$stmt -> closeCursor();
+	
+	//replace height and width
+	//$interm = preg_replace('/(<*[^>]*width=)"[^>]+"([^>]*>)/', '\1"100%"\2', htmlspecialchars_decode($e['playlist']) );
+	//$result = preg_replace('/(<*[^>]*height=)"[^>]+"([^>]*>)/', '\1"90"\2', $interm);
+	
+	return htmlspecialchars_decode($e['playlist']);
+  }
+ 
+ 
+ /**
   * Print Latest newsItems preview format
   *	
   * @param int $numberOfPosts
