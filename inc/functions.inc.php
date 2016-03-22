@@ -72,6 +72,7 @@ function renameFile($ext) {
  * @return string the extension to be used with the file
  */
 function getImageExtensions($type) {
+	
 	switch ($type) {
 		case 'image/gif' :
 			return '.gif';
@@ -110,15 +111,22 @@ function getImageExtensions($type) {
 	 	throw new Exception("Couldn't save the uploaded image!");
     }
 	
-	//2.save small and medium image
+	//2.save small, medium and large image
 	
 	$destination = '../img/small/'.$filename;
 	resizeAndSaveImage($coverimagePath, $destination, 143, 143);
 	
 	$destination = '../img/medium/'.$filename;
 	resizeAndSaveImage($coverimagePath, $destination, 750, 450);
+	
+	$destination = '../img/large/'.$filename;
+	$img = new abeautifulsite\SimpleImage($coverimagePath);
+	$img->best_fit(2000, 2000)->save($destination);
+	
+	//3.remove original
+	unlink($coverimagePath);
 		
-	//3.return filename
+	//4.return filename
 	return $filename;
  }
  
@@ -207,9 +215,10 @@ function getImageExtensions($type) {
 	
 	//replace height and width
 	//$interm = preg_replace('/(<*[^>]*width=)"[^>]+"([^>]*>)/', '\1"100%"\2', htmlspecialchars_decode($e['playlist']) );
-	//$result = preg_replace('/(<*[^>]*height=)"[^>]+"([^>]*>)/', '\1"90"\2', $interm);
+	$result = preg_replace('/(<*[^>]*height=)"[^>]+"([^>]*>)/', '\1"90"\2', htmlspecialchars_decode($e['playlist']));
+	$result = preg_replace('/(<*[^>]*width=)"[^>]+"([^>]*>)/', '\1"100%"\2', $result);
 	
-	return htmlspecialchars_decode($e['playlist']);
+	return htmlspecialchars_decode($result);
   }
  
  

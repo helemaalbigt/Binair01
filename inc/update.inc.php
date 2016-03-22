@@ -190,7 +190,7 @@ else if($_SERVER['REQUEST_METHOD'] == 'POST'
 }
 
 /*****************/
-/*delete project */
+/*delete blogpost*/
 /*****************/
 else if (isset($_GET['action']) && $_GET['action'] == 'project_delete') {
 	//check if logged in and logged in as admin or editor before deleting
@@ -212,7 +212,33 @@ else if (isset($_GET['action']) && $_GET['action'] == 'project_delete') {
 	} else{
 		exit('ERROR: You are not authorized to delete projects.');
 	};
+}
+
+/*****************/
+/*delete event   */
+/*****************/
+else if (isset($_GET['action']) && $_GET['action'] == 'event_delete') {
+	//check if logged in and logged in as admin or editor before deleting
+	if(isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == 1){	
+		//instantiate the Project class
+		$event = new Event();
+	
+		//Delete the post and return to the entry
+		if ($event -> deleteEvent($_GET['id'])) {
+			header('Location:../events.php');
+			exit ;
+		}
+		//if deletion fails, output an error message
+		else {
+			exit('ERROR: Could not delete the event.');
+		}
+	
+		exit ;
+	} else{
+		exit('ERROR: You are not authorized to delete events.');
+	};
 } 
+ 
 
 /*******************************/
 /*if logout is pressed, log out*/

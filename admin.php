@@ -35,8 +35,10 @@ $eventTags ="";
 $eventSortdate ="";
 $eventHour ="";
 $eventVenue ="";
+$eventVenueUrl = "";
 $eventAddress = "";
 $eventTicketLink ="";
+$eventFacebookUrl = "";
 $eventCoverImage ="./img/default.jpg";
 $eventPreview ="";
 $eventBody="";
@@ -72,8 +74,10 @@ if(isset($_GET['editingEvent']) && isset($_GET['id'])){
 	$eventSortdate = $event->sortdateArray["day"]."/".$event->sortdateArray["month"]."/".$event->sortdateArray["year"];
 	$eventHour = $event->hour;
 	$eventVenue = $event->venue;
+	$eventVenueUrl = $event->venueurl;
 	$eventAddress = $event->address;
 	$eventTicketLink = $event->ticketsurl;
+	$eventFacebookUrl = $event->facebookurl;
 	$eventCoverImage =  "./img/medium/".$event->coverimage;
 	$eventPreview = $event->preview;
 	$eventBody = $event->body;
@@ -162,6 +166,9 @@ if(isset($_GET['editingEvent']) && isset($_GET['id'])){
 		  });
 		  
 		  $('#summernote3').summernote('lineHeight', 1.4);
+		  
+		  //scrolls window to top on load
+		  window.scrollTo(0,0);
 		});
 		
 		//date picker
@@ -197,7 +204,21 @@ if(isset($_GET['editingEvent']) && isset($_GET['id'])){
 		        
 		    });
 		});
+		
+		
+		/**
+		 * Delete Image
+		 *  
+		 * @param 
+		 * @return
+		 */
+		function deleteImage(e) {		 
+			if (confirm('Are you sure you want to DELETE this image? \n This cannot be undone')) {
+				e.parentNode.parentNode.removeChild(e.parentNode);
+			} 
+		}
 		</script>
+        
         
     	<script type="text/javascript">
 		//calls a function to check for errors, passes arrays with elements to check
@@ -428,7 +449,9 @@ if(isset($_GET['editingEvent']) && isset($_GET['id'])){
 	    	<!-- WEBSITE PARAMETERS END -->
 	    	
 	    	
+            <!------------------------>
             <!-- ADD BLOGPOST START -->
+            <!------------------------>
             <?php if(!$editingEvent){ //don't display if we're editing an event ?>
             <div class="row">
                 <div class="col-sm-2">&nbsp;</div>
@@ -533,7 +556,9 @@ if(isset($_GET['editingEvent']) && isset($_GET['id'])){
              <!-- ADD BLOGPOST END -->
              
              
+             <!--------------------->
              <!-- ADD EVENT START -->
+             <!--------------------->
              <?php if(!$editingPost){ //don't display if we're editing an event ?>
             <div class="row">
                 <div class="col-sm-2">&nbsp;</div>
@@ -586,6 +611,14 @@ if(isset($_GET['editingEvent']) && isset($_GET['id'])){
                     </div>
                 </div>
                 
+                <!--venue link-->
+                <div class="form-group">
+                    <label class="control-label col-sm-2" for="venueurl">Venue Link:</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="venueurl" name="venueurl" placeholder="link to the venue's website" value="<?php echo $eventVenueUrl ?>">
+                    </div>
+                </div>
+                
                  <!--address-->
                 <div class="form-group">
                     <label class="control-label col-sm-2" for="address">*Address:</label>
@@ -599,6 +632,14 @@ if(isset($_GET['editingEvent']) && isset($_GET['id'])){
                     <label class="control-label col-sm-2" for="address">*Event Ticket Link:</label>
                     <div class="col-sm-10">
                         <input type="text" class="form-control" id="ticketsurl" name="ticketsurl" placeholder="Add link to where tickets can be bought" value="<?php echo $eventTicketLink ?>">
+                    </div>
+                </div>
+                
+                <!--facebook link-->
+                <div class="form-group">
+                    <label class="control-label col-sm-2" for="facebookurl">Facebook Event Page:</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="facebookurl" name="facebookurl" placeholder="link to the facebook event page" value="<?php echo $eventFacebookUrl ?>">
                     </div>
                 </div>
                 
@@ -657,9 +698,13 @@ if(isset($_GET['editingEvent']) && isset($_GET['id'])){
 										$galleryImgPathXL = "img/original/".$value;
 
 										echo <<<IMAGE
-										<a href="$galleryImgPathXL" data-lightbox="eventalbum" title=""> 
-											<img src='$galleryImgPath' class='img-responsive event' />
-										</a>							
+										<span class="galleryimage" >
+											<a class="deleteimage" onclick="deleteImage(this)"><span class="glyphicon glyphicon-remove"></span><a/>
+											<a href="$galleryImgPathXL" data-lightbox="eventalbum" title=""> 
+												<img src='$galleryImgPath' class='img-responsive event' />
+											</a>
+											<input type="hidden" name="existingGalleryImages[]" id="existingGalleryImages" value="$value" >			
+										</span>				
 IMAGE;
 			            			}
 								}

@@ -103,7 +103,7 @@ META;
 				for (var i = 0; i < buttons.length; i++) {
 					buttons[i].addEventListener('click', function() {
 
-						if (confirm('You are about to DELETE a post. \n This CANNOT BE UNDONE! \n \n  Do you want to continue?')) {
+						if (confirm('You are about to DELETE an event. \n This CANNOT BE UNDONE! \n \n  Do you want to continue?')) {
 							return true;
 						} else {
 							event.preventDefault();

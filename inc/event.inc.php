@@ -17,9 +17,11 @@
 		public $tags;
 		public $hour;
 		public $venue;
+		public $venueurl;
 		public $address;
 		public $coverimage;
 		public $ticketsurl;
+		public $facebookurl;
 		public $bodyOriginal;
 		public $preview;
 		public $body;
@@ -40,8 +42,10 @@
 				$this->tags = NULL;
 				$this->hour = NULL;
 				$this->venue = NULL;
+				$this->venueurl = NULL;
 				$this->address = NULL;
 				$this->ticketsurl = NULL;
+				$this->facebookurl = NULL;
 				$this->coverimage = "img/default.jpg";
 				$this->preview = NULL;
 				$this->body = NULL;
@@ -77,9 +81,13 @@
 			
 			$this -> venue = $e['venue'];
 			
+			$this -> venueurl = $e['venueurl'];
+			
 			$this -> address = $e['address'];
 			
 			$this -> ticketsurl = $e['ticketsurl'];
+			
+			$this -> facebookurl = $e['facebookurl'];
 			
 			$this->tagsOriginal = $e['tags'];
 			$tagArray = explode(",", $e['tags']);
@@ -113,7 +121,7 @@
 			$e = $stmt -> fetch();
 			$stmt -> closeCursor();
 			
-			if(count($e) <= 26){	
+			if(count($e) <= 30){	
 				return $e;
 			} else{
 				exit("ERROR: database query returned more values than allowed (".count($e).")");
@@ -128,7 +136,7 @@
 		 * @return
 		 */
 		 public function updateEvent($p){
-		 	/*PREP DATA*/
+		 	/*PREPARING DATA*/
 		 	//handle date
 		 	list($day, $month, $year) = split('[/.-]', $p['sortdate']);
 		 	$date = $year."-".$month."-".$day;
@@ -147,8 +155,13 @@
 			
 			//handle image gallery
 			$galleryimages = array();
-			$galleryimagesSerialized = "";
-			//check if there are gallery images, then loop through them
+			//1.Check if there were existing gallery images; add them to the galleryimages array
+			if(!empty($p["existingGalleryImages"])){
+				foreach($p["existingGalleryImages"] as $key=>$value){
+            		array_push($galleryimages, $value); 
+				}
+			}
+			//2.check if there are new gallery images, then loop through them and add them to the array
 			if(!empty($_FILES['imagegallery']['name'][0])){
 			 	//loop through gallery images
 			 	foreach($_FILES["imagegallery"]["name"] as $key=>$tmp_name)
@@ -166,9 +179,9 @@
 					//add filename to array
 					array_push($galleryimages, $filename); 
 				}
-				//serialize arrayvalue into single string
-				$galleryimagesSerialized = serialize($galleryimages);
 			}
+			//3.serialize arrayvalue into single string
+			$galleryimagesSerialized = (count($galleryimages) > 0) ? serialize($galleryimages) : "";
 			
 		 	/*UPLOADING DATA*/
 		 	//if an id was passed, edit the existing entry
@@ -183,17 +196,15 @@
 					$appendSQL .= ", coverimage=?";
 					$appendSTMT = array($filename);
 				}
-				//check if galleryimages were added, and add some stuff to the query if its the case
-				if(!empty($_FILES['imagegallery']['name'][0])){
-					$appendSQL .= ", galleryimages=?";
-					array_push($appendSTMT, $galleryimagesSerialized);
-				}
-				
+				//append galleryimages to the query (used to be conditional, that's why its seperated - T.
+				$appendSQL .= ", galleryimages=?";
+				array_push($appendSTMT, $galleryimagesSerialized);
+			
 				//prepare the sql query and append a part if we're adding images
-				$sql = "UPDATE events SET title=?, tags=?, sortdate=?, hour=?, address=?, venue=?, ticketsurl=?, preview=?, body=?".$appendSQL." WHERE id=? LIMIT 1";
+				$sql = "UPDATE events SET title=?, tags=?, sortdate=?, hour=?, address=?, venue=?, venueurl=?, ticketsurl=?, facebookurl=?, preview=?, body=?".$appendSQL." WHERE id=? LIMIT 1";
 	
 				if ($stmt = $this -> db -> prepare($sql)) {
-					$A = array_merge(array_merge(array($p['title'], $p['tags'], $date, $p['hour'], $p['address'], $p['venue'], $p['ticketsurl'], $p['preview'], $p['body']), $appendSTMT),array($p['id']));
+					$A = array_merge(array_merge(array($p['title'], $p['tags'], $date, $p['hour'], $p['address'], $p['venue'], $p['venueurl'], $p['ticketsurl'], $p['facebookurl'], $p['preview'], $p['body']), $appendSTMT),array($p['id']));
 					$stmt -> execute($A);
 					$stmt -> closeCursor();
 					
@@ -204,9 +215,9 @@
 			//save the entry into the database
 			else
 			{
-				$sql = "INSERT INTO events (title, tags, sortdate, hour, address, venue, ticketsurl, coverimage, preview, body, galleryimages) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+				$sql = "INSERT INTO events (title, tags, sortdate, hour, address, venue, venueurl, ticketsurl, facebookurl, coverimage, preview, body, galleryimages) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 				if ($stmt = $this -> db -> prepare($sql)) {
-					$stmt -> execute(array( $p['title'], $p['tags'], $date, $p['hour'], $p['address'], $p['venue'], $p['ticketsurl'], $filename, $p['preview'], $p['body'], $galleryimagesSerialized));	
+					$stmt -> execute(array( $p['title'], $p['tags'], $date, $p['hour'], $p['address'], $p['venue'], $p['venueurl'], $p['ticketsurl'], $p['facebookurl'], $filename, $p['preview'], $p['body'], $galleryimagesSerialized));	
 					$stmt -> closeCursor();
 					
 					//get the ID of the entry that was just saved
@@ -320,9 +331,9 @@ PREVIEW;
 		 
 		 
 		 /**
-		 * format for blogpost page
+		 * format single Event
 		 * 
-		 * @param array $p The $_POST superglobal
+		 * @param 
 		 * @return
 		 */
 		 public function formatSingleEvent($loggedIn = false){
@@ -330,17 +341,27 @@ PREVIEW;
 		 	$formattedProject = "";
 			
 			//prepare variables for the heredoc
-			$imgPath = "img/original/".$this->coverimage;
+			$imgPath = "img/large/".$this->coverimage;
 			$title = $this->title;
 			$date =  date('F', strtotime($this->sortdateArray["year"].$this->sortdateArray["month"].$this->sortdateArray["day"]))." ".$this->sortdateArray["day"].date('S').", ".$this->sortdateArray["year"];//$this->sortdate;
 			$hour = $this->hour;
-			$venue = $this->venue;
+			$venueurl = $this->venueurl;
+			
+			//make a link of the venue if it has one
+			$venue = ($venueurl != NULL & $venueurl !="") 
+			? "<a class='venueurl' href='".$venueurl."' target='_blank'>".$this->venue."</a>" 
+			: $this->venue;
 			$address = $this->address;
 			
 			//only display ticket link if eventdate is after todays date   			date("Y").date("m").date("d")
 			$tickets = ( $this->sortdateArray["year"].$this->sortdateArray["month"].$this->sortdateArray["day"] >= date("Y").date("m").date("d")) 
 			? "<a class='ticket-link' target='_blank' href='". $this->ticketsurl ."' role='button'><h1>Get Tickets</h1></a><br>" 
 			: "&nbsp;";
+			
+			//show facebook event page url if there is one
+			$facebookurl = ($this->facebookurl != NULL && $this->facebookurl != "") 
+			? "<a href='".$this->facebookurl ."' target='_blank'>View event on Facebook</a> &nbsp; / &nbsp; " 
+			: "";
 			
 			$id = $this->id;
 			$body = $this->body;
@@ -372,11 +393,11 @@ GALLERYOPEN;
 				//add each image
 				foreach ($this->galleryimages as $key => $value) {
 					$galleryImgPath = "img/small/".$value;
-					$galleryImgPathXL = "img/original/".$value;
+					$galleryImgPathXL = "img/large/".$value;
 					
 					$imagegallery .=<<<IMAGE
 														
-								<a href="$galleryImgPathXL" data-lightbox="eventalbum" title="image"> 
+								<a class="galleryimage" href="$galleryImgPathXL" data-lightbox="eventalbum" title="image"> 
 									<img src='$galleryImgPath' class='img-responsive event' />
 								</a>
 								
@@ -391,6 +412,7 @@ IMAGE;
 				</div>		
 GALARYCLOSE;
 			}
+			
 			
 			//format the heredoc
 			$formattedProject .= <<<POST
@@ -424,10 +446,11 @@ GALARYCLOSE;
 							</div>
 						</div>
 						
-						<!--post-->
+						<!--title / fb link / tags-->
 						<div class="body-content">
 					        <div class="col-md-8 black eventpage-title">	
 					          	<h1>$title</h1>
+					          	<div class="italic gray">$facebookurl tags: $taglinks</div>	
 					        </div>
 				        </div>
 				        
@@ -439,32 +462,8 @@ GALARYCLOSE;
 						<!--metadata-->
 						<div class="col-md-3 event-sidebar">
 						<p>
-							<ul>
-								<li>
-								<b>
-								
-									<table>
-										<tr>
-										
-											<td>
-												<span class="glyphicon glyphicon-map-marker"></span>
-											</td>
-												
-											<td>
-												<div class="uppercase">
-													$venue<br>
-												</div>
-												<div>
-													$address
-												</div>
-											</td>
-											
-										</tr>
-									</table>
-									
-								</b>
-								</li>
-								
+							<br>
+							<ul>												
 															
 								<li>
 								<b>
@@ -491,14 +490,40 @@ GALARYCLOSE;
 								</b>
 								</li>
 								
+							
+								<li>
+								<b>
+								
+									<table>
+										<tr>
+										
+											<td>
+												<span class="glyphicon glyphicon-map-marker"></span>
+											</td>
+												
+											<td>
+												<div class="uppercase">
+													$venue<br>
+												</div>
+												<div>
+													$address
+												</div>
+											</td>
+											
+										</tr>
+									</table>
+									
+								</b>
+								</li>
+								
 							</ul>
 							
 						</div>
 						
 						<!--body text and tag links-->
 						<div class="col-md-8">	
+							<br>
 						    <p class="body">$body</p>
-			          		<div class="italic gray">tags: $taglinks</div>	
 						</div>
 						
 					</div>
@@ -523,7 +548,7 @@ GALARYCLOSE;
 							&nbsp;
 						</div>
 						<div class="col-md-8">	
-							<a class="btn btn-danger delete"  href="./inc/update.inc.php?action=project_delete&id=$id" >delete</a> 
+							<a class="btn btn-danger delete"  href="./inc/update.inc.php?action=event_delete&id=$id" >delete</a> 
 							<a class="btn btn-primary" href="admin.php?editingEvent=1&id=$id">edit</a>
 						</div>
 					</div>
@@ -541,8 +566,8 @@ POST;
 		 *
 		 * @param string $id The id of the post to delete
 		 */
-		public function deleteBlogpost($id) {
-			$sql = "DELETE FROM blogposts WHERE id=? LIMIT 1";
+		public function deleteEvent($id) {
+			$sql = "DELETE FROM events WHERE id=? LIMIT 1";
 			if ($stmt = $this -> db -> prepare($sql)) {
 				//Execute the command, free used memory, and return true
 				$stmt -> execute(array($id));

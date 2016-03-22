@@ -48,6 +48,14 @@ h4{
 	text-decoration:none;
 }
 
+.slogan.above_fold{
+	display:none;
+}
+
+.slogan.under_fold{
+	display:block;
+}
+
 .navbar-header .logo{
 	margin-top:9px;
 	margin-left:9px;
@@ -137,7 +145,7 @@ h4{
 
 .coverimage .inner .content{
 	padding:20px;
-	max-width:600px;
+	max-width:400px;
 	margin:auto;
 	text-align:center;
 	height:100%;
@@ -331,6 +339,45 @@ ul.social #facebook:hover, ul.social  #youtube:hover, ul.social  #mixcloud:hover
 }
 
 
+.slogan.above_fold{
+  left:50%;
+  margin:auto;
+  position:absolute; 
+  top:calc(50% - 75px);
+  text-align:center;
+  color:white;
+  font-size:180%;
+  
+}
+
+.slogan.above_fold .phrase1{
+	position:absolute;
+	width:350px;
+	left:calc(50% - 590px);
+}
+
+.slogan.above_fold .phrase2{
+	 position:absolute;
+	left:calc(50% + 210px);
+	width:423px;
+}
+
+.slogan.above_fold b{
+	font-size:120%;
+}
+
+.slogan.above_fold .phrase2 span{
+	float:right;
+	font-size:60%;	
+	font-weight:normal;
+	margin-top:5px;
+	margin-right:12px;
+}
+
+.slogan.above_fold .phrase2 span a{
+	color:white;
+}
+
 /*news*/
 
 .page-content.admin, .pagecontent.news{
@@ -511,6 +558,10 @@ a.ticket-link:hover h1{
     margin-right:10px;
 }
 
+a.venueurl{
+	color:black;
+}
+
 iframe{
 	z-index:0;
 }
@@ -531,9 +582,12 @@ a.thin_button:hover{
 }
 
 
+.galleryimage{
+	float:left;
+}
+
 .img-responsive.event{
 	margin:0 5px 5px 0;
-	float:left;
 }
 
 /*float tickets link to right when bootstrap resizes*/
@@ -543,6 +597,25 @@ a.thin_button:hover{
 		margin-top:5px;
 		margin-bottom:10px;
 	}
+}
+
+.galleryimage{
+	position:relative;
+}
+
+.galleryimage .glyphicon-remove{
+	position:absolute;
+	top:5px;
+	left:115px;
+}
+
+a.deleteimage{
+	color:black;
+}
+
+a.deleteimage:hover{
+	color:red;
+	cursor:pointer;
 }
 
 /*ABOUT PAGE*/
@@ -679,6 +752,23 @@ a.thin_button:hover{
 	
 	a.thin_button, a.thin_button:visited, a.thin_button:active{
 		float:left;	
+	}
+}
+
+/*BIG SCREEN STYLE CHANGES*/
+@media screen and (min-width: 1280px){
+	
+	/*display slogan above fold when on big screen, and hide slogan under the fold*/
+	.slogan.above_fold{
+		display:block;
+	}
+	
+	.slogan.under_fold{
+		display:none;
+	}
+	
+	.eventsoverview{
+		margin-top:40px;
 	}
 }
 

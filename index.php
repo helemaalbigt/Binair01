@@ -66,6 +66,7 @@
 	    	
 	    	<!-- content -->
 		    <div class="inner">
+		    	<!-- logo & playlist -->
 				<div class="content">
 					<div class="logo_wrapper">
 						<img src="./img/Logo.png" class="img-responsive biglogo" />
@@ -75,6 +76,17 @@
 						<?php echo getPlaylistIFrame()?>
 						<!-- <iframe scrolling="no" frameborder="0" allowTransparency="true" src="http://www.deezer.com/plugins/player?format=classic&autoplay=false&playlist=false&width=700&height=350&color=007FEB&layout=&size=medium&type=playlist&id=<?php echo getPlaylistIFrame()?>&app_id=1"  width="100%" height="90px"></iframe>-->
 						<!-- <iframe scrolling="no" frameborder="0" allowTransparency="true" src="http://www.deezer.com/plugins/player?format=classic&autoplay=false&playlist=false&width=700&height=350&color=007FEB&layout=&size=medium&type=playlist&id=1222291061&app_id=1"  width="100%" height="90px"></iframe>-->
+					</div>
+				</div>
+				
+				<!-- slogan -->
+				<div class="slogan above_fold">
+					<div class="phrase1">
+						<b>Binair 01</b> cares about music diversity.<br>
+					</div>
+					<div class="phrase2">
+						We offer quality  <b>dance music</b> neglected by <b>mainstream media</b>.
+						<br><span><a href="about.php">learn more &raquo;</a></span>
 					</div>
 				</div>
 			</div>
@@ -87,7 +99,7 @@
 	    <div class="container" id="about_segment">
 	    	
 	    	<!-- About Short -->
-	    	<div class="content-segment" >
+	    	<div class="content-segment slogan under_fold" >
 	    		<div class="row about">
 		        	<div class="col-md-3 title">
 		        		<span class="sidetitle underscore">BINAIR 01</span><br><br>
@@ -99,12 +111,11 @@
 						<h4>
 					</div>
 				</div>
-				<a class="thin_button" href="#" role="button"><span>learn more &raquo;</span></a>
+				<a class="thin_button" href="about.php" role="button"><span>learn more &raquo;</span></a>
 			</div>
 			
-			
 			<!-- Latest Events -->
-			<div class="content-segment">
+			<div class="content-segment eventsoverview">
 	    		<div class="row news">
 		        	<div class="col-md-3 col-sm-12 title">
 		        		<span class="sidetitle underscore">EVENTS</span><br><br>

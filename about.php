@@ -333,12 +333,12 @@
 					</div>		
 				</div><br>
 				
+				<!--Tijl-->
 				<div class="row">
 					<div class="col-md-3 title">
 		        		&nbsp;
 					</div>
 												
-					<!--Tijl-->
 					<div class="col-md-2 title">
 		        		<img src="img/temp.jpg" />
 					</div>
@@ -354,13 +354,13 @@
 						<br>
 					</div>
 				</div><br>
-				
+			
+				<!--Thomas-->	
 				<div class="row">
 					<div class="col-md-3 title">
 		        		&nbsp;
 					</div>
 					
-					<!--Thomas-->
 					<div class="col-md-2 title">
 		        		<img src="img/temp.jpg" />
 					</div>
@@ -385,21 +385,48 @@
 		        		<span class="sidetitle underscore">PARTNERS</span><br><br>
 					</div>
 					
-					<div class="col-md-8">
+					<!--Partner 1-->
+					<a href="http://www.google.com" target="_blank"> <!--vervang door link naar partner website--> 
+						<div class="col-md-2 title">
+			        		<img src="img/temp.jpg" />
+						</div>
+					</a>
+					
+					<div class="col-md-6">
+						<h2 id="anglo"><span class="">Bedrijf 1</span></h2>
+						<br>
 						<p>
 							Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam volutpat, 
 							ipsum non tristique tincidunt, leo mi dignissim lorem, quis pellentesque 
-							nunc augue sit amet nibh. Pellentesque habitant morbi tristique senectus 
-							et netus et malesuada fames ac turpis egestas. Curabitur malesuada commodo 
-							ligula. Suspendisse ut vestibulum neque. Praesent vel tortor sit amet nibh 
-							condimentum eleifend nec at augue. Phasellus feugiat pulvinar quam, quis 
-							sollicitudin nibh dignissim eu. Aenean cursus hendrerit erat ac bibendum. 
-							Sed egestas semper porta. Phasellus pretium risus et vulputate auctor. 
-							Quisque placerat dictum massa, quis luctus justo lacinia non. Donec tempor 
-							a elit ullamcorper pellentesque. Ut ultricies vel purus a porta.
+							nunc augue sit amet nibh.
 						</p>
+						<br>
+					</div>	
+				</div><br>
+				
+				<!--Partner 2-->	
+				<div class="row">
+					<div class="col-md-3 title">
+		        		&nbsp;
 					</div>
-				</div>
+					
+					<a href="http://www.google.com" target="_blank"> <!--vervang door link naar partner website--> 
+						<div class="col-md-2 title">
+			        		<img src="img/temp.jpg" />
+						</div>
+					</a>
+					
+					<div class="col-md-6">
+						<h2 id="anglo"><span class="">Bedrijf 2</span></h2>
+						<br>
+						<p>
+							Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam volutpat, 
+							ipsum non tristique tincidunt, leo mi dignissim lorem, quis pellentesque 
+							nunc augue sit amet nibh.
+						</p>
+						<br>
+					</div>	
+				</div><br>
 				
 								
 			</div>
