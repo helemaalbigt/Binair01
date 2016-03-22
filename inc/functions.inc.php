@@ -112,7 +112,6 @@ function getImageExtensions($type) {
     }
 	
 	//2.save small, medium and large image
-	
 	$destination = '../img/small/'.$filename;
 	resizeAndSaveImage($coverimagePath, $destination, 143, 143);
 	
@@ -131,7 +130,7 @@ function getImageExtensions($type) {
  }
  
 /**
- * Save image in various colors
+ * Save image in various colors for the homepage and the nav bars
  * 
  * @param
  * @return
@@ -170,11 +169,24 @@ function getImageExtensions($type) {
  	$img = new abeautifulsite\SimpleImage($originalPath);
 	
 	if($width/$height < $W/$H){
-		$img->fit_to_width($W)->crop(0, 0, $W, $H)->save($destination);
+		//portrait
+		$y1 = (($height * $W / $width) - $H) / 2;
+		$y2 = ((($height * $W / $width) - $H) / 2 ) + $H;
+		$img->fit_to_width($W)->crop(0, $y1, $W, $y2)->save($destination);
 	} else{
-		$img->fit_to_height($H)->crop(0, 0, $W, $H)->save($destination);
+		//landscape
+		$x1 = (($width * $H / $height) - $W) / 2;
+		$x2 = ((($width * $H / $height) - $W) / 2 ) + $W;
+		$img->fit_to_height($H)->crop($x1, 0, $x2, $H)->save($destination);
 	}
 	
+	/*
+		 if($width/$height < $W/$H){
+			$img->fit_to_width($W)->crop(0, ($height - $H) / 2, $W, (($height - $H) / 2) + $H)->save($destination);
+		} else{
+			$img->fit_to_height($H)->crop(($width - $W) / 2, 0, (($width - $W) / 2) + $W, $H)->save($destination);
+		}
+	 */	
  }
  
  /**
@@ -587,7 +599,6 @@ function printFooter(){
 				
 					<div class="col-sm-4">
 						<div class="footer darkgray">&copy; Binair01 - $year </div><br>
-						<div class="footer darkgray">website by Thomas Van Bouwel <br> www.tvb-design.com</div>
 						<br>
 		        		<br>
 			        </div>
@@ -598,17 +609,24 @@ function printFooter(){
 		        		<div class="footer darkgray">binair01@binair01.be</div>
 		        		<div class="footer darkgray">Begijnhoflaan 121, B-9000 Gent</div>
 		        		<div class="footer darkgray">t: 09 233 80 23</div>
-		        		<br><br>
+		        		<br>
+		        		<br>
 			        </div>
 			        
 			        <div class="col-sm-4">
-			        	<div class="footer darkgray footertitle">SOCIAL</div>
+			        	<div class="footer darkgray footertitle">FOLLOW BINAIR01</div>
 			        	
 				        <ul class="social">
 				        	<li>
 				        		<a data-toggle="tooltip" title="mixcloud" href="https://www.mixcloud.com/mnsr_z%C3%A9r0/" target="_blank" id="mixcloud">mc &nbsp;</a>  
 				        		<a data-toggle="tooltip" title="facebook" href="https://www.facebook.com/binair01-182905618426061/?fref=ts" target="_blank" id="facebook">fb &nbsp;</a>
-				        		<a data-toggle="tooltip" title="youtube" href="https://www.youtube.com/user/binair01" target="_blank" id="youtube">yt &nbsp;</a>       		
+				        		<a data-toggle="tooltip" title="youtube" href="https://www.youtube.com/user/binair01" target="_blank" id="youtube">yt &nbsp;</a> 
+				        		<a data-toggle="tooltip" title="twitter" href="https://twitter.com/binair01" target="_blank" id="twitter">tw &nbsp;</a>  
+				        		<br>
+				        		<a data-toggle="tooltip" title="instagram" href="https://www.instagram.com/binair01/" target="_blank" id="instagram">ig &nbsp;</a> 
+				        		<a data-toggle="tooltip" title="soundcloud" href="https://soundcloud.com/binair01-1" target="_blank" id="soundcloud">sc &nbsp;</a>  
+				        		<a data-toggle="tooltip" title="spotify" href="https://open.spotify.com/user/binair01" target="_blank" id="spotify">sf &nbsp;</a>   
+				        		<a data-toggle="tooltip" title="deezer" href="http://www.deezer.com/profile/698631591/playlists" target="_blank" id="deezer">yt &nbsp;</a>      		
 				        	</li>
 				        </ul>
 				    </div>

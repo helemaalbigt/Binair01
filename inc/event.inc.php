@@ -142,11 +142,11 @@
 		 	$date = $year."-".$month."-".$day;
 			
 		 	//handle coverimage
-		 	$filename="";
+		 	$filenameCoverimage="";
 		 	//if clause prevent execution if project was edited(id exists) and no new image was added (image is not empty)
 			if (empty($p['id']) || $_FILES['coverimage']['name'] != '') {
 				try {
-					$filename = saveImage($_FILES['coverimage']);
+					$filenameCoverimage = saveImage($_FILES['coverimage']);
 				} catch (Exception $e) {
 					//if an error occurred, output your custom error message
 					die($e -> getMessage());
@@ -194,7 +194,7 @@
 				//check if new image was added, add some stuff to the query if it is
 				if ($_FILES['coverimage']['name'] != ''){
 					$appendSQL .= ", coverimage=?";
-					$appendSTMT = array($filename);
+					$appendSTMT = array($filenameCoverimage);
 				}
 				//append galleryimages to the query (used to be conditional, that's why its seperated - T.
 				$appendSQL .= ", galleryimages=?";
@@ -204,7 +204,7 @@
 				$sql = "UPDATE events SET title=?, tags=?, sortdate=?, hour=?, address=?, venue=?, venueurl=?, ticketsurl=?, facebookurl=?, preview=?, body=?".$appendSQL." WHERE id=? LIMIT 1";
 	
 				if ($stmt = $this -> db -> prepare($sql)) {
-					$A = array_merge(array_merge(array($p['title'], $p['tags'], $date, $p['hour'], $p['address'], $p['venue'], $p['venueurl'], $p['ticketsurl'], $p['facebookurl'], $p['preview'], $p['body']), $appendSTMT),array($p['id']));
+					$A = array_merge(array_merge(array($p['title'], $p['tags'], $date, $p['hour'], $p['address'], $p['venue'], $p['venueurl'], $p['ticketsurl'], $p['facebookurl'], $p['event_preview'], $p['event_body']), $appendSTMT),array($p['id']));
 					$stmt -> execute($A);
 					$stmt -> closeCursor();
 					
@@ -217,7 +217,7 @@
 			{
 				$sql = "INSERT INTO events (title, tags, sortdate, hour, address, venue, venueurl, ticketsurl, facebookurl, coverimage, preview, body, galleryimages) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 				if ($stmt = $this -> db -> prepare($sql)) {
-					$stmt -> execute(array( $p['title'], $p['tags'], $date, $p['hour'], $p['address'], $p['venue'], $p['venueurl'], $p['ticketsurl'], $p['facebookurl'], $filename, $p['preview'], $p['body'], $galleryimagesSerialized));	
+					$stmt -> execute(array( $p['title'], $p['tags'], $date, $p['hour'], $p['address'], $p['venue'], $p['venueurl'], $p['ticketsurl'], $p['facebookurl'], $filenameCoverimage, $p['event_preview'], $p['event_body'], $galleryimagesSerialized));	
 					$stmt -> closeCursor();
 					
 					//get the ID of the entry that was just saved

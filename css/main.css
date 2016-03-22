@@ -138,6 +138,7 @@ h4{
 	display:table-cell;
 	vertical-align:middle;
 	width:100%;
+	height:100%;
 	max-width:none;
 	margin:auto;
 	position:relative;
@@ -296,20 +297,49 @@ ul.social a{
 	width: 30px;
 	height: 30px;
 	text-indent: -99999px;
+	margin-bottom:5px;
 }
 
 ul.social #facebook{
-	background: url('../img/fb.jpg');
+	background: url('../img/social/fb.jpg');
 }
 
 ul.social #youtube{
-	background: url('../img/yt.jpg');
-}
-ul.social #mixcloud{
-	background: url('../img/mc.jpg');
+	background: url('../img/social/yt.jpg');
 }
 
-ul.social #facebook:hover, ul.social  #youtube:hover, ul.social  #mixcloud:hover {
+ul.social #mixcloud{
+	background: url('../img/social/mc.jpg');
+}
+
+ul.social #deezer{
+	background: url('../img/social/de.jpg');
+}
+
+ul.social #spotify{
+	background: url('../img/social/sp.jpg');
+}
+
+ul.social #soundcloud{
+	background: url('../img/social/sc.jpg');
+}
+
+ul.social #instagram{
+	background: url('../img/social/ig.jpg');
+}
+
+ul.social #twitter{
+	background: url('../img/social/tw.jpg');
+}
+
+ul.social #facebook:hover, 
+ul.social  #youtube:hover, 
+ul.social  #mixcloud:hover, 
+ul.social  #deezer:hover, 
+ul.social  #spotify:hover, 
+ul.social  #soundcloud:hover, 
+ul.social  #instagram:hover, 
+ul.social  #twitter:hover {
 	background-position: 0 30px;
 }
 
@@ -344,7 +374,7 @@ ul.social #facebook:hover, ul.social  #youtube:hover, ul.social  #mixcloud:hover
   margin:auto;
   position:absolute; 
   top:calc(50% - 75px);
-  text-align:center;
+  text-align:left;
   color:white;
   font-size:180%;
   
@@ -360,6 +390,7 @@ ul.social #facebook:hover, ul.social  #youtube:hover, ul.social  #mixcloud:hover
 	 position:absolute;
 	left:calc(50% + 210px);
 	width:423px;
+	//text-align:justify;
 }
 
 .slogan.above_fold b{

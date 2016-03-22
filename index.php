@@ -82,7 +82,7 @@
 				<!-- slogan -->
 				<div class="slogan above_fold">
 					<div class="phrase1">
-						<b>Binair 01</b> cares about music diversity.<br>
+						<b>Binair01</b> cares about music diversity.<br>
 					</div>
 					<div class="phrase2">
 						We offer quality  <b>dance music</b> neglected by <b>mainstream media</b>.
@@ -106,7 +106,7 @@
 					</div>
 					<div class="col-md-9 body-content">
 						<h4>
-							Binair 01 cares about music <b>diversity</b>. 
+							Binair01 cares about music <b>diversity</b>. 
 							We offer quality dance music <b>neglected by mainstream media</b>, who only focus on Anglo-Saxon pop music.
 						<h4>
 					</div>

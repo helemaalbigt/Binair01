@@ -221,7 +221,8 @@ if(isset($_GET['editingEvent']) && isset($_GET['id'])){
         
         
     	<script type="text/javascript">
-		//calls a function to check for errors, passes arrays with elements to check
+    	
+		//calls a function to check for errors in a new blogpost, passes arrays with elements to check
 		function checkInputForm(edit) {
 			
 			//array of all inputs to check for 'empty' errors [id,name]
@@ -240,6 +241,28 @@ if(isset($_GET['editingEvent']) && isset($_GET['id'])){
 			return validateForm(true, checkEmpty, checkFilesize);
 		}
 		
+		//calls a function to check for errors in a new event, passes arrays with elements to check
+		function checkInputFormEvent(edit) {
+			
+			//array of all inputs to check for 'empty' errors [id,name]
+			var checkEmpty = new Array;
+			//if editing, omit the check for empty images
+			if (edit) {
+				checkEmpty = [["event_title","title"], ["event_tags","tags"], ["event_sortdate","sort date"],  ["event_hour","hour"], ["event_venue","venue"], ["summernote2","preview"], ["summernote3","body"], ["event_address","address"]];
+			} else{
+				checkEmpty = [["event_title","title"], ["event_tags","tags"], ["event_sortdate","sort date"],  ["event_hour","hour"], ["event_venue","venue"], ["summernote2","preview"], ["summernote3","body"], ["event_address","address"]];
+			}
+
+			// array of all inputs to check filesize [id, name]
+			var checkFilesize = [['event_coverimage', "cover image"]]; 
+			
+			//array of all inputs to check filesize, where multiple inputs are allowed
+			var checkFilesizeMultiple = [['imagegallery', "one of the gallery images"]];
+
+			//execute form check  //checkEmpty
+			return validateForm(true, checkEmpty, checkFilesize, checkFilesizeMultiple);
+		}
+		
 		/**
 		 * Check for errors in forms
 		 *
@@ -251,7 +274,7 @@ if(isset($_GET['editingEvent']) && isset($_GET['id'])){
 		 * @param array(array) checkFileSize 2D array containing elements to check for filesize bigger than 'maxsize' errors (("ID","human readable name"), (...))
 		 * @return boolean False if error found
 		 */
-		function validateForm(gotoError, checkEmpty, checkFilesize) {
+		function validateForm(gotoError, checkEmpty, checkFilesize, checkFilesizeMultiple) {
 			
 			var error = false;
 			var message = "ERROR";
@@ -316,6 +339,37 @@ if(isset($_GET['editingEvent']) && isset($_GET['id'])){
 									goTo = checkFilesize[i][0];
 								}
 								e.style.backgroundColor = errorColor;
+							}
+						}
+					}
+				}
+			}
+			
+			/*
+			 * FILESIZE (Multiple) ERROR - checks fields that allow multiple files to be selected
+			 */
+			for (var i = 0; i < checkFilesizeMultiple.length; i++) {
+				// Check for the various File API support.
+				if (window.File && window.FileReader && window.FileList && window.Blob) {
+					//check if element exists
+					if (document.getElementById(checkFilesizeMultiple[i][0]) != null) {
+						//get element file size
+						var e = document.getElementById(checkFilesizeMultiple[i][0]);
+						//check if file is selected
+						if (!(e.value == null || e.value == "")) {
+							for (var j = 0; j < document.getElementById(checkFilesizeMultiple[i][0]).files.length; j++){
+								//get filesize
+								var v = document.getElementById(checkFilesizeMultiple[i][0]).files[j].size;
+								//if element is not empty and not numerical, add a line to the error string, change css
+								if (v > maxsize) {
+									var returnString = "\n-" + checkFilesizeMultiple[i][1] + " filesize is bigger than the maximum of 2Mb!";
+									message += returnString;
+									error = true;
+									if (goTo == "#") {
+										goTo = checkFilesizeMultiple[i][0];
+									}
+									e.style.backgroundColor = errorColor;
+								}
 							}
 						}
 					}
@@ -510,8 +564,10 @@ if(isset($_GET['editingEvent']) && isset($_GET['id'])){
 			                </span>
 			                <input type="text" class="form-control" readonly>
 			            </div>
-			            <div class="infotext">You need to either have a mediacover or a cover image. <br> 
-			                	If both are filled in, the small preview on the front page will display the coverimage instead of the mediacover
+			            <div class="infotext">
+			            	MAX FILESIZE 2Mb!<br> 
+			            	You need to either have a mediacover or a cover image. <br> 
+			                If both are filled in, the small preview on the front page will display the coverimage instead of the mediacover
 			            </div>
                     </div>
                 </div>
@@ -572,106 +628,109 @@ if(isset($_GET['editingEvent']) && isset($_GET['id'])){
             	
                 <!--title-->
                 <div class="form-group">
-                    <label class="control-label col-sm-2" for="title">*Title:</label>
+                    <label class="control-label col-sm-2" for="event_title">*Title:</label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control" id="title" name="title" placeholder="Enter title" value="<?php echo $eventTitle ?>">
+                        <input type="text" class="form-control" id="event_title" name="title" placeholder="Enter title" value="<?php echo $eventTitle ?>">
                     </div>
                 </div>
                 
                 <!--tags-->
                 <div class="form-group">
-                    <label class="control-label col-sm-2" for="title">*Tags:</label>
+                    <label class="control-label col-sm-2" for="event_title">*Tags:</label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control" id="tags" name="tags" placeholder="separate multiple tags by comma eg: party, folk, music" value="<?php echo $eventTags ?>">
+                        <input type="text" class="form-control" id="event_tags" name="tags" placeholder="separate multiple tags by comma eg: party, folk, music" value="<?php echo $eventTags ?>">
                     </div>
                 </div>
                 
                 <!--sortdate-->
                 <div class="form-group">
-                    <label class="control-label col-sm-2" for="sortdate">*Event Date:</label>
+                    <label class="control-label col-sm-2" for="event_sortdate">*Event Date:</label>
                     <div class="col-sm-10">
-                    	<input type="text" id="sortdate" name="sortdate" value="<?php echo $eventSortdate ?>" />
+                    	<input type="text" id="event_sortdate" name="sortdate" value="<?php echo $eventSortdate ?>" />
                     	<div class="infotext">The exact date of the event</div>
                     </div>
                 </div>
                 
                 <!--hour-->
                 <div class="form-group">
-                    <label class="control-label col-sm-2" for="hour">*Starting Hour:</label>
+                    <label class="control-label col-sm-2" for="event_hour">*Starting Hour:</label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control" id="hour" name="hour" placeholder="eg: 21h30" value="<?php echo $eventHour ?>">
+                        <input type="text" class="form-control" id="event_hour" name="hour" placeholder="eg: 21h30" value="<?php echo $eventHour ?>">
                     </div>
                 </div>
                 
                 <!--venue-->
                 <div class="form-group">
-                    <label class="control-label col-sm-2" for="venue">*Venue:</label>
+                    <label class="control-label col-sm-2" for="event_venue">*Venue:</label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control" id="venue" name="venue" placeholder="eg: Kunstencentrum Vooruit " value="<?php echo $eventVenue ?>">
+                        <input type="text" class="form-control" id="event_venue" name="venue" placeholder="eg: Kunstencentrum Vooruit " value="<?php echo $eventVenue ?>">
                     </div>
                 </div>
                 
                 <!--venue link-->
                 <div class="form-group">
-                    <label class="control-label col-sm-2" for="venueurl">Venue Link:</label>
+                    <label class="control-label col-sm-2" for="event_venueurl">Venue Link:</label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control" id="venueurl" name="venueurl" placeholder="link to the venue's website" value="<?php echo $eventVenueUrl ?>">
+                        <input type="text" class="form-control" id="event_venueurl" name="venueurl" placeholder="link to the venue's website" value="<?php echo $eventVenueUrl ?>">
                     </div>
                 </div>
                 
                  <!--address-->
                 <div class="form-group">
-                    <label class="control-label col-sm-2" for="address">*Address:</label>
+                    <label class="control-label col-sm-2" for="event_address">*Address:</label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control" id="address" name="address" placeholder="eg: Kantienberg 5, 9000 Gent " value="<?php echo $eventAddress ?>">
+                        <input type="text" class="form-control" id="event_address" name="address" placeholder="eg: Kantienberg 5, 9000 Gent " value="<?php echo $eventAddress ?>">
                     </div>
                 </div>
                 
                  <!--ticketsurl-->
                 <div class="form-group">
-                    <label class="control-label col-sm-2" for="address">*Event Ticket Link:</label>
+                    <label class="control-label col-sm-2" for="event_address">Event Ticket Link:</label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control" id="ticketsurl" name="ticketsurl" placeholder="Add link to where tickets can be bought" value="<?php echo $eventTicketLink ?>">
+                        <input type="text" class="form-control" id="event_ticketsurl" name="ticketsurl" placeholder="Add link to where tickets can be bought" value="<?php echo $eventTicketLink ?>">
                     </div>
                 </div>
                 
                 <!--facebook link-->
                 <div class="form-group">
-                    <label class="control-label col-sm-2" for="facebookurl">Facebook Event Page:</label>
+                    <label class="control-label col-sm-2" for="event_facebookurl">Facebook Event Page:</label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control" id="facebookurl" name="facebookurl" placeholder="link to the facebook event page" value="<?php echo $eventFacebookUrl ?>">
+                        <input type="text" class="form-control" id="event_facebookurl" name="facebookurl" placeholder="link to the facebook event page" value="<?php echo $eventFacebookUrl ?>">
                     </div>
                 </div>
                 
                 <!--coverimage-->
                 <div class="form-group">
-                    <label class="control-label col-sm-2" for="coverimage">*Cover Image:</label>
+                    <label class="control-label col-sm-2" for="event_coverimage">*Cover Image:</label>
                     <img class="col-sm-3 imagepreview img-responsive" src="<?php echo $eventCoverImage?>"/>
                     <div class="col-sm-7">
                     	<div class="input-group">
 			                <span class="input-group-btn">
 			                    <span class="btn btn-default btn-file">
-			                        Browse&hellip; <input name="coverimage" id="coverimage" type="file" onchange="updatePreviewImage(this)">
+			                        Browse&hellip; <input name="coverimage" id="event_coverimage" type="file" onchange="updatePreviewImage(this)">
 			                    </span>
 			                </span>
 			                <input type="text" class="form-control" readonly>
+			            </div>
+			            <div class="infotext">
+			            	MAX FILESIZE 2Mb!<br> 
 			            </div>
                     </div>
                 </div>
                 
                 <!--preview-->
                 <div class="row">
-                    <label class="control-label col-sm-2" for="preview">*Previewtext:</label>
+                    <label class="control-label col-sm-2" for="event_preview">*Previewtext:</label>
                     <div class="col-sm-10 nopadding">
-						<textarea id="summernote2" name="preview"><?php echo $eventPreview ?></textarea>
+						<textarea id="summernote2" name="event_preview"><?php echo $eventPreview ?></textarea>
 					</div>
                 </div>
                 
                 <!--body-->
                 <div class="row">
-                    <label class="control-label col-sm-2" for="body">*Body:</label>
+                    <label class="control-label col-sm-2" for="event_body">*Body:</label>
                     <div class="col-sm-10 nopadding">
-						<textarea id="summernote3" name="body"><?php echo $eventBody ?></textarea>
+						<textarea id="summernote3" name="event_body"><?php echo $eventBody ?></textarea>
 					</div>
                 </div>
                 
@@ -687,8 +746,10 @@ if(isset($_GET['editingEvent']) && isset($_GET['id'])){
 			                </span>
 			                <input type="text" class="form-control" readonly>
 			            </div>
-			            <div class="infotext">Select one or more images <br> Note: to add images to an existing gallery, the original images need to be re-uploaded as well</div>
+			            <div class="infotext">MAX FILESIZE PER IMAGE 2Mb!<br> Select one or more images <br> Note: to add images to an existing gallery, the original images need to be re-uploaded as well</div>
+			           
 			            <br>
+			            
 			            <div>
 			            	<?php
 			            		//if event has gallery images show them here
