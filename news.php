@@ -38,14 +38,39 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-        <title></title>
-        <meta name="description" content="">
+        <title>
+        	<?php
+        	if (isset($_GET['id'])) 
+			{
+				echo $blogpost -> title;
+			} 
+        	?>
+        </title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
+       	
        	<?php 
+       	
         if (isset($_GET['id'])) 
-		{ ?>
-        <meta property="og:title" content="title" />
-       	<?php } ?>
+		{
+			$metaTitle = $blogpost -> title;
+			$metaDescription = strip_tags($blogpost -> body);
+			if($blogpost->youtubeCover != NULL && $blogpost->youtubeCover != ""){
+				$metaImg = $_SERVER['DOCUMENT_ROOT'].APP_FOLDER."/img/LogoFull.jpg";
+			} else{
+				$metaImg = $_SERVER['DOCUMENT_ROOT'].APP_FOLDER."/img/medium/".$blogpost -> coverimage;
+			}
+			
+			$metaImg = str_replace("/customers/0/3/1/", "http://www.", $metaImg); 
+			$metaImg = str_replace("/httpd.www", "", $metaImg);
+			
+        	echo <<<META
+				<meta property="og:title" value="$metaTitle" />
+				<meta property="og:description" value="$metaDescription" />
+				<meta property="og:image" value="$metaImg" ?>
+META;
+		}
+		
+		 ?>
 
         <link rel="stylesheet" href="css/bootstrap.min.css">
         <link rel="stylesheet" href="css/bootstrap-theme.min.css">

@@ -53,7 +53,7 @@ else if($_SERVER['REQUEST_METHOD'] == 'POST'
 && !empty($_POST['title']) 
 && !empty($_POST['tags']) 
 && !empty($_POST['sortdate']) 
-&& (!empty($_FILES['coverimage']["name"]) || (!empty($_POST['youtubecover']) && $_POST['youtubecover'] != "" ))) {
+&& (!empty($_FILES['coverimage']["name"]) || (!empty($_POST['youtubecover']) && $_POST['youtubecover'] != "" ) || !empty($_POST['id']))) {
 
 //var_dump($_POST);
 //var_dump($_FILES);

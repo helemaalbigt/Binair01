@@ -265,13 +265,18 @@ PREVIEW;
 			
 			$imgPath = "img/medium/".$this->coverimage;
 			$title = $this->title;
+			
 			$date = $this->sortdate;
 			$id = $this->id;
 			$body = $this->body;
 			
 			$adminVisibility = ($loggedIn) ? "block" : "none";
 			
-			$fblink = "http://binair01.be/dev/news.php?id=".$id;
+			//links used in share button - doesnt work
+			$fblink = urlencode("http://binair01.be/dev/news.php?id=".$id);
+			$imgPathAbs = urlencode($_SERVER['DOCUMENT_ROOT'].APP_FOLDER."/".$imgPath);
+			$summary = urlencode($body);
+			$titleFb = urlencode($title);
 			
 			$taglinks ="";
 			foreach($this->tags as $tag){
@@ -301,7 +306,10 @@ PREVIEW;
 			          		<div class="italic gray">tags: $taglinks</div>
 			          		<p class="body">$body</p>
 			          	
-			          		<!--<div class="fb-share-button" data-href="$fblink" data-layout="button_count"></div>-->
+			          		<!--
+			          		<a onClick="window.open('http://www.facebook.com/sharer.php?s=100&amp;p[title]=$titleFb&amp;p[summary]=$summary&amp;p[url]=$fblink&amp;p[images][0]=$imgPathAbs','sharer','toolbar=0,status=0,width=548,height=325');" href="javascript: void(0)">Insert text or an image here.</a>
+			          		-->
+			  
 				        </div>
 			        </div>
 				</div>

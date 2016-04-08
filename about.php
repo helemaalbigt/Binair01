@@ -37,8 +37,11 @@
         
 				
 		/**
+		 * -Old function for old slagzin-
+		 * 
 		 * Cycle through each slagzin word 
 		 */
+									/*
 		var slagZinLinks;
 		var slagZinIndex = 0;
 		var auto = true;
@@ -58,10 +61,10 @@
 		 	}
 		 	
 		}, 3000);
-		
+									*/
 				
 		/**
-		 *Add links to tags in "music" section
+		 * Add links to tags in "music" section
 		 */
 		window.onload = function() {
 			
@@ -87,6 +90,28 @@
 		 	slagZinLinks[slagZinIndex].setAttribute("active", "true");
 		 	document.getElementById(slagZinLinks[slagZinIndex].getAttribute("targetid")).style.display = 'block';	
 		};
+		
+		
+		/**
+		 *Opens info on each slagzin word 
+		 * 
+		 * @param 
+		 * @return
+		 */
+		function openInfo(e){
+			
+			if(e.getAttribute("active") == "false")
+			{
+				e.setAttribute("active", "true");
+				$(e).parent().next().slideDown(700);
+			} 
+			else
+			{
+				e.setAttribute("active", "false");
+				$(e).parent().next().slideUp(700);
+			}
+		}
+		
 		
 		/**
 		 * Slagzin mink function: loads respective piece of text
@@ -126,32 +151,12 @@
 		        		<span class="sidetitle underscore">BINAIR 01</span><br><br>
 					</div>
 					<div class="col-md-8">
-						<h2 class="nomargin slagzin" id="slagzin">
-							<a class="red activated" href="#" active="true" targetid="bin01" onclick="goto(this)">Binair 01&#x25BE</a> cares about 
-							<a class="red" href="#" active="false" targetid="music" onclick="goto(this)">music&#x25BE</a> 
-							<a class="red" href="#" active="false" targetid="diversity" onclick="goto(this)">diversity&#x25BE</a>. <br> We 
-							<a class="green" href="#" active="false" targetid="offer" onclick="goto(this)">offer&#x25BE</a> 
-							<a class="green" href="#" active="false" targetid="quality" onclick="goto(this)">quality&#x25BE</a> 
-							<a class="green" href="#" targetid="dance" onclick="goto(this)">dance music&#x25BE</a> neglected by 
-							<a class="beige" href="#" active="false" targetid="mainstream" onclick="goto(this)">mainstream media&#x25BE</a>, who only focus on 
-							<a class="beige" href="#" active="false" targetid="anglo" onclick="goto(this)">Anglo-Saxon pop music&#x25BE</a>.
-						<h2>
-					</div>
-				</div>
-				
-				
-				
-				<!-- woorden -->
-				<div class="row">
-					<div class="col-md-3 title">
-		        		&nbsp;
-					</div>
-					<div class="col-md-8">
-						
-						<!-- Binair01 -->
-						<div id="bin01">
-						<h2><span class="fill red">binair 01</span></h2>
-						<p>
+						<div class="nomargin slagzin" id="slagzin">
+							<!--Toggle-->
+							<h2><a class="red activated" active="false" targetid="bin01" onclick="openInfo(this)">Binair 01&#x25BE</a></h2> 
+							
+							<p style="display:none;">
+							<br>
 							Binair01 is a music platform located in Ghent, Belgium, 
 							striving for more music diversity and an increased attention 
 							for under exposed music origins and influences.  The organization was 
@@ -159,14 +164,15 @@
 							It expanded ever since to a collective of music lovers discovering and selecting 
 							dance music from all over the world without any borders or format restrictions, 
 							as an essential addition to the limited Anglo-Saxon pop music in the mainstream Flemish media.
-						</p>
-						<br>
-						</div>
-		
-						<!-- music -->
-						<div id="music">
-						<h2 ><span class="fill red">music</span></h2>
-						<p id="musictext">
+							<br>
+							<br>
+							</p>
+							
+							<!--Toggle-->
+							<h2>cares about <a class="red" active="false" targetid="music" onclick="openInfo(this)">music&#x25BE</a></h2> 
+							
+							<p id="musictext" style="display:none;">
+								<br>
 							Binair01 promotes music complementary to the selection made by the 
 							traditional public media. We pay attention to regions and genres 
 							producing amazing dance rhythms, such as <a>balkan</a> and East-European 
@@ -182,14 +188,15 @@
 							and so on. The music we collect and share may come from far away, 
 							but is also found in the bars next door in Ghent or melting pot Brussels, 
 							unable to broaden its audience in the current media framing. 
-						</p>
-						<br>
-						</div>
-						
-						<!-- diversity -->
-						<div id="diversity">
-						<h2 ><span class="fill red">diversity</span></h2>
-						<p>
+							<br>
+							<br>
+							</p>
+							
+							<!--Toggle-->
+							<h2><a class="red" active="false" targetid="diversity" onclick="openInfo(this)">diversity&#x25BE</a>.</h2> 
+							
+							<p style="display:none;">
+								<br>
 							Music in Flanders is stuck behind imaginary linguistic and cultural barriers. 
 							National public radio broadcast neglects all music styles, origins and 
 							influences which do not match the narrowly defined music specifications, 
@@ -200,16 +207,20 @@
 							than economical compulsive logics. We try to get this balance in check pledging 
 							the conviction that diversity is a vital condition in all evolutions, 
 							including musical development.
-						</p>
-						<br>
-						</div>
-						
-						<!-- offer -->
-						<div id="offer">
-						<h2 ><span class="fill green">offer</span></h2>
-						<p>
+							<br>
+							<br>
+							</p>
+							
+							<!--Toggle-->
+							<h2>We <a class="green" active="false" targetid="offer" onclick="openInfo(this)">offer&#x25BE</a></h2> 
+							
+							<p style="display:none;">
+								<br>
 							The music we discover in Belgium, in neighbor countries or at the other side of the planet, 
-							is shared on social media and streaming services such as Deezer, Spotify and Soundcloud. 
+							is shared on social media and streaming services such as 
+							<a href="http://www.deezer.com/profile/698631591/playlists" target="_blank">Deezer</a>, 
+							<a href="https://play.spotify.com/user/binair01" target="_blank">Spotify</a> and 
+							<a href="https://soundcloud.com/binair01-1" target="_blank">Soundcloud</a>. 
 							Most of all we build amazing parties with this highly inflammable content, 
 							from small dj-set editions to big productions with a line-up of several 
 							live bands. Generally we organize 5 events a year in the nicest venues Ghent has 
@@ -219,14 +230,15 @@
 							these international big fishes, we keep an eye on local, Belgian talent. We give 
 							this music and the bands creating it a stage, and an audience of melomaniacs and 
 							dance addicts the opportunity to hear and experience what radio leaves uncovered.
-						</p>
-						<br>
-						</div>
-						
-						<!-- quality -->
-						<div id="quality">
-						<h2 ><span class="fill green">quality</span></h2>
-						<p>
+							<br>
+							<br>
+							</p>
+							
+							<!--Toggle-->
+							<h2><a class="green" active="false" targetid="quality" onclick="openInfo(this)">quality&#x25BE</a></h2> 
+							
+							<p style="display:none;">
+								<br>
 							If not quality but the lack of airplay is the reason why not being programmed 
 							in the regular circuit, we consider this mechanism an increasing and vicious 
 							bleakness of the musical landscape. The music outside the range of the conventional 
@@ -234,14 +246,15 @@
 							outside the lines of a radio format often tend to innovative crossovers, and mutual 
 							influences lead more than perhaps to new music trends and evolutions with 
 							interesting music-technical features and fresh rhythm variations. 
-						</p>
-						<br>
-						</div>
-						
-						<!-- dance -->
-						<div id="dance">
-						<h2 ><span class="fill green">dance music</span></h2>
-						<p>
+							<br>
+							<br>
+							</p>
+							
+							<!--Toggle-->
+							<h2><a class="green" targetid="dance" onclick="openInfo(this)">dance music&#x25BE</a></h2> 
+							
+							<p style="display:none;">
+								<br>
 							The music we collect is carefully selected on its dance pedigree 
 							and complexity of influences and variety of rhythms. Dancing is the very core of our 
 							events. It is not wobbling on endless repeating beats. It’s not waiting till the dj 
@@ -250,14 +263,15 @@
 							unconditional dancing without any restrictive barriers. Our parties and concerts 
 							are never too crowded to even get a chance to start moving. We keep the dance floor 
 							enjoyable and give your shoes all the space they need.  So dance, dance, otherwise we are lost.
-						</p>
-						<br>
-						</div>
-						
-						<!-- mainstream media -->
-						<div id="mainstream">
-						<h2 ><span class="fill beige">mainstream media</span></h2>
-						<p>
+							<br>
+							<br>
+							</p>
+							
+							<!--Toggle-->
+							<h2>neglected by <a class="beige" active="false" targetid="mainstream" onclick="openInfo(this)">mainstream media&#x25BE</a>,</h2> 
+							
+							<p style="display:none;">
+								<br>
 							Most dance music played on the radio is focusing on catchy tunes rather than rich rhythms. 
 							Mid-Western Europe lost in bits and pieces the art of dancing together. The responsibility 
 							of public media in gathering people as a layered but cohesive society can’t be underestimated. 
@@ -265,24 +279,27 @@
 							This need is even enforced by the recent phenomenon of open, global music traffic thanks 
 							to virtual and physical migrations. Contrary to this evolution, the music diversity provided 
 							by broadcast mainstream media is decreasing and exclusively focusing on a 1% part of economically dominant music.
-						</p>
-						<br>
-						</div>
-						
-						<!-- anglo -->
-						<div id="anglo">
-						<h2 ><span class="fill beige">Anglo-Saxon pop-music</span></h2>
-						<p>
+							<br>
+							<br>
+							</p>
+							
+							<!--Toggle-->
+							<h2>who only focus on <a class="beige" active="false" targetid="anglo" onclick="openInfo(this)">Anglo-Saxon pop music&#x25BE</a>.</h2>
+							
+							<p style="display:none;">
+								<br>
 							Don’t be misunderstood: we actually like the good part of Anglo-Saxon pop, 
 							rock and dance music just like any genres. We just aim for the right balance, 
 							and therefore try to bring alive a small part of the 99% neglected music by 
 							the conventional radio channels in Flanders.
-						</p>
-						<br>
+							<br>
+							<br>
+							</p>
+							
 						</div>
-						
 					</div>
 				</div>
+				
 				
 				<br><br><br><br><br>
 				
@@ -310,24 +327,83 @@
 				
 				<br><br>
 				
-				<!-- MEMBERS -->
+				
+				<!-- PEOPLE -->
+				<!-- Collaborators & Volunteers -->
 				<div class="row">
 					<div class="col-md-3 title">
-		        		<span class="sidetitle underscore">MEMBERS</span><br><br>
+		        		<span class="sidetitle underscore">PEOPLE</span><br><br>
+					</div>
+					
+					
+					<div class="col-md-8 title">
+		        		<span class="sidetitle">Collaborators & volunteers</span><br><br>
+		        		
+		        		<p>
+		        			The events organized by binair01 wouldn’t be possible without the help of many volunteers. <br>
+		        			For each event 10 to 40 people are working hard on spreading the promo stuff, 
+		        			getting the production right, serving drinks and selling tickets.<br><br>
+							We are always looking for motivated people to join the organization or to volunteer on one of our events. 
+							If you want to jump in, just write us at vrijwilligers@binair01.be.
+		        		</p><br><br>
+					</div>
+				
+				</div>
+				
+				<!-- Board Members -->
+				<div class="row">
+					<div class="col-md-3 title">
+		        		&nbsp;
+					</div>
+					
+					<!-- Collaborators & Volunteers -->
+					<div class="col-md-8 title">
+		        		<span class="sidetitle">Board Members</span><br><br>
+					</div>
+				</div>
+					
+				<div class="row">
+					<div class="col-md-3 title">
+		        		&nbsp;
 					</div>
 					
 					<!--Olivier-->
-					<div class="col-md-2 title">
-		        		<img src="img/temp.jpg" />
+					<div class="col-xs-4 col-md-2 title">
+		        		<img class="img-responsive" src="img/about/oliv.jpg" /> <!--Profile image, change src path to change image-->
 					</div>
 					
-					<div class="col-md-6">
-						<h2 id="anglo"><span class="">Olivier Roegiest</span></h2>
-						<br>
+					<div class="col-xs-7 col-md-6">
+						<h2 class="no_top_margin"><span class="">Olivier Roegiest</span></h2>
+						<b>Founding member, music selection, band scouting, production, resident dj</b>
+						<br><br>
 						<p>
-							Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam volutpat, 
-							ipsum non tristique tincidunt, leo mi dignissim lorem, quis pellentesque 
-							nunc augue sit amet nibh.
+							Olivier is one of the founding members of binair01. 
+							He’s responsible for the overall functioning and production, 
+							and selects the playlist music and the live bands being programmed. <br>
+							As an architect and an urbanist he’s fascinated by the complexity and diversity of the urban fabric 
+							whose identity is subtly influenced by new music tendencies, and in the meantime questioning its 
+							imaginary cultural borders. As a devoted music addict he carefully built up an ever expanding 
+							valuable collection of non-exposed dance music treasures by years of research in all quarters 
+							of our planet. He combines this knowledge with traditional club mixing techniques gained throughout a long career as a party dj.
+							<br><br>
+							
+							The sum of classic beatmatching and unconventional dance tunes makes him a party dj producing 
+							a unique sound, developed under the pseudonym mnsr zér0, resident at binair01.
+							<br><br>
+							
+							His sets are surprising blends of greasy balkan with a crazy gipsy wink, super tight electric 
+							cumbiabeats on eclectic afrolatinoriffs, hot Spanish nuevo flamenco melting on übercooled 
+							Scandinavian swinghip-hop, rumba Catalána versus African clubzouk, contagious ska infecting 
+							French jazz manouche, solid reggaetón devouring fragile tango, Arabian raps clashing 
+							with uptempo klezmer. His mixes always feature an exciting variety of rhythms and are a 
+							real relief for people addicted to dancing and searching for challenges beyond the simple beats of shallow radio hit music.
+						</p>
+						<p>
+							<div class="infotext">
+								<span class="glyphicon glyphicon-envelope small"></span> <a href="mailto:olivier.roegiest@binair01.be" target="_blank">olivier.roegiest@binair01.be</a><br>
+								<span class="glyphicon glyphicon-user small"></span> <a href="https://www.facebook.com/binair01.mnsrzero" target="_blank">www.facebook.com/binair01.mnsrzero</a><br>
+								<span class="glyphicon glyphicon-earphone small"></span> 0478/287323<br>
+							</div>
 						</p>
 						<br>
 					</div>		
@@ -339,17 +415,25 @@
 		        		&nbsp;
 					</div>
 												
-					<div class="col-md-2 title">
-		        		<img src="img/temp.jpg" />
+					<div class="col-xs-4 col-md-2 title">
+		        		<img class="img-responsive" src="img/about/oliv.jpg" /> <!--Profile image, change src path to change image-->
 					</div>
 					
-					<div class="col-md-6">
-						<h2 id="anglo"><span class="">Tijl</span></h2>
-						<br>
+					<div class="col-xs-7 col-md-6">
+						<h2 class="no_top_margin"><span class="">Tijl</span></h2>
+						<b>Founding member, music selection, band scouting, production, resident dj</b>
+						<br><br>
 						<p>
 							Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam volutpat, 
 							ipsum non tristique tincidunt, leo mi dignissim lorem, quis pellentesque 
 							nunc augue sit amet nibh.
+						</p>
+						<p>
+							<div class="infotext">
+								<span class="glyphicon glyphicon-envelope small"></span> <a href="mailto:olivier.roegiest@binair01.be" target="_blank">olivier.roegiest@binair01.be</a><br>
+								<span class="glyphicon glyphicon-user small"></span> <a href="https://www.facebook.com/binair01.mnsrzero" target="_blank">www.facebook.com/binair01.mnsrzero</a><br>
+								<span class="glyphicon glyphicon-earphone small"></span> 0478/287323<br>
+							</div>
 						</p>
 						<br>
 					</div>
@@ -361,17 +445,25 @@
 		        		&nbsp;
 					</div>
 					
-					<div class="col-md-2 title">
-		        		<img src="img/temp.jpg" />
+					<div class="col-xs-4 col-md-2 title">
+		        		<img class="img-responsive" src="img/about/thomas.jpg" /> <!--Profile image, change src path to change image-->
 					</div>
 					
-					<div class="col-md-6">
-						<h2 id="anglo"><span class="">Thomas</span></h2>
-						<br>
+					<div class="col-xs-7 col-md-6">
+						<h2 class="no_top_margin"><span class="">Thomas</span></h2>
+						<b>Founding member, music selection, band scouting, production, resident dj</b>
+						<br><br>
 						<p>
 							Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam volutpat, 
 							ipsum non tristique tincidunt, leo mi dignissim lorem, quis pellentesque 
 							nunc augue sit amet nibh.
+						</p>
+						<p>
+							<div class="infotext">
+								<span class="glyphicon glyphicon-envelope small"></span> <a href="mailto:olivier.roegiest@binair01.be" target="_blank">olivier.roegiest@binair01.be</a><br>
+								<span class="glyphicon glyphicon-user small"></span> <a href="https://www.facebook.com/binair01.mnsrzero" target="_blank">www.facebook.com/binair01.mnsrzero</a><br>
+								<span class="glyphicon glyphicon-earphone small"></span> 0478/287323<br>
+							</div>
 						</p>
 						<br>
 					</div>		
@@ -379,51 +471,133 @@
 				
 				<br><br>
 				
+				
 				<!-- PARTNERS -->
+				
 				<div class="row">
 					<div class="col-md-3 title">
 		        		<span class="sidetitle underscore">PARTNERS</span><br><br>
 					</div>
 					
-					<!--Partner 1-->
-					<a href="http://www.google.com" target="_blank"> <!--vervang door link naar partner website--> 
-						<div class="col-md-2 title">
-			        		<img src="img/temp.jpg" />
-						</div>
-					</a>
 					
-					<div class="col-md-6">
-						<h2 id="anglo"><span class="">Bedrijf 1</span></h2>
-						<br>
-						<p>
-							Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam volutpat, 
-							ipsum non tristique tincidunt, leo mi dignissim lorem, quis pellentesque 
-							nunc augue sit amet nibh.
-						</p>
-						<br>
-					</div>	
-				</div><br>
+					<div class="col-md-8 title">		        		
+		        		<p>
+		        			We are constantly looking for local partners who share our philosophy. 
+		        			The following brands and companies are actually some of our most loyal 
+		        			sponsors or partners. All of them match our mission of creating an urban 
+		        			environment which is sustainable and durable, driven by creative concepts 
+		        			which increase life quality and embrace the variety and layered complexity 
+		        			of our cities.
+		        		</p><br><br>
+					</div>
 				
-				<!--Partner 2-->	
+				</div>
+				
+				<!--Partner 1-->
 				<div class="row">
 					<div class="col-md-3 title">
 		        		&nbsp;
 					</div>
 					
-					<a href="http://www.google.com" target="_blank"> <!--vervang door link naar partner website--> 
-						<div class="col-md-2 title">
-			        		<img src="img/temp.jpg" />
+					<a href="http://www.tastyworld.be/en/home/" target="_blank"> <!--vervang door link naar partner website--> 
+						<div class="col-xs-4 col-md-2 title">
+		        			<img class="img-responsive" src="img/about/tasty.jpg" /> <!--Profile image, change src path to change image-->
 						</div>
 					</a>
 					
-					<div class="col-md-6">
-						<h2 id="anglo"><span class="">Bedrijf 2</span></h2>
+					<div class="col-xs-7 col-md-6">
+						<h2 id="anglo" class="no_top_margin"><span class="">Tasty World</span></h2>
+							<br>
+							<p>
+								Tasty World is our royal veggie burger delivery service since years. 
+								Thanks to their catering, our volunteers never turn hungry.
+								<br><br>
+								In Ghent, Tasty World created a new concept in offering a varied choice 
+								of vegetarian burgers and smoothies. Their philosophy is to create a solid 
+								basis for what’s utterly important in our demanding society: a physical and 
+								mental balance thanks to healthy and tasty food. They emphasize the quality 
+								of their ingredients and the freshness of the in-house prepared food. Their 
+								environmental consciousness is high and they only use bio-degradable waste.
+								<br><br>
+								Check them out at on their <a href="http://www.tastyworld.be/en/home/" target="_blank">website</a> or in their restaurants at Hoogpoort 1 and Walpoortstraat 38 in Ghent.
+							</p>
 						<br>
-						<p>
-							Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam volutpat, 
-							ipsum non tristique tincidunt, leo mi dignissim lorem, quis pellentesque 
-							nunc augue sit amet nibh.
-						</p>
+					</div>	
+				</div><br>
+				
+				<!--Partner 2-->
+				<div class="row">
+					<div class="col-md-3 title">
+		        		&nbsp;
+					</div>
+					
+					<a href="http://www.lekkergec.be/" target="_blank"> <!--vervang door link naar partner website--> 
+						<div class="col-xs-4 col-md-2 title">
+		        			<img class="img-responsive" src="img/about/gec.jpg" /> <!--Profile image, change src path to change image-->
+						</div>
+					</a>
+					
+					<div class="col-xs-7 col-md-6">
+						<h2 id="anglo" class="no_top_margin"><span class="">Lekker Gec</span></h2>
+							<br>
+							<p>
+								Lekker Gec delivers the exquisite meals for our musicians and guests. 
+								Thanks to their catering, the performances on our stages are outstanding.
+								<br><br>
+								Lekker Gec is a bio-vegetarian restaurant. A cooperative company supported 
+								by a joyful team. The core of business is not only the preparation of nice 
+								food with respect for the environment, but also their social engagement. 
+								In their kitchen they train people in need of a re-orientation in order 
+								to get a new chance on the labor market.
+								<br><br>
+								Lucky for us, they recently launched a delivery and catering service, aiming 
+								an increased awareness that healthy food can be honest and tasty for a broad public.
+								Check them out at on their <a href="http://www.lekkergec.be/" target="_blank">website</a> or in their restaurant at K. 
+								Maria Hendrikaplein 6, just in front of the main train station Ghent Sint-Pieters.
+							</p>
+						<br>
+					</div>	
+				</div><br>
+				
+				<!--Partner 3-->
+				<div class="row">
+					<div class="col-md-3 title">
+		        		&nbsp;
+					</div>
+					
+					<a href="http://www.tastyworld.be/en/home/" target="_blank"> <!--vervang door link naar partner website--> 
+						<div class="col-xs-4 col-md-2 title">
+		        			<img class="img-responsive" src="img/about/bio.gif" /> <!--Profile image, change src path to change image-->
+						</div>
+					</a>
+					
+					<div class="col-xs-7 col-md-6">
+						<h2 id="anglo" class="no_top_margin"><span class="">Bioplanet</span></h2>
+							<br>
+							<p>
+								Bioplanet is our home supermarket. 
+								They offer us all the stuff we need backstage, 
+								from crackers and fruit to spoil cast and crew, 
+								to soap for washing their plates. Thanks to them, 
+								we never run short on cookies with plenty of tea for twenty.
+								____________________ nog aan te passen! (mail naar bioplanet)______________
+								The Bio-Planet mission states that we want our customers to enjoy life in 
+								a healthier and more conscious way, thanks to our tasty, complete and 
+								reliable assortment of organic products. Bio-Planet is a unique concept, 
+								as a separate supermarket selling only organic food and ecological 
+								non-food products. Our new shop in Leuven (Belgium) is designed according 
+								to the latest and best possible ecological performance indicators. 
+								In this way, it is a trendsetter with an integrated green approach 
+								combining product and infrastructure aspects in a business context. 
+								Additionally, we are taking a new step towards a 'passive' supermarket. 
+								Our first attention went to lowering energy consumption in general. 
+								For a shop that is already very energy efficient due to its concept 
+								(a closed cold-storage area instead of open refrigerated shelves, 
+								no air conditioning, no excessive lighting, no open freezers), 
+								the challenge was to cut energy consumption by another half. 
+								By monitoring the performance of the different techniques, 
+								we will evaluate its applicability for other stores within the Colruyt Group. 	
+							</p>
 						<br>
 					</div>	
 				</div><br>

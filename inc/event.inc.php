@@ -21,6 +21,7 @@
 		public $address;
 		public $coverimage;
 		public $ticketsurl;
+		public $ticketsatdoor;
 		public $facebookurl;
 		public $bodyOriginal;
 		public $preview;
@@ -45,6 +46,7 @@
 				$this->venueurl = NULL;
 				$this->address = NULL;
 				$this->ticketsurl = NULL;
+				$this->ticketsatdoor = NULL;
 				$this->facebookurl = NULL;
 				$this->coverimage = "img/default.jpg";
 				$this->preview = NULL;
@@ -87,6 +89,8 @@
 			
 			$this -> ticketsurl = $e['ticketsurl'];
 			
+			$this -> ticketsatdoor = $e['ticketsatdoor'];
+			
 			$this -> facebookurl = $e['facebookurl'];
 			
 			$this->tagsOriginal = $e['tags'];
@@ -121,7 +125,7 @@
 			$e = $stmt -> fetch();
 			$stmt -> closeCursor();
 			
-			if(count($e) <= 30){	
+			if(count($e) <= 32){	
 				return $e;
 			} else{
 				exit("ERROR: database query returned more values than allowed (".count($e).")");
@@ -140,6 +144,9 @@
 		 	//handle date
 		 	list($day, $month, $year) = split('[/.-]', $p['sortdate']);
 		 	$date = $year."-".$month."-".$day;
+			
+			//handle tickets at door
+			$ticketsatdoorValue = (isset($p['ticketsatdoor'])) ? TRUE : FALSE;
 			
 		 	//handle coverimage
 		 	$filenameCoverimage="";
@@ -201,10 +208,10 @@
 				array_push($appendSTMT, $galleryimagesSerialized);
 			
 				//prepare the sql query and append a part if we're adding images
-				$sql = "UPDATE events SET title=?, tags=?, sortdate=?, hour=?, address=?, venue=?, venueurl=?, ticketsurl=?, facebookurl=?, preview=?, body=?".$appendSQL." WHERE id=? LIMIT 1";
+				$sql = "UPDATE events SET title=?, tags=?, sortdate=?, hour=?, address=?, venue=?, venueurl=?, ticketsurl=?, ticketsatdoor=?, facebookurl=?, preview=?, body=?".$appendSQL." WHERE id=? LIMIT 1";
 	
 				if ($stmt = $this -> db -> prepare($sql)) {
-					$A = array_merge(array_merge(array($p['title'], $p['tags'], $date, $p['hour'], $p['address'], $p['venue'], $p['venueurl'], $p['ticketsurl'], $p['facebookurl'], $p['event_preview'], $p['event_body']), $appendSTMT),array($p['id']));
+					$A = array_merge(array_merge(array($p['title'], $p['tags'], $date, $p['hour'], $p['address'], $p['venue'], $p['venueurl'], $p['ticketsurl'], $ticketsatdoorValue, $p['facebookurl'], $p['event_preview'], $p['event_body']), $appendSTMT),array($p['id']));
 					$stmt -> execute($A);
 					$stmt -> closeCursor();
 					
@@ -215,9 +222,9 @@
 			//save the entry into the database
 			else
 			{
-				$sql = "INSERT INTO events (title, tags, sortdate, hour, address, venue, venueurl, ticketsurl, facebookurl, coverimage, preview, body, galleryimages) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+				$sql = "INSERT INTO events (title, tags, sortdate, hour, address, venue, venueurl, ticketsurl, ticketsatdoor, facebookurl, coverimage, preview, body, galleryimages) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 				if ($stmt = $this -> db -> prepare($sql)) {
-					$stmt -> execute(array( $p['title'], $p['tags'], $date, $p['hour'], $p['address'], $p['venue'], $p['venueurl'], $p['ticketsurl'], $p['facebookurl'], $filenameCoverimage, $p['event_preview'], $p['event_body'], $galleryimagesSerialized));	
+					$stmt -> execute(array( $p['title'], $p['tags'], $date, $p['hour'], $p['address'], $p['venue'], $p['venueurl'], $p['ticketsurl'], $ticketsatdoorValue, $p['facebookurl'], $filenameCoverimage, $p['event_preview'], $p['event_body'], $galleryimagesSerialized));	
 					$stmt -> closeCursor();
 					
 					//get the ID of the entry that was just saved
@@ -343,7 +350,9 @@ PREVIEW;
 			//prepare variables for the heredoc
 			$imgPath = "img/large/".$this->coverimage;
 			$title = $this->title;
-			$date =  date('F', strtotime($this->sortdateArray["year"].$this->sortdateArray["month"].$this->sortdateArray["day"]))." ".$this->sortdateArray["day"].date('S').", ".$this->sortdateArray["year"];//$this->sortdate;
+			$date =  date('F', strtotime($this->sortdateArray["year"].$this->sortdateArray["month"].$this->sortdateArray["day"]))." ".$this->sortdateArray["day"].", ".$this->sortdateArray["year"];//$this->sortdate;
+			//display only if event has passed
+			$dateAppendum = ( $this->sortdateArray["year"].$this->sortdateArray["month"].$this->sortdateArray["day"] < date("Y").date("m").date("d")) ? "<span>This event took place on</span>" : "";
 			$hour = $this->hour;
 			$venueurl = $this->venueurl;
 			
@@ -353,10 +362,23 @@ PREVIEW;
 			: $this->venue;
 			$address = $this->address;
 			
-			//only display ticket link if eventdate is after todays date   			date("Y").date("m").date("d")
-			$tickets = ( $this->sortdateArray["year"].$this->sortdateArray["month"].$this->sortdateArray["day"] >= date("Y").date("m").date("d")) 
-			? "<a class='ticket-link' target='_blank' href='". $this->ticketsurl ."' role='button'><h1>Get Tickets</h1></a><br>" 
-			: "&nbsp;";
+			//tickets
+			$tickets ="";
+			//only display ticket link if eventdate is after todays date  ( date("Y").date("m").date("d") )
+			if( $this->sortdateArray["year"].$this->sortdateArray["month"].$this->sortdateArray["day"] >= date("Y").date("m").date("d")){ //($this->ticketsurl != null && $this->ticketsurl != "")
+				//are we selling tickets at the door?
+				$tickets = ($this->ticketsatdoor) 
+				? "<a class='ticket-link'><h4>Tickets sold at the door</h4></a>"
+				: "<a class='ticket-link'><h4>Tickets available soon</h4></a>";  
+				
+				//if there is a ticket link display that instead
+				$tickets = ($this->ticketsurl != null && $this->ticketsurl != "") 
+				? "<a class='ticket-link' target='_blank' href='". $this->ticketsurl ."' role='button'><h1>Get Tickets</h1></a><br>" 
+				: $tickets; 
+			} else{
+				//are we selling tickets at the door?
+				$tickets = "&nbsp"; 
+			}
 			
 			//show facebook event page url if there is one
 			$facebookurl = ($this->facebookurl != NULL && $this->facebookurl != "") 
@@ -477,6 +499,7 @@ GALARYCLOSE;
 												
 											<td>
 												<div>
+													$dateAppendum
 													$date 
 												</div>
 												<div>

@@ -38,6 +38,7 @@ $eventVenue ="";
 $eventVenueUrl = "";
 $eventAddress = "";
 $eventTicketLink ="";
+$eventTicketsatdoor ="";
 $eventFacebookUrl = "";
 $eventCoverImage ="./img/default.jpg";
 $eventPreview ="";
@@ -77,6 +78,7 @@ if(isset($_GET['editingEvent']) && isset($_GET['id'])){
 	$eventVenueUrl = $event->venueurl;
 	$eventAddress = $event->address;
 	$eventTicketLink = $event->ticketsurl;
+	$eventTicketsatdoor = ($event->ticketsatdoor) ? "checked" : "";
 	$eventFacebookUrl = $event->facebookurl;
 	$eventCoverImage =  "./img/medium/".$event->coverimage;
 	$eventPreview = $event->preview;
@@ -688,6 +690,17 @@ if(isset($_GET['editingEvent']) && isset($_GET['id'])){
                     <label class="control-label col-sm-2" for="event_address">Event Ticket Link:</label>
                     <div class="col-sm-10">
                         <input type="text" class="form-control" id="event_ticketsurl" name="ticketsurl" placeholder="Add link to where tickets can be bought" value="<?php echo $eventTicketLink ?>">
+                    </div>
+                </div>
+                
+                <!--tickets at the door-->
+                <div class="form-group">
+                    <label class="control-label col-sm-2" for="event_address">Tickets sold at the door?:</label>
+                    <div class="col-sm-1">
+                        <input type="checkbox" class="form-control floatleft" id="event_ticketsatdoor" name="ticketsatdoor" <?php echo $eventTicketsatdoor ?>>
+                    </div>
+                    <div class="col-sm-9">
+                    	&nbsp;
                     </div>
                 </div>
                 

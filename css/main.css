@@ -21,6 +21,10 @@ html, body {
 	margin:0;
 }
 
+.no_top_margin{
+	margin-top:0;
+}
+
 .gray, a.gray, .gray a, a.gray:hover{
 	color:rgb(160,160,160);
 }
@@ -35,6 +39,10 @@ html, body {
 }
 
 .floatright{
+	float:right;
+}
+
+.floatleft{
 	float:right;
 }
 
@@ -560,17 +568,22 @@ a.sidetitle_link:hover{
 	font-size:130%;
 }
 
+.event-sidebar ul div:first-child span{
+	text-transform: lowercase;
+}
+
 a.ticket-link{
 	color:black;
 	text-align:center;
 	text-decoration:none;
 }
 
-a.ticket-link h1{
+a.ticket-link h1, a.ticket-link h4{
 	font-size:200%;
 	padding: 5px;
 	border: 5px solid black;
 }
+
 
 a.ticket-link:hover h1{
 	font-size:200%;
@@ -655,12 +668,36 @@ a.deleteimage:hover{
 	line-height:140%;	
 }
 
+#slagzin h2{
+	margin:0 0 7px;
+}
+
 .slagzin a{
 	color:black;
 	text-decoration:none;
-	padding:0px 6px 2px 3px;
+	font-weight:bold;
+	font-size:110%;
+	padding:0px 6px 2px 5px;
+	margin-left:-5px;
 }
 
+.slagzin a:hover{
+	border-bottom:solid 5px black;
+	cursor:pointer;
+}
+
+.slagzin a[active=true]{
+	color:white;
+	background-color:black;
+	padding:0px 6px 0px 5px;
+	border-bottom:solid 5px black;
+}
+
+.slagzin p a:hover{
+	border-bottom:none;
+}
+
+/*
 .slagzin a.red{
 	color:#bf1e2e;
 }
@@ -724,9 +761,15 @@ a.deleteimage:hover{
 	border-color:#a1a274;
 	color:#a1a274;
 }
+*/
 
 #musictext a:hover{
 	text-decoration:underline;
+}
+
+span.glyphicon.small{
+	position:relative;
+	top:10px;
 }
 
 
