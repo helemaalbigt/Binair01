@@ -220,16 +220,19 @@
 							is shared on social media and streaming services such as 
 							<a href="http://www.deezer.com/profile/698631591/playlists" target="_blank">Deezer</a>, 
 							<a href="https://play.spotify.com/user/binair01" target="_blank">Spotify</a> and 
-							<a href="https://soundcloud.com/binair01-1" target="_blank">Soundcloud</a>. 
-							Most of all we build amazing parties with this highly inflammable content, 
-							from small dj-set editions to big productions with a line-up of several 
-							live bands. Generally we organize 5 events a year in the nicest venues Ghent has 
-							to offer: De Centrale and Kunstencentrum Vooruit (links!). We invite bands on our 
-							stage playing music that doesn’t fit into most national radio formats, but are sometimes 
-							famous in other parts of the world and popular in their home countries. Besides 
-							these international big fishes, we keep an eye on local, Belgian talent. We give 
-							this music and the bands creating it a stage, and an audience of melomaniacs and 
-							dance addicts the opportunity to hear and experience what radio leaves uncovered.
+							<a href="https://soundcloud.com/binair01-1" target="_blank">Soundcloud</a>.<br> 
+							The selected music must not only beat the hell out of people’s dancing feet, it must 
+							also have real radio capabilities. With this selection of highly inflammable content 
+							we build amazing parties, from small dj-set editions to big productions with a line-up 
+							of several live bands. Generally we organize 5 <a href="./events.php">events</a> a year in the nicest venues Ghent 
+							has to offer: 
+							<a href="http://decentrale.be/en" target="_blank">De Centrale</a> and 
+							<a href="https://vooruit.be/nl/" target="_blank">Kunstencentrum Vooruit</a>. 
+							We invite bands to our stage playing music that doesn’t fit into most national radio formats, but are sometimes 
+							famous in other parts of the world and popular in their home countries. Besides these 
+							international big fishes, we keep an eye on local, Belgian talent. We offer these bands 
+							and their music a stage, and give an audience of melomaniacs and dance addicts the 
+							opportunity to hear and experience what radio leaves uncovered. 
 							<br>
 							<br>
 							</p>
@@ -262,13 +265,13 @@
 							front of a photographer’s lens with your whitest teeth either. It’s just dancing, 
 							unconditional dancing without any restrictive barriers. Our parties and concerts 
 							are never too crowded to even get a chance to start moving. We keep the dance floor 
-							enjoyable and give your shoes all the space they need.  So dance, dance, otherwise we are lost.
+							enjoyable and give your shoes all the space they need. So dance, dance, otherwise we are lost.
 							<br>
 							<br>
 							</p>
 							
 							<!--Toggle-->
-							<h2>neglected by <a class="beige" active="false" targetid="mainstream" onclick="openInfo(this)">mainstream media&#x25BE</a>,</h2> 
+							<h2>neglected by <a class="beige" active="false" targetid="mainstream" onclick="openInfo(this)">mainstream media&#x25BE</a><!--,-->.</h2> 
 							
 							<p style="display:none;">
 								<br>
@@ -283,7 +286,7 @@
 							<br>
 							</p>
 							
-							<!--Toggle-->
+							<!--Toggle
 							<h2>who only focus on <a class="beige" active="false" targetid="anglo" onclick="openInfo(this)">Anglo-Saxon pop music&#x25BE</a>.</h2>
 							
 							<p style="display:none;">
@@ -294,7 +297,7 @@
 							the conventional radio channels in Flanders.
 							<br>
 							<br>
-							</p>
+							</p>-->
 							
 						</div>
 					</div>
@@ -303,29 +306,6 @@
 				
 				<br><br><br><br><br>
 				
-				<!-- HISTORY -->
-				<div class="row">
-					<div class="col-md-3 title">
-		        		<span class="sidetitle underscore">HISTORY</span><br><br>
-					</div>
-					
-					<div class="col-md-8">
-						<p>
-							Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam volutpat, 
-							ipsum non tristique tincidunt, leo mi dignissim lorem, quis pellentesque 
-							nunc augue sit amet nibh. Pellentesque habitant morbi tristique senectus 
-							et netus et malesuada fames ac turpis egestas. Curabitur malesuada commodo 
-							ligula. Suspendisse ut vestibulum neque. Praesent vel tortor sit amet nibh 
-							condimentum eleifend nec at augue. Phasellus feugiat pulvinar quam, quis 
-							sollicitudin nibh dignissim eu. Aenean cursus hendrerit erat ac bibendum. 
-							Sed egestas semper porta. Phasellus pretium risus et vulputate auctor. 
-							Quisque placerat dictum massa, quis luctus justo lacinia non. Donec tempor 
-							a elit ullamcorper pellentesque. Ut ultricies vel purus a porta.
-						</p>
-					</div>
-				</div>
-				
-				<br><br>
 				
 				
 				<!-- PEOPLE -->
@@ -356,7 +336,6 @@
 		        		&nbsp;
 					</div>
 					
-					<!-- Collaborators & Volunteers -->
 					<div class="col-md-8 title">
 		        		<span class="sidetitle">Board Members</span><br><br>
 					</div>
@@ -380,11 +359,11 @@
 							Olivier is one of the founding members of binair01. 
 							He’s responsible for the overall functioning and production, 
 							and selects the playlist music and the live bands being programmed. <br>
-							As an architect and an urbanist he’s fascinated by the complexity and diversity of the urban fabric 
-							whose identity is subtly influenced by new music tendencies, and in the meantime questioning its 
-							imaginary cultural borders. As a devoted music addict he carefully built up an ever expanding 
-							valuable collection of non-exposed dance music treasures by years of research in all quarters 
-							of our planet. He combines this knowledge with traditional club mixing techniques gained throughout a long career as a party dj.
+							As an architect and an urbanist he’s fascinated by the complexity and diversity of the urban 
+							fabric whose identity is subtly influenced by new music tendencies, and in the meantime questioning 
+							its imaginary cultural borders. As a devoted music addict he carefully built up an ever expanding 
+							valuable collection of non-exposed dance music treasures by years of research in all quarters of our 
+							planet. He combines this knowledge with traditional club mixing techniques gained throughout a long career as a party dj.
 							<br><br>
 							
 							The sum of classic beatmatching and unconventional dance tunes makes him a party dj producing 
@@ -416,23 +395,25 @@
 					</div>
 												
 					<div class="col-xs-4 col-md-2 title">
-		        		<img class="img-responsive" src="img/about/oliv.jpg" /> <!--Profile image, change src path to change image-->
+		        		<img class="img-responsive" src="img/about/Tijl.jpg" /> <!--Profile image, change src path to change image-->
 					</div>
 					
 					<div class="col-xs-7 col-md-6">
 						<h2 class="no_top_margin"><span class="">Tijl</span></h2>
-						<b>Founding member, music selection, band scouting, production, resident dj</b>
+						<b>Production, Sound technician</b>
 						<br><br>
 						<p>
-							Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam volutpat, 
-							ipsum non tristique tincidunt, leo mi dignissim lorem, quis pellentesque 
-							nunc augue sit amet nibh.
+							Tijl has many years of experience in event organization. As a professional sound technician, 
+							he’s got the love for music running through his veins. He is responsible for the overall 
+							organization of the concert productions, he sets up front- and backline and guarantees a 
+							smooth course of everything happening during the events. The musician’s smile on stage 
+							and the amazing sound on the dance floor is all about his merits.
 						</p>
 						<p>
 							<div class="infotext">
-								<span class="glyphicon glyphicon-envelope small"></span> <a href="mailto:olivier.roegiest@binair01.be" target="_blank">olivier.roegiest@binair01.be</a><br>
-								<span class="glyphicon glyphicon-user small"></span> <a href="https://www.facebook.com/binair01.mnsrzero" target="_blank">www.facebook.com/binair01.mnsrzero</a><br>
-								<span class="glyphicon glyphicon-earphone small"></span> 0478/287323<br>
+								<span class="glyphicon glyphicon-envelope small"></span> <a href="mailto:productie@binair01.be" target="_blank">productie@binair01.be</a><br>
+								<span class="glyphicon glyphicon-user small"></span> <a href="https://www.facebook.com/tijl.deruysscher" target="_blank">www.facebook.com/tijl.deruysscher</a><br>
+								<span class="glyphicon glyphicon-earphone small"></span> 0473/223610<br>
 							</div>
 						</p>
 						<br>
@@ -451,20 +432,63 @@
 					
 					<div class="col-xs-7 col-md-6">
 						<h2 class="no_top_margin"><span class="">Thomas</span></h2>
-						<b>Founding member, music selection, band scouting, production, resident dj</b>
+						<b>Band scouting, programmation, promo & PR, social media, resident dj</b>
 						<br><br>
 						<p>
-							Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam volutpat, 
-							ipsum non tristique tincidunt, leo mi dignissim lorem, quis pellentesque 
-							nunc augue sit amet nibh.
+							Thomas started his career at binair01 as Black Pete on the first #balkan sessions# edition at the end of 2015. His 
+							responsibility though grew rapidly, as he is now working on music selection, band scouting and production.
+							<br><br>
+							As a social worker, musician and dj he believes in a strong open minded vision of diversity. By research and lots 
+							of travels through continental Europe, Thomas is always on the hunt of complementing the binair01 music collection.
+							<br><br>
+							In the beginning of 2016, he created the alter-ego “Radio Barbã”. As a musician influenced by the hottest balkangrooves, 
+							he started to compose his own music. “Radio Barbã” will spread love, sweat and happiness through performances with full 
+							live band and dj sets. He is now the second resident dj at binair01.
 						</p>
 						<p>
 							<div class="infotext">
-								<span class="glyphicon glyphicon-envelope small"></span> <a href="mailto:olivier.roegiest@binair01.be" target="_blank">olivier.roegiest@binair01.be</a><br>
-								<span class="glyphicon glyphicon-user small"></span> <a href="https://www.facebook.com/binair01.mnsrzero" target="_blank">www.facebook.com/binair01.mnsrzero</a><br>
-								<span class="glyphicon glyphicon-earphone small"></span> 0478/287323<br>
+								<span class="glyphicon glyphicon-envelope small"></span> <a href="mailto:thomas@binair01.be" target="_blank">thomas@binair01.be</a><br>
+								<span class="glyphicon glyphicon-user small"></span> <a href="https://www.facebook.com/thomas.baert.54" target="_blank">www.facebook.com/thomas.baert.54</a><br>
+								<span class="glyphicon glyphicon-earphone small"></span> 0473/262128<br>
 							</div>
 						</p>
+						<br>
+					</div>		
+				</div><br>
+				
+				<!-- Useful Information -->
+				<div class="row">
+					<div class="col-md-3 title">
+		        		&nbsp;
+					</div>
+					
+					<div class="col-md-8 title">
+		        		<span class="sidetitle">Useful Information</span><br><br>
+					</div>
+				</div>
+				<!-- Juridical form -->
+				<div class="row">
+					<div class="col-md-3 title">
+		        		&nbsp;
+					</div>
+					
+					<div class="col-xs-4 col-md-2 title">
+		        		<img class="img-responsive" src="img/about/index.png" /> <!--Profile image, change src path to change image-->
+					</div>
+					
+					<div class="col-xs-7 col-md-6">
+						<h2 class="no_top_margin"><span class="">Juridical form</span></h2>
+						<p>
+							Binair01 is a non-profit organization <br>
+							(vzw, BE0844 598 103)
+						</p>
+						<br>
+						<h2 class="no_top_margin"><span class="">Contact</span></h2>
+							<div class="infotext">
+								<span class="glyphicon glyphicon-envelope small"></span> <a href="mailto:binair01@binair01.be" target="_blank">binair01@binair01.be</a><br>
+								<span class="glyphicon glyphicon-map-marker small"></span> Begijnhoflaan 121, B-9000 Gent><br>
+								<span class="glyphicon glyphicon-earphone small"></span> 09 233 80 23<br>
+							</div>
 						<br>
 					</div>		
 				</div><br>
@@ -472,13 +496,39 @@
 				<br><br>
 				
 				
-				<!-- PARTNERS -->
+				<!-- HISTORY -->
+				<div class="row">
+					<div class="col-md-3 title">
+		        		<span class="sidetitle underscore">HISTORY</span><br><br>
+					</div>
+					
+					<div class="col-md-8 title">
+		        		<span class="sidetitle">Where does the name binair01 come from?</span><br><br>
+		        		
+		        		<p>
+		        			Binair01 starts in 2010 as a once-only party organized among friends for friends of friends. It emerges as a 2011 new year’s party, carrying the name of the date itself: 010111. Still it was clear from the very beginning it wouldn’t be a party like any other. The motivation is shared among all the 350 friends of friends who had the time of their life: the music played at this very first event is strangely enough familiar and accessible in the meantime, yet exotic and quite exceptional . As one of the attendees mentions, the surprising and eclectic mix of quality dance music without borders or restrictions is very refreshing and complementary to the conventional club scene. The friends’ surprise party turns out to be a very urgent matter of absolute necessity, demanded by many unsatisfied music- and dance lovers. The team decides to bring it on, and names the music organization after their first improvised attempt: the binary number of the date it took place. Binair01 sharpens its mission to being a music platform for music influences outside the range of the national radio stations in the Flemish part of Belgium. It formulates the ambition of taking this music out of its enforced niche position by bringing it to the surface where it belongs: to a broad and diverse public, with events in mainstream beautiful cultural venues. This very specific aim is perceived as natural and logical, but strangely enough quite unique.
+		        		</p>
+						<p>
+							The clear choice to avoid stereotypes and clichés is also reflected in rejecting subcultures, mixing and combining a huge amount of music styles, and the particular interest in crossing far edged genres. Combining a pair of different bits produces an endless variety of unique elements, explaining another signification behind the cryptic “binair01”.
+						</p>
+						<p>
+							The success of the unique concept was the ever present drive behind the extending organization. In 2012, the first live production took place in Kunstencentrum Vooruit, Ghent’s main concert venue. From local bands it quickly went to internationally renowned musicians, autonomous productions were complemented with different partnerships such as coproductions with De Centrale, an amazing intercultural music centre in Gent. The original crew changed slightly to a more professional lay-out and was extended with people from inside the music production scene.
+						</p>
+						<p>
+							It is the ambition of binair01 not necessarily to grow even more in public numbers at its events, but in the first place to increase the range of its message in Flanders. In the cause of music richness and its socio-cultural effects we believe it is absolutely necessary to change the monotonous music landscape of our specifically extremely varied region. To reach this goal, we want more people to access the music we select, we want to give a first Belgian stage to more artists, we want to collaborate with mainstream media in order to give impulses to slow evolutions, and we want to behave as an open production house where new initiatives and combinations of music with other disciplines are welcome.
+						</p>
+						<br><br>
+					</div>
+				</div>
 				
+				<br><br>
+				
+				
+				<!-- PARTNERS -->
 				<div class="row">
 					<div class="col-md-3 title">
 		        		<span class="sidetitle underscore">PARTNERS</span><br><br>
 					</div>
-					
 					
 					<div class="col-md-8 title">		        		
 		        		<p>
@@ -575,28 +625,20 @@
 						<h2 id="anglo" class="no_top_margin"><span class="">Bioplanet</span></h2>
 							<br>
 							<p>
-								Bioplanet is our home supermarket. 
-								They offer us all the stuff we need backstage, 
-								from crackers and fruit to spoil cast and crew, 
-								to soap for washing their plates. Thanks to them, 
-								we never run short on cookies with plenty of tea for twenty.
-								____________________ nog aan te passen! (mail naar bioplanet)______________
-								The Bio-Planet mission states that we want our customers to enjoy life in 
-								a healthier and more conscious way, thanks to our tasty, complete and 
-								reliable assortment of organic products. Bio-Planet is a unique concept, 
-								as a separate supermarket selling only organic food and ecological 
-								non-food products. Our new shop in Leuven (Belgium) is designed according 
-								to the latest and best possible ecological performance indicators. 
-								In this way, it is a trendsetter with an integrated green approach 
-								combining product and infrastructure aspects in a business context. 
-								Additionally, we are taking a new step towards a 'passive' supermarket. 
-								Our first attention went to lowering energy consumption in general. 
-								For a shop that is already very energy efficient due to its concept 
-								(a closed cold-storage area instead of open refrigerated shelves, 
-								no air conditioning, no excessive lighting, no open freezers), 
-								the challenge was to cut energy consumption by another half. 
-								By monitoring the performance of the different techniques, 
-								we will evaluate its applicability for other stores within the Colruyt Group. 	
+								Bioplanet is our home supermarket. They offer us all the stuff we need backstage, 
+								from crackers and fruit to spoil cast and crew, to soap for washing their plates. 
+								Thanks to them, we never run short on cookies with plenty of tea for twenty.
+							</p>
+							<p>	
+								Bio-Planet wants their customers to enjoy life in a healthier and more conscious way, 
+								thanks to the tasty, complete and reliable assortment of organic products. Bio-Planet 
+								is a unique concept, as a separate supermarket selling only organic food and ecological 
+								non-food products. Their second aim is to consume the least possible energy. Some of 
+								the Bioplanet stores are passive buildings.
+								
+								For our events we go shopping in the main <a href="https://www.bioplanet.be/bio/nl/static/winkels-detail?storedetails=3901"= target="_blank">Gent Bioplanet store</a> located at 
+								Drongensesteenweg 134, and appreciate the quality and variety of the 
+								products and the ever friendly crew. Highly recommended! 	
 							</p>
 						<br>
 					</div>	
