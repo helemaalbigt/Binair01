@@ -8,8 +8,30 @@
 		session_start();
 	}
 ?>
-
-<!-- Website by Thomas Van Bouwel - www.tvb-design.com-->
+<!-- 
+	Website by Thomas Van Bouwel - www.tvb-design.com
+	-First version published online on 10/04/2016
+	-get the source at
+	
+	Notes to future developpers
+	---------------------------
+	
+	Site main pages:
+	-index.php 			main page
+	-about.php 			about page
+	-news.php 			page with news posts - renders overview of all news or individual news posts
+	-events.php 		page with events - renders overview of all events or individual event
+	-search.php 		page to display search reseult from clicking a tag on either a news post or event
+	-admin.php 			portal for webadmins to manage content
+	
+	Functional pages:
+	-blogpost.inc.php 	news post class - holds parameters for individual news posts and functions to render them on a page
+	-event.inc.php 		event class - holds parameters for individual events and functions to render them on a page
+	-db.inc.php 		database login info - change the info here to switch between local development and the online database
+						NOTE: NEVER PUBLISH THIS IN PUBLIC REPOSITORIES!
+	-functions.inc.php 	functionality used throughout the website: creating lists of events/news, cleaning post data, printing headers and footers, ...
+	-update.inc.php		handles posting/editing/deleting news and events
+-->
 
 <!doctype html>
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang=""> <![endif]-->
