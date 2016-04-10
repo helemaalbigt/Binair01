@@ -40,10 +40,11 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
         <title>
         	<?php
-        	if (isset($_GET['id'])) 
-			{
+        	if (isset($_GET['id'])) {
 				echo $blogpost -> title;
-			} 
+			} else{
+				echo "Binair01 - News";
+			}
         	?>
         </title>
         <meta name="viewport" content="width=device-width, initial-scale=1">

@@ -38,12 +38,23 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-        <title>Binair 01</title>
+        <title>
+        <?php 
+		//page title
+		if (isset($_GET['id'])){
+			echo $event -> title;
+		} else{
+			echo "Binair 01 - Events";
+		}
+		?>
+		</title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         
-		<?php if (isset($_GET['id'])){
-		
+		<?php 
+		//if showing a single event, add this metadata for facebook
+		if (isset($_GET['id'])){
+	
 		$thistitle = $event -> title;
 		$thisurl = $_SERVER['REQUEST_URI'];
 		$imgurl =  $_SERVER['DOCUMENT_ROOT'].APP_FOLDER."/img/medium/".$event -> coverimage;

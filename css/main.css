@@ -398,7 +398,7 @@ ul.social  #twitter:hover {
 	 position:absolute;
 	left:calc(50% + 210px);
 	width:423px;
-	//text-align:justify;
+	text-align:justify;
 }
 
 .slogan.above_fold b{

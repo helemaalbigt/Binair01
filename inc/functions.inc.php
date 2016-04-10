@@ -19,7 +19,7 @@ if (session_id() == '' || !isset($_SESSION)) {
 
 
 /**
- * Clean form data data
+ * Clean form data 
  * 
  * Strips tags and removes/replaces certain characters from post data
  * 

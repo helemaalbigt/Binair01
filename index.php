@@ -19,7 +19,7 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-        <title></title>
+        <title>Binair01</title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="css/bootstrap.min.css">
@@ -53,10 +53,8 @@
             <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
         
-        <!-- Nav -->
-        <?php echo printHeader(true, true, "red", "home", "./index.php") ?>
-
-
+        <!-- Nav --> 
+        <!--<?php echo printHeader(true, true, "red", "home", "./index.php") ?>--><!-- old navbar that would appear behind the big image on mainhpage-->
 
 		<!-- HomePage CoverImage-->
 	    <div class="coverimage">
@@ -82,7 +80,7 @@
 				<!-- slogan -->
 				<div class="slogan above_fold">
 					<div class="phrase1">
-						<b>Binair01</b> cares about music diversity.<br>
+						<b>Binair01</b> cares about <b>music diversity</b>.<br>
 					</div>
 					<div class="phrase2">
 						We offer quality  <b>dance music</b> neglected by <b>mainstream media</b>.
