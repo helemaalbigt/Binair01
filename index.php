@@ -8,6 +8,7 @@
 		session_start();
 	}
 ?>
+
 <!-- 
 	Website by Thomas Van Bouwel - www.tvb-design.com
 	-First version published online on 10/04/2016
@@ -44,6 +45,12 @@
         <title>Binair01</title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!-- facebook metadata-->
+		<meta property="og:title" content="Binair01" />
+		<meta property="og:description" content="Binair01 cares about music diversity. We offer quality dance music neglected by mainstream media" />
+		<meta property="og:url" content="http://binair01.be" />
+		<meta property="og:image" content="http://binair01.be/img/cover_red.jpg" />
+		
         <link rel="stylesheet" href="css/bootstrap.min.css">
         <link rel="stylesheet" href="css/bootstrap-theme.min.css">
         <link rel="stylesheet" href="css/main.css">
@@ -102,7 +109,7 @@
 				<!-- slogan -->
 				<div class="slogan above_fold">
 					<div class="phrase1">
-						<b>Binair01</b> cares about <b>music diversity</b>.<br>
+						<b>Binair01</b> cares about <br><b>music diversity</b>.<br>
 					</div>
 					<div class="phrase2">
 						We offer quality  <b>dance music</b> neglected by <b>mainstream media</b>.

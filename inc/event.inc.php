@@ -351,10 +351,13 @@ PREVIEW;
 			$imgPath = "img/large/".$this->coverimage;
 			$title = $this->title;
 			$date =  date('F', strtotime($this->sortdateArray["year"].$this->sortdateArray["month"].$this->sortdateArray["day"]))." ".$this->sortdateArray["day"].", ".$this->sortdateArray["year"];//$this->sortdate;
-			//display only if event has passed
+			//display only if event has already happened
 			$dateAppendum = ( $this->sortdateArray["year"].$this->sortdateArray["month"].$this->sortdateArray["day"] < date("Y").date("m").date("d")) ? "<span>This event took place on</span>" : "";
 			$hour = $this->hour;
-			$venueurl = $this->venueurl;
+			$venueurl = (substr( $this->venueurl, 0, 7 ) === "http://" || substr( $this->venueurl, 0, 7 ) === "https://") ? 
+			$this->venueurl:
+			"http://".$this->venueurl;
+			
 			
 			//make a link of the venue if it has one
 			$venue = ($venueurl != NULL & $venueurl !="") 
@@ -545,7 +548,12 @@ GALARYCLOSE;
 						
 						<!--body text and tag links-->
 						<div class="col-md-8">	
-							<br>
+							<!--imagegallery-->
+							<div class="event_imagegallery">
+								<br>
+									$imagegallery
+								<br>
+							</div>
 						    <p class="body">$body</p>
 						</div>
 						
@@ -553,15 +561,6 @@ GALARYCLOSE;
 					
 					<br><br><br>
 					
-					<!--imagegallery-->
-					<div>
-						<div class="col-md-3">
-							&nbsp;
-						</div>
-						<div class="col-md-8">
-							$imagegallery
-						</div>
-					</div>
 					
 					<br><br><br><br>
 					

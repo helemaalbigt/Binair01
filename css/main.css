@@ -390,9 +390,7 @@ ul.social  #twitter:hover {
 
 .slogan.above_fold .phrase1{
 	position:absolute;
-	//width:350px;
-	width:390px;
-	font-size:79%;
+	width:350px;
 	left:calc(50% - 590px);
 }
 
@@ -401,8 +399,8 @@ ul.social  #twitter:hover {
 	left:calc(50% + 210px);
 	width:423px;
 	text-align:justify;
-	font-size:79%;
 }
+
 
 .slogan.above_fold b{
 	font-size:120%;
@@ -631,6 +629,10 @@ a.thin_button:hover{
 
 .galleryimage{
 	float:left;
+}
+
+.event_imagegallery{
+	margin-left:15px;
 }
 
 .img-responsive.event{

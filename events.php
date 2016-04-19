@@ -56,8 +56,8 @@
 		if (isset($_GET['id'])){
 	
 		$thistitle = $event -> title;
-		$thisurl = $_SERVER['REQUEST_URI'];
-		$imgurl =  $_SERVER['DOCUMENT_ROOT'].APP_FOLDER."/img/medium/".$event -> coverimage;
+		$thisurl = "http://binair01.be".$_SERVER['REQUEST_URI'];
+		$imgurl =  str_replace("/customers/0/3/1/binair01.be/httpd.www", "http://binair01.be", $_SERVER['DOCUMENT_ROOT'].APP_FOLDER."/img/medium/".$event -> coverimage);
 		 
 			echo <<<META
 			
