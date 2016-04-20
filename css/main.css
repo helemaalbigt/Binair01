@@ -667,6 +667,17 @@ a.deleteimage:hover{
 	cursor:pointer;
 }
 
+.imagePreviewWrapper{
+	position:relative;
+}
+
+.coverimageDelete{
+	position:absolute;
+	right:10px;
+	top:5px;
+	z-index:9999;
+}
+
 /*ABOUT PAGE*/
 .slagzin{
 	margin-top:5px;

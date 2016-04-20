@@ -209,7 +209,7 @@ if(isset($_GET['editingEvent']) && isset($_GET['id'])){
 		
 		
 		/**
-		 * Delete Image
+		 * Delete Image from gallery
 		 *  
 		 * @param 
 		 * @return
@@ -219,11 +219,24 @@ if(isset($_GET['editingEvent']) && isset($_GET['id'])){
 				e.parentNode.parentNode.removeChild(e.parentNode);
 			} 
 		}
+		
+		/**
+		 * Delete CoverImage from blogpost
+		 * 
+		 * @param
+		 * @return
+		 */
+		function deleteCoverImage(e){
+			if (confirm('Are you sure you want to DELETE this image? \n This cannot be undone')) {
+				e.style.display= "none";
+				$("#blogpostCoverimage").attr("src","./img/default.jpg");
+				$("#existingCoverImage").attr("value","true");
+			}
+		}
 		</script>
         
         
     	<script type="text/javascript">
-    	
 		//calls a function to check for errors in a new blogpost, passes arrays with elements to check
 		function checkInputForm(edit) {
 			
@@ -402,7 +415,11 @@ if(isset($_GET['editingEvent']) && isset($_GET['id'])){
 		        var reader = new FileReader();            
 		        reader.onload = function (event) {
 		        	//get the img element above the file input and change the src
-		           $(input).parent().parent().parent().parent().siblings('img').filter(':first').attr('src', event.target.result); 
+					$("#blogpostCoverimage").attr("src",event.target.result);
+					//re-display delete button
+					$("#coverimageDeletebutton").show();
+					//set delete value to false
+					$("#existingCoverImage").attr("value","false");		         
 		        }            
 		        reader.readAsDataURL(input.files[0]);
 		    }
@@ -556,7 +573,13 @@ if(isset($_GET['editingEvent']) && isset($_GET['id'])){
                  <!--coverimage-->
                 <div class="form-group">
                     <label class="control-label col-sm-2" for="coverimage">Cover Image:</label>
-                    <img class="col-sm-3 imagepreview img-responsive" src="<?php echo $postCoverImage?>"/>
+					<!-- image preview-->
+					<div class="col-sm-3 imagepreview imagepreviewWrapper">
+						<?php if($postCoverImage!="./img/default.jpg" && $youtubeCover!=""){ echo "<a id='coverimageDeletebutton' class='deleteimage coverimageDelete' onclick='deleteCoverImage(this)'><span class='glyphicon glyphicon-remove'></span><a/>";} ?> <!-- show delete image button only when there is both an image and media cover-->
+						<img id="blogpostCoverimage" class="imagepreview img-responsive" src="<?php echo $postCoverImage?>"/>
+						<input type="hidden" name="existingCoverImage" id="existingCoverImage" value="false"> <!-- set to true if we need to delete this image, eg when there is a media cover -->
+					</div>
+					<!-- image input field-->
                     <div class="col-sm-7">
                     	<div class="input-group">
 			                <span class="input-group-btn">

@@ -130,10 +130,10 @@
 			{
 				$appendSQL ="";
 				$appendSTMT = array();
-				//check if new image was added, add some stuff to the query if it is
-				if ($_FILES['coverimage']['name'] != ''){
+				//check if new image was added, or if an image was deleted, and add some stuff to the query if it is
+				if ($_FILES['coverimage']['name'] != '' || $p['existingCoverImage'] == "true"){
 					$appendSQL .= ", coverimage=?";
-					$appendSTMT = array($filename);
+					$appendSTMT = ($p['existingCoverImage'] == "true") ?  array("") : array($filename); //if we deleted the image, replace image path by empty string
 				}
 	
 				//prepare the sql query and append a part if we're adding images
